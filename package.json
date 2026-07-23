@@ -1,0 +1,12 @@
+{
+  "name": "daily-skill-report",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate-report.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

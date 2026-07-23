@@ -1,0 +1,60 @@
+name: Daily Skill Report
+
+on:
+  schedule:
+    # 01:45 UTC = 09:45 Australia/Perth (UTC+8)
+    - cron: "45 1 * * *"
+  workflow_dispatch:
+    inputs:
+      report_date:
+        description: "可选：补跑日期，YYYY-MM-DD"
+        required: false
+        type: string
+      force:
+        description: "即使当天文件存在也重新生成"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-skill-report
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
+      REPORT_TIMEZONE: Australia/Perth
+      REPORT_DATE: ${{ inputs.report_date }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate report
+        run: node scripts/generate-report.mjs ${{ inputs.force == true && '--force' || '' }}
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit report
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily index.md
+          git commit -m "docs: add daily skill report"
+          git push
