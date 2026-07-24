@@ -1,9 +1,6 @@
 name: Daily Skill Report
 
 on:
-  # One-time bootstrap trigger; removed after the first successful dispatch.
-  push:
-    branches: [main]
   schedule:
     # 01:45 UTC = 09:45 Australia/Perth (UTC+8)
     - cron: "45 1 * * *"
