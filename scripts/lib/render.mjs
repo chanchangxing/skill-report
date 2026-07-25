@@ -9,7 +9,7 @@ function reportFileName(report) {
 }
 
 function reportSortKey(report) {
-  return report.generatedAt || report.reportId || report.date;
+  return report.reportId || report.date;
 }
 
 function list(items) {

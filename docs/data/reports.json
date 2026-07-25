@@ -1,37 +1,5 @@
 [
   {
-    "date": "2026-07-26",
-    "projectId": "obra/superpowers",
-    "fingerprint": "R_kgDOP_gcWw",
-    "name": "superpowers",
-    "description": "An agentic skills framework & software development methodology that works.",
-    "repository": "obra/superpowers",
-    "repositoryUrl": "https://github.com/obra/superpowers",
-    "projectUrl": "https://github.com/obra/superpowers",
-    "homepageUrl": "",
-    "primaryDocumentPath": "README.md",
-    "stars": 260973,
-    "stars7d": null,
-    "forks": 23291,
-    "forks7d": null,
-    "issueActivity7d": 23,
-    "pushedAt": "2026-07-24T21:21:36Z",
-    "topics": [
-      "ai",
-      "brainstorming",
-      "coding",
-      "obra",
-      "sdlc",
-      "skills",
-      "subagent-driven-development",
-      "superpowers"
-    ],
-    "language": "Shell",
-    "score": 75.67,
-    "title": "superpowers",
-    "summary": "这是 obra/superpowers 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。"
-  },
-  {
     "reportId": "2026-07-26-024302",
     "date": "2026-07-26",
     "generatedAt": "2026-07-25T18:43:02.694Z",
@@ -65,5 +33,37 @@
     "score": 75.31,
     "title": "ECC 智能体工作台操作系统",
     "summary": "ECC（原Everything Claude Code）是一个面向AI代理工作台（harness）的操作系统级工具包，并非仅是一组配置文件。它集成了技能、本能学习、记忆优化、持续学习、安全扫描和研究优先的开发模式，旨在提升跨多种代理工作台（如Claude Code、Codex、Cursor、OpenCode、Gemini等）的开发效率。项目包含261+技能、67个专用子代理、84条命令以及丰富的钩子、规则和MCP配置，支持12种以上语言生态，并已在实际产品中经过10个月以上的高强度验证。"
+  },
+  {
+    "date": "2026-07-26",
+    "projectId": "obra/superpowers",
+    "fingerprint": "R_kgDOP_gcWw",
+    "name": "superpowers",
+    "description": "An agentic skills framework & software development methodology that works.",
+    "repository": "obra/superpowers",
+    "repositoryUrl": "https://github.com/obra/superpowers",
+    "projectUrl": "https://github.com/obra/superpowers",
+    "homepageUrl": "",
+    "primaryDocumentPath": "README.md",
+    "stars": 260973,
+    "stars7d": null,
+    "forks": 23291,
+    "forks7d": null,
+    "issueActivity7d": 23,
+    "pushedAt": "2026-07-24T21:21:36Z",
+    "topics": [
+      "ai",
+      "brainstorming",
+      "coding",
+      "obra",
+      "sdlc",
+      "skills",
+      "subagent-driven-development",
+      "superpowers"
+    ],
+    "language": "Shell",
+    "score": 75.67,
+    "title": "superpowers",
+    "summary": "这是 obra/superpowers 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。"
   }
 ]
