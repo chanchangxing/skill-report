@@ -1,5 +1,36 @@
 [
   {
+    "date": "2026-07-26",
+    "skillId": "obra/superpowers::skills/dispatching-parallel-agents/SKILL.md",
+    "fingerprint": "3fa091b348bbe0a18eaa0e17e9092c97f7005cbe",
+    "name": "dispatching-parallel-agents",
+    "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies",
+    "repository": "obra/superpowers",
+    "repositoryUrl": "https://github.com/obra/superpowers",
+    "skillUrl": "https://github.com/obra/superpowers/blob/main/skills/dispatching-parallel-agents/SKILL.md",
+    "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
+    "stars": 260935,
+    "stars7d": null,
+    "forks": 23280,
+    "forks7d": null,
+    "issueActivity7d": 22,
+    "pushedAt": "2026-07-24T21:21:36Z",
+    "topics": [
+      "ai",
+      "brainstorming",
+      "coding",
+      "obra",
+      "sdlc",
+      "skills",
+      "subagent-driven-development",
+      "superpowers"
+    ],
+    "language": "Shell",
+    "score": 75.62,
+    "title": "并行派发代理",
+    "summary": "当面对两个或两个以上彼此独立、无需共享状态或顺序依赖的任务时，可将每个任务委派给一个专门的代理，并行处理。每个代理仅获得精确裁剪的指令和所需上下文，从而保持专注并高效完成任务，同时避免主会话上下文膨胀。通过并行派发，可将多个独立调查工作同时进行，显著缩短总耗时。"
+  },
+  {
     "date": "2026-07-25",
     "skillId": "openclaw/openclaw::.agents/skills/agent-transcript/SKILL.md",
     "fingerprint": "97ce47dafec2505ca26bdb94223b67195bc9ec09",

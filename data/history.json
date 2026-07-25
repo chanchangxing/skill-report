@@ -80,5 +80,76 @@
       "source": "deepseek",
       "model": "deepseek-v4-pro"
     }
+  },
+  {
+    "date": "2026-07-26",
+    "skillId": "obra/superpowers::skills/dispatching-parallel-agents/SKILL.md",
+    "fingerprint": "3fa091b348bbe0a18eaa0e17e9092c97f7005cbe",
+    "name": "dispatching-parallel-agents",
+    "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies",
+    "repository": "obra/superpowers",
+    "repositoryUrl": "https://github.com/obra/superpowers",
+    "skillUrl": "https://github.com/obra/superpowers/blob/main/skills/dispatching-parallel-agents/SKILL.md",
+    "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
+    "stars": 260935,
+    "stars7d": null,
+    "forks": 23280,
+    "forks7d": null,
+    "issueActivity7d": 22,
+    "pushedAt": "2026-07-24T21:21:36Z",
+    "topics": [
+      "ai",
+      "brainstorming",
+      "coding",
+      "obra",
+      "sdlc",
+      "skills",
+      "subagent-driven-development",
+      "superpowers"
+    ],
+    "language": "Shell",
+    "score": 75.62,
+    "analysis": {
+      "title": "并行派发代理",
+      "introduction": "当面对两个或两个以上彼此独立、无需共享状态或顺序依赖的任务时，可将每个任务委派给一个专门的代理，并行处理。每个代理仅获得精确裁剪的指令和所需上下文，从而保持专注并高效完成任务，同时避免主会话上下文膨胀。通过并行派发，可将多个独立调查工作同时进行，显著缩短总耗时。",
+      "whyHot": [
+        "显著提升多故障修复效率：避免顺序调查的长时间等待，多个代理同时工作，总耗时接近单个任务的处理时间",
+        "适用于大型重构后的回归测试失败：快速将不同测试文件的失败分配给不同代理，独立分析根因并修复",
+        "减少上下文切换与干扰：每个代理只处理一个明确问题域，主会话仅需协调结果，无需深入所有细节"
+      ],
+      "capabilities": [
+        "自动识别独立问题域：根据子系统或测试文件将故障分组，确认彼此无依赖",
+        "创建高度聚焦的代理任务：为每个域定制明确的修复范围、目标、约束和期望输出",
+        "并行派发代理：在同一次响应中发起多个子代理调用，实现真正的并发执行",
+        "审查与整合结果：阅读各代理返回的摘要，检查变更冲突，运行全量测试套件，统一集成修复"
+      ],
+      "workflow": [
+        "第一步：识别独立域——分析所有故障，按子系统或测试文件分组，排除可能相互影响的域，确保每个域可以独立调查",
+        "第二步：创建专注的代理任务——为每个独立域编写一个自包含的任务描述，包含明确的测试文件、目标（如“让测试通过”）、约束（如“不得修改生产代码”）和期望输出（如“返回根因和修复摘要”）",
+        "第三步：并行派发——在同一次助手回复中，通过调用多个子代理（Subagent）指令，一次性派发所有任务，系统将并行执行",
+        "第四步：审查与整合——代理返回后，依次阅读每个摘要，检查是否有代理修改了相同代码区域，运行完整测试套件确认全部通过，最后将所有变更整合到代码库"
+      ],
+      "inputs": [
+        "多个独立的测试失败或子系统故障，以文件路径和错误信息形式提供",
+        "对每个问题的简要描述，确保代理能理解其所属领域和预期行为"
+      ],
+      "outputs": [
+        "每个代理返回的根因分析与修复摘要",
+        "全量测试套件通过的结果",
+        "集成后的代码变更，确保无冲突"
+      ],
+      "caveats": [
+        "不适用于相关失败：如果修复一个可能导致其他失败自然解决，应统一调查，避免冗余工作",
+        "不适用于共享状态的场景：如果多个任务会修改相同文件或依赖同一运行时状态，并行代理可能产生冲突",
+        "需要提供充分上下文：若代理缺乏具体错误信息或文件位置，可能导致迷失方向或错误修复",
+        "不适用于探索性调试：在不明根因的初步调查阶段，应保留完整系统视角，不宜过早拆分",
+        "代理任务必须精确限定：过于宽泛的目标（如“修复所有测试”）会使代理效率低下"
+      ],
+      "evidence": [
+        "skills/dispatching-parallel-agents/SKILL.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-pro"
+    }
   }
 ]

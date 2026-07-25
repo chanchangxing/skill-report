@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="当面对两个或两个以上彼此独立、无需共享状态或顺序依赖的任务时，可将每个任务委派给一个专门的代理，并行处理。每个代理仅获得精确裁剪的指令和所需上下文，从而保持专注并高效完成任务，同时避免主会话上下文膨胀。通过并行派发，可将多个独立调查工作同时进行，显著缩短总耗时。">
-  <title>并行派发代理 — 智能体技能日报</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>并行派发代理 — 2026-07-26</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>智能体技能</span>日报</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>智能体技能</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-07-26 · 今日智能体技能</p>
@@ -33,13 +33,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>第一步：识别独立域——分析所有故障，按子系统或测试文件分组，排除可能相互影响的域，确保每个域可以独立调查</p></li><li><span>2</span><p>第二步：创建专注的代理任务——为每个独立域编写一个自包含的任务描述，包含明确的测试文件、目标（如“让测试通过”）、约束（如“不得修改生产代码”）和期望输出（如“返回根因和修复摘要”）</p></li><li><span>3</span><p>第三步：并行派发——在同一次助手回复中，通过调用多个子代理（Subagent）指令，一次性派发所有任务，系统将并行执行</p></li><li><span>4</span><p>第四步：审查与整合——代理返回后，依次阅读每个摘要，检查是否有代理修改了相同代码区域，运行完整测试套件确认全部通过，最后将所有变更整合到代码库</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>skills/dispatching-parallel-agents/SKILL.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>不适用于相关失败：如果修复一个可能导致其他失败自然解决，应统一调查，避免冗余工作</li><li>不适用于共享状态的场景：如果多个任务会修改相同文件或依赖同一运行时状态，并行代理可能产生冲突</li><li>需要提供充分上下文：若代理缺乏具体错误信息或文件位置，可能导致迷失方向或错误修复</li><li>不适用于探索性调试：在不明根因的初步调查阶段，应保留完整系统视角，不宜过早拆分</li><li>代理任务必须精确限定：过于宽泛的目标（如“修复所有测试”）会使代理效率低下</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-pro</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><article class="report-card" data-search="智能体对话记录 agent-transcript openclaw/openclaw 人工智能 智能助手 openclaw 数据自主 个人工具">
-    <div><time>2026-07-25</time><span class="score">热度 78</span></div>
-    <h3><a href="./reports/2026-07-25.html">智能体对话记录</a></h3>
-    <p>该技能会在 OpenClaw 智能体创建拉取请求或议题时，加入经过脱敏的对话记录，让评审者了解智能体的关键决策，同时避免泄露原始日志和敏感信息。</p>
-    <div class="card-meta"><span>星标 384,083</span><span>派生 80,703</span><span>openclaw/openclaw</span></div>
-  </article></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><a href="./2026-07-25.html">agent-transcript →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 数据来自 GitHub · 分析由 DeepSeek 或中文规则生成</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>
