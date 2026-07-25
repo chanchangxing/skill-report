@@ -9,7 +9,16 @@ import { daysAgo, reportDate } from "./lib/utils.mjs";
 const root = process.cwd();
 const timezone = process.env.REPORT_TIMEZONE || "Asia/Shanghai";
 const date = reportDate(timezone);
-const force = process.argv.includes("--force");
+const additional = process.argv.includes("--additional") || process.env.REPORT_MODE === "on-demand";
+const generatedAt = new Date().toISOString();
+const timeId = new Intl.DateTimeFormat("en-GB", {
+  timeZone: timezone,
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+}).format(new Date()).replaceAll(":", "");
+const reportId = additional ? `${date}-${timeId}` : date;
 const historyPath = path.join(root, "data", "history.json");
 const snapshotDir = path.join(root, "data", "snapshots");
 const snapshotPath = path.join(snapshotDir, `${date}.json`);
@@ -38,8 +47,8 @@ async function existingSnapshotAtOrBefore(targetDate) {
 
 await mkdir(snapshotDir, { recursive: true });
 const history = await readJson(historyPath, []);
-if (history.some((item) => item.date === date) && !force) {
-  console.log(`${date} 的报告已存在；使用 --force 可重新生成。`);
+if (!additional && history.some((item) => item.date === date && item.kind !== "on-demand")) {
+  console.log(`${date} 的定时报告已存在；无需重复生成。`);
   await renderSite({ root, reports: history });
   process.exit(0);
 }
@@ -78,7 +87,10 @@ if (!finalSelection) throw new Error("无法选出今日项目。");
 console.log(`今日选择：${finalSelection.id}`);
 const analysis = await analyzeWithDeepSeek(finalSelection);
 const report = {
+  reportId,
   date,
+  generatedAt,
+  kind: additional ? "on-demand" : "daily",
   projectId: finalSelection.projectId,
   fingerprint: finalSelection.projectSha,
   name: finalSelection.name,
@@ -101,9 +113,9 @@ const report = {
 };
 
 const nextHistory = [
-  ...history.filter((item) => item.date !== date),
+  ...history.filter((item) => additional || item.date !== date || item.kind === "on-demand"),
   report,
-].sort((a, b) => a.date.localeCompare(b.date));
+].sort((a, b) => (a.generatedAt || a.date).localeCompare(b.generatedAt || b.date));
 await writeFile(historyPath, `${JSON.stringify(nextHistory, null, 2)}\n`);
 await renderSite({ root, reports: nextHistory });
-console.log(`已生成 ${date} 的报告及 GitHub Pages 历史页面（${analysis.source}）。`);
+console.log(`已生成 ${reportId} 的${additional ? "即时" : "定时"}报告及 GitHub Pages 历史页面（${analysis.source}）。`);

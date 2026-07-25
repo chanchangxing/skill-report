@@ -2,6 +2,16 @@ import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { escapeHtml, formatNumber, relativeTimeLabel } from "./utils.mjs";
 
+const manualRunUrl = "https://github.com/chanchangxing/skill-report/actions/workflows/daily-skill-report.yml";
+
+function reportFileName(report) {
+  return `${String(report.reportId || report.date).replace(/[^0-9A-Za-z_-]/g, "-")}.html`;
+}
+
+function reportSortKey(report) {
+  return report.generatedAt || report.reportId || report.date;
+}
+
 function list(items) {
   return `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
 }
@@ -48,7 +58,7 @@ function reportCard(report, root = ".") {
   const summary = report.analysis?.introduction || report.summary || report.description;
   return `<article class="report-card" data-search="${escapeHtml(`${displayTitle} ${report.name} ${report.repository} ${(report.topics || []).join(" ")}`.toLowerCase())}">
     <div><time>${escapeHtml(report.date)}</time><span class="score">热度 ${report.score}</span></div>
-    <h3><a href="${root}/reports/${report.date}.html">${escapeHtml(displayTitle)}</a></h3>
+    <h3><a href="${root}/reports/${reportFileName(report)}">${escapeHtml(displayTitle)}</a></h3>
     <p>${escapeHtml(summary)}</p>
     <div class="card-meta"><span>星标 ${formatNumber(report.stars)}</span><span>派生 ${formatNumber(report.forks)}</span><span>${escapeHtml(report.repository)}</span></div>
   </article>`;
@@ -60,10 +70,11 @@ function reportBody(report) {
     ? `DeepSeek · ${analysis.model}`
     : "规则解析（人工智能降级模式）";
   return `<section class="hero report-hero">
-    <p class="eyebrow">${escapeHtml(report.date)} · 今日智能体项目</p>
+    <p class="eyebrow">${escapeHtml(report.date)} · ${report.kind === "on-demand" ? "即时推荐" : "今日智能体项目"}</p>
     <h1>${escapeHtml(analysis.title || report.name)}</h1>
     <p class="lead">${escapeHtml(analysis.introduction)}</p>
-    <div class="actions"><a class="button" href="${escapeHtml(report.projectUrl || report.repositoryUrl)}">查看 GitHub 项目</a>${report.homepageUrl ? `<a class="button secondary" href="${escapeHtml(report.homepageUrl)}">项目主页</a>` : ""}</div>
+    <div class="actions"><a class="button" href="${escapeHtml(report.projectUrl || report.repositoryUrl)}">查看 GitHub 项目</a>${report.homepageUrl ? `<a class="button secondary" href="${escapeHtml(report.homepageUrl)}">项目主页</a>` : ""}<a class="button secondary" href="${manualRunUrl}">立即推荐新项目</a></div>
+    <p class="action-hint">登录 GitHub 后点击“Run workflow”确认；生成完成后本页会自动更新，旧推荐仍保留在历史中。</p>
   </section>
   <section class="metrics">
     ${metric("星标总数", formatNumber(report.stars), "选题最高优先级")}
@@ -102,9 +113,9 @@ export async function renderSite({ root, reports }) {
     mkdir(assetsDir, { recursive: true }),
   ]);
 
-  const sorted = [...reports].sort((a, b) => b.date.localeCompare(a.date));
+  const sorted = [...reports].sort((a, b) => reportSortKey(b).localeCompare(reportSortKey(a)));
   const latest = sorted[0];
-  const empty = `<section class="hero"><p class="eyebrow">智能体项目日报</p><h1>第一份项目报告即将生成</h1><p class="lead">系统将发现并分析一个完整的智能体开源项目。</p></section>`;
+  const empty = `<section class="hero"><p class="eyebrow">智能体项目日报</p><h1>第一份项目报告即将生成</h1><p class="lead">系统将发现并分析一个完整的智能体开源项目。</p><div class="actions"><a class="button" href="${manualRunUrl}">立即推荐新项目</a></div></section>`;
   const latestContent = latest
     ? `${reportBody(latest)}<section class="more"><h2>最近推荐</h2><div class="cards">${sorted.slice(1, 7).map((item) => reportCard(item)).join("") || "<p>暂无更多历史报告。</p>"}</div><a class="text-link" href="./history.html">浏览全部历史 →</a></section>`
     : empty;
@@ -127,18 +138,18 @@ export async function renderSite({ root, reports }) {
     }),
   );
 
-  const validReportFiles = new Set(sorted.map((report) => `${report.date}.html`));
+  const validReportFiles = new Set(sorted.map((report) => reportFileName(report)));
   const oldReportFiles = (await readdir(reportsDir))
-    .filter((file) => /^\d{4}-\d{2}-\d{2}\.html$/.test(file) && !validReportFiles.has(file));
+    .filter((file) => /^\d{4}-\d{2}-\d{2}(?:-\d{6})?\.html$/.test(file) && !validReportFiles.has(file));
   await Promise.all(oldReportFiles.map((file) => unlink(path.join(reportsDir, file))));
 
   for (let index = 0; index < sorted.length; index += 1) {
     const report = sorted[index];
     const newer = sorted[index - 1];
     const older = sorted[index + 1];
-    const navigation = `<nav class="report-nav">${newer ? `<a href="./${newer.date}.html">← ${escapeHtml(newer.name)}</a>` : "<span></span>"}${older ? `<a href="./${older.date}.html">${escapeHtml(older.name)} →</a>` : "<span></span>"}</nav>`;
+    const navigation = `<nav class="report-nav">${newer ? `<a href="./${reportFileName(newer)}">← ${escapeHtml(newer.name)}</a>` : "<span></span>"}${older ? `<a href="./${reportFileName(older)}">${escapeHtml(older.name)} →</a>` : "<span></span>"}</nav>`;
     await writeFile(
-      path.join(reportsDir, `${report.date}.html`),
+      path.join(reportsDir, reportFileName(report)),
       layout({
         title: `${report.analysis?.title || report.name} — ${report.date}`,
         description: report.analysis?.introduction || report.description,

@@ -30,6 +30,7 @@ h3 { font-size: 1rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .button { background: var(--accent); color: white; padding: 11px 18px; border-radius: 999px; text-decoration: none; font-weight: 700; }
 .button.secondary { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.action-hint { margin: 12px 0 0; color: var(--muted); font-size: .88rem; }
 .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); background: var(--line); border-radius: 18px; margin: 42px 0; }
 .metric { display: flex; flex-direction: column; min-height: 126px; padding: 20px; background: var(--card); }
 .metric span, .metric small { color: var(--muted); }

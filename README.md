@@ -67,7 +67,9 @@ GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 To
 
 - 首页展示当天推荐和最近报告。
 - `/history.html` 提供历史卡片及名称、仓库、主题搜索。
-- 每份报告有固定地址 `/reports/YYYY-MM-DD.html`，并提供前后翻页。
+- 首页的“立即推荐新项目”按钮会打开安全的 Actions 触发页；登录 GitHub 后点击 **Run workflow** 即可追加一份推荐。
+- 手动推荐使用 `/reports/YYYY-MM-DD-HHMMSS.html`，同一天可生成多份且不会覆盖旧报告；定时报告仍使用 `/reports/YYYY-MM-DD.html`。
+- 每份报告提供前后翻页。
 - 已推荐的项目仓库保存在 `data/history.json`；同一项目不会再次推荐。
 - 仓库中的单个技能文件、插件或子目录不会成为独立推荐对象。
 - 如果候选池耗尽，任务会明确失败，不会静默重复旧内容。

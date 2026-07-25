@@ -20,11 +20,6 @@ on:
         description: "可选：补跑日期（YYYY-MM-DD）"
         required: false
         type: string
-      force:
-        description: "覆盖同一天的报告"
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: write
@@ -46,6 +41,7 @@ jobs:
       MAX_REPOSITORIES: ${{ vars.MAX_REPOSITORIES || '35' }}
       REPORT_TIMEZONE: Asia/Shanghai
       REPORT_DATE: ${{ inputs.report_date }}
+      REPORT_MODE: ${{ github.event_name == 'workflow_dispatch' && 'on-demand' || 'daily' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,7 +55,7 @@ jobs:
         run: npm test
 
       - name: Generate report and site
-        run: npm run generate -- ${{ inputs.force == true && '--force' || '' }}
+        run: npm run generate -- ${{ github.event_name == 'workflow_dispatch' && '--additional' || '' }}
 
       - name: Commit generated data
         id: changes
