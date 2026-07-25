@@ -11,6 +11,12 @@ function workflow(items) {
     `<li><span>${index + 1}</span><p>${escapeHtml(item)}</p></li>`).join("")}</ol>`;
 }
 
+function useCases(items) {
+  const labels = ["场景一", "场景二"];
+  return `<div class="use-cases">${items.slice(0, 2).map((item, index) =>
+    `<section class="use-case"><span>${labels[index]}</span><p>${escapeHtml(item)}</p></section>`).join("")}</div>`;
+}
+
 function metric(label, value, hint = "") {
   return `<div class="metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong>${hint ? `<small>${escapeHtml(hint)}</small>` : ""}</div>`;
 }
@@ -71,10 +77,18 @@ function reportBody(report) {
     <article class="panel wide"><h2>为什么热门</h2>${list(analysis.whyHot)}</article>
     <article class="panel"><h2>核心能力</h2>${list(analysis.capabilities)}</article>
     <article class="panel"><h2>输入与输出</h2><h3>输入</h3>${list(analysis.inputs)}<h3>输出</h3>${list(analysis.outputs)}</article>
+    <article class="panel wide"><h2>两个使用场景</h2>${useCases(analysis.useCases || fallbackUseCases(report))}</article>
     <article class="panel wide"><h2>具体运作流程</h2>${workflow(analysis.workflow)}</article>
     <article class="panel"><h2>证据文件</h2>${list(analysis.evidence)}</article>
     <article class="panel"><h2>限制与判断边界</h2>${list(analysis.caveats)}<p class="source-label">分析方式：${escapeHtml(aiLabel)}</p></article>
   </div>`;
+}
+
+function fallbackUseCases(report) {
+  return [
+    `当任务明确符合 ${report.name} 的适用条件时，用它规范智能体的执行步骤和结果检查。`,
+    "当团队需要重复处理同类任务时，用它统一操作方式，减少遗漏并提高交付一致性。",
+  ];
 }
 
 export async function renderSite({ root, reports }) {

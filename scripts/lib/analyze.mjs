@@ -50,6 +50,10 @@ export function fallbackAnalysis(skill, reason = "") {
     capabilities: fallbackCapabilities(skill.markdown).length
       ? fallbackCapabilities(skill.markdown)
       : ["按照技能说明文件提供可复用的智能体执行指令"],
+    useCases: [
+      `当任务明确符合 ${skill.name} 的触发条件时，使用该技能规范智能体的执行步骤和结果检查。`,
+      `当团队需要重复处理同类任务时，使用该技能统一操作方式，减少遗漏并提高交付一致性。`,
+    ],
     workflow: fallbackWorkflow(skill.markdown),
     inputs: ["用户任务描述", "技能引用的文件或上下文"],
     outputs: ["按照技能约束生成的任务结果"],
@@ -63,7 +67,7 @@ export function fallbackAnalysis(skill, reason = "") {
 }
 
 function validateAnalysis(value) {
-  const requiredArrays = ["whyHot", "capabilities", "workflow", "inputs", "outputs", "caveats", "evidence"];
+  const requiredArrays = ["whyHot", "capabilities", "useCases", "workflow", "inputs", "outputs", "caveats", "evidence"];
   const readerFields = [
     value?.title,
     value?.introduction,
@@ -75,6 +79,7 @@ function validateAnalysis(value) {
     && typeof value.title === "string"
     && typeof value.introduction === "string"
     && requiredArrays.every((key) => Array.isArray(value[key]) && value[key].length)
+    && value.useCases.length === 2
     && readerFields.every((text) => /[\u3400-\u9fff]/u.test(text));
 }
 
@@ -90,7 +95,9 @@ export async function analyzeWithDeepSeek(skill) {
 但 title 必须给出中文名称，introduction 及各数组内容不得直接照抄英文原文；需要准确翻译并用中文解释。
 请输出一个 JSON 对象，不要使用 Markdown 代码围栏。字段必须为：
 title(string), introduction(string), whyHot(string[]), capabilities(string[]),
-workflow(string[]), inputs(string[]), outputs(string[]), caveats(string[]), evidence(string[])。
+useCases(string[2]), workflow(string[]), inputs(string[]), outputs(string[]), caveats(string[]), evidence(string[])。
+useCases 必须恰好包含两个具体且不同的中文使用场景。每个场景都要说明实际情境、使用方式和解决的问题，
+不能只改写核心能力，也不能使用“场景一”或“场景二”作为内容前缀。
 workflow 必须按执行顺序具体说明触发、读取资源、工具/脚本调用、产出和验证。
 evidence 只能填写证据包中实际出现的文件路径。无法确认的内容必须在 caveats 中标记为推断。`;
 

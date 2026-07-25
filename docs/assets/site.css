@@ -42,6 +42,10 @@ h3 { font-size: 1rem; }
 .workflow li { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
 .workflow span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 800; }
 .workflow p { margin: 3px 0 18px; }
+.use-cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.use-case { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--accent-soft); }
+.use-case span { color: var(--accent); font-weight: 800; font-size: .88rem; }
+.use-case p { margin: 10px 0 0; }
 .source-label { color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 14px; }
 .more { margin-top: 64px; }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -64,6 +68,6 @@ footer { padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--m
   .site-header nav { gap: 12px; flex-direction: column; }
   main { padding-top: 48px; }
   .metrics { grid-template-columns: repeat(2, 1fr); }
-  .content-grid, .cards { grid-template-columns: 1fr; }
+  .content-grid, .cards, .use-cases { grid-template-columns: 1fr; }
   .panel.wide { grid-column: auto; }
 }
