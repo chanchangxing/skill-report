@@ -1,14 +1,14 @@
-# Agent Skill Daily
+# 智能体项目日报
 
-每天北京时间 09:45，从 GitHub 公开仓库中发现一个热门且未推荐过的 Agent Skill，读取其 `SKILL.md` 与引用文件，生成中文技术分析并发布到 GitHub Pages。
+每天北京时间 09:45，从 GitHub 公开仓库中发现一个热门且未推荐过的智能体开源项目。项目可以是独立的智能体技能、人工智能智能体、智能体框架或相关工具，但推荐对象始终是完整 GitHub 仓库，不是某个项目内部的单个 `SKILL.md` 文件。
 
 ## 工作方式
 
 1. GitHub Actions 按 `45 1 * * *`（UTC）定时启动，即北京时间 09:45。
-2. 脚本通过 GitHub API 搜索包含真实 `SKILL.md` 的活跃公开仓库，排除归档、Fork、链接合集与不完整文件。
+2. 脚本通过 GitHub API 搜索智能体项目，要求仓库包含项目级 README 以及实际代码或根目录 `SKILL.md`，并排除归档、Fork 和纯链接合集。
 3. 总 Stars 占评分的 70%；七日新增 Stars、Forks、Issue 活跃度与更新时间合计占 30%。
-4. 系统使用 `仓库全名::SKILL.md 路径` 和文件指纹永久去重，并对同一仓库设置 14 天冷却。
-5. DeepSeek 阅读选中的 Skill 及其直接引用文件，输出项目介绍、热门原因、核心能力、输入输出和具体运作流程。
+4. 系统使用仓库全名永久去重，已经推荐过的项目不会再次出现。
+5. DeepSeek 阅读项目 README、架构说明和根目录技能说明等项目级资料，输出项目介绍、热门原因、核心能力、两个使用场景、输入输出和具体运作流程。
 6. 报告、指标快照和历史索引写回仓库；静态站点部署到 GitHub Pages。
 
 > 七日新增 Stars/Forks 来自本仓库每天保存的快照。运行前七天会显示“待积累”，之后使用真实增量，不用模型猜测。
@@ -58,7 +58,7 @@ GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 To
 ## 首次运行
 
 1. 添加 `DEEPSEEK_API_KEY`。
-2. 打开仓库 **Actions → Daily Agent Skill Report → Run workflow**。
+2. 打开仓库 **Actions → Daily AI Agent Project Report → Run workflow**。
 3. 首次成功后访问 `https://chanchangxing.github.io/skill-report/`。
 
 如果暂时没有配置 Key，或 DeepSeek 临时不可用，生成器会自动输出有明确标记的规则版报告，保证历史快照和页面仍能更新。
@@ -68,8 +68,8 @@ GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 To
 - 首页展示当天推荐和最近报告。
 - `/history.html` 提供历史卡片及名称、仓库、主题搜索。
 - 每份报告有固定地址 `/reports/YYYY-MM-DD.html`，并提供前后翻页。
-- 已推荐的 Skill ID 和文件指纹保存在 `data/history.json`；完全相同的 Skill 不会再次推荐。
-- 同一仓库的其他 Skill 在 14 天内不会连续出现。
+- 已推荐的项目仓库保存在 `data/history.json`；同一项目不会再次推荐。
+- 仓库中的单个技能文件、插件或子目录不会成为独立推荐对象。
 - 如果候选池耗尽，任务会明确失败，不会静默重复旧内容。
 
 ## 本地命令

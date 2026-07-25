@@ -1,8 +1,8 @@
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { analyzeWithDeepSeek } from "./lib/analyze.mjs";
-import { discoverSkills, enrichCandidate } from "./lib/github.mjs";
-import { selectSkill } from "./lib/ranking.mjs";
+import { discoverProjects, enrichCandidate } from "./lib/github.mjs";
+import { selectProject } from "./lib/ranking.mjs";
 import { renderSite } from "./lib/render.mjs";
 import { daysAgo, reportDate } from "./lib/utils.mjs";
 
@@ -44,11 +44,11 @@ if (history.some((item) => item.date === date) && !force) {
   process.exit(0);
 }
 
-console.log("正在从 GitHub 搜索真实的 Agent Skills…");
-const discovered = await discoverSkills({
+console.log("正在从 GitHub 搜索完整的智能体开源项目…");
+const discovered = await discoverProjects({
   maxRepositories: Number(process.env.MAX_REPOSITORIES || 35),
 });
-if (!discovered.length) throw new Error("没有发现通过校验的 Agent Skill，未生成空报告。");
+if (!discovered.length) throw new Error("没有发现通过项目级校验的智能体开源项目，未生成空报告。");
 
 const oldSnapshots = await existingSnapshotAtOrBefore(daysAgo(date, 7));
 const snapshot = [...new Map(discovered.map((skill) => [
@@ -62,9 +62,9 @@ const snapshot = [...new Map(discovered.map((skill) => [
 ])).values()];
 await writeFile(snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`);
 
-const preliminary = selectSkill(discovered, history, oldSnapshots, date);
+const preliminary = selectProject(discovered, history, oldSnapshots, date);
 if (!preliminary.selected) {
-  throw new Error("候选池中没有未推荐过的新 Skill；系统不会静默重复推荐。");
+  throw new Error("候选池中没有未推荐过的新项目；系统不会静默重复推荐。");
 }
 
 // Only spend extra API calls on the strongest candidates, then score with issue activity.
@@ -72,21 +72,22 @@ const enriched = [];
 for (const candidate of preliminary.ranked.slice(0, 8)) {
   enriched.push(await enrichCandidate(candidate, date));
 }
-const finalSelection = selectSkill(enriched, history, oldSnapshots, date).selected;
-if (!finalSelection) throw new Error("无法选出今日 Skill。");
+const finalSelection = selectProject(enriched, history, oldSnapshots, date).selected;
+if (!finalSelection) throw new Error("无法选出今日项目。");
 
 console.log(`今日选择：${finalSelection.id}`);
 const analysis = await analyzeWithDeepSeek(finalSelection);
 const report = {
   date,
-  skillId: finalSelection.id,
-  fingerprint: finalSelection.skillSha,
+  projectId: finalSelection.projectId,
+  fingerprint: finalSelection.projectSha,
   name: finalSelection.name,
   description: finalSelection.description,
   repository: finalSelection.repository,
   repositoryUrl: finalSelection.repositoryUrl,
-  skillUrl: finalSelection.skillUrl,
-  skillPath: finalSelection.skillPath,
+  projectUrl: finalSelection.projectUrl,
+  homepageUrl: finalSelection.homepageUrl,
+  primaryDocumentPath: finalSelection.primaryDocumentPath,
   stars: finalSelection.stars,
   stars7d: finalSelection.stars7d,
   forks: finalSelection.forks,

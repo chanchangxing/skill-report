@@ -1,11 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { deltasFor, scoreSkill, selectSkill } from "../scripts/lib/ranking.mjs";
+import { deltasFor, scoreProject, selectProject } from "../scripts/lib/ranking.mjs";
 
 const base = {
-  id: "owner/repo::skills/example/SKILL.md",
+  id: "owner/repo",
+  projectId: "owner/repo",
   repository: "owner/repo",
-  skillSha: "abc",
+  projectSha: "abc",
   stars: 10_000,
   forks: 1_000,
   pushedAt: "2026-07-24T00:00:00Z",
@@ -24,19 +25,19 @@ test("没有历史快照时增量为 null", () => {
   assert.deepEqual(deltasFor(base, []), { stars7d: null, forks7d: null });
 });
 
-test("历史上推荐过的 Skill 不会再次入选", () => {
-  const result = selectSkill(
-    [base, { ...base, id: "other/repo::SKILL.md", repository: "other/repo", skillSha: "def" }],
-    [{ date: "2026-07-20", skillId: base.id, repository: base.repository, fingerprint: "abc" }],
+test("历史上推荐过的项目不会再次入选", () => {
+  const result = selectProject(
+    [base, { ...base, id: "other/repo", projectId: "other/repo", repository: "other/repo", projectSha: "def" }],
+    [{ date: "2026-07-20", projectId: base.id, repository: base.repository, fingerprint: "abc" }],
     [],
     "2026-07-25",
   );
-  assert.equal(result.selected.id, "other/repo::SKILL.md");
+  assert.equal(result.selected.id, "other/repo");
 });
 
 test("总 Stars 是评分的主要权重", () => {
-  const popular = scoreSkill(base, { stars7d: 0, forks7d: 0 }, "2026-07-25");
-  const viral = scoreSkill(
+  const popular = scoreProject(base, { stars7d: 0, forks7d: 0 }, "2026-07-25");
+  const viral = scoreProject(
     { ...base, stars: 50, forks: 5, issueActivity7d: 80 },
     { stars7d: 2000, forks7d: 200 },
     "2026-07-25",

@@ -2,10 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { fallbackAnalysis } from "../scripts/lib/analyze.mjs";
 
-const skill = {
-  name: "示例技能",
+const project = {
+  name: "示例项目",
   repository: "owner/repo",
-  skillPath: "skills/example/SKILL.md",
+  primaryDocumentPath: "README.md",
   description: "An English-only repository description.",
   markdown: "## Overview\n1. Run the command.\n",
   stars: 100,
@@ -16,7 +16,7 @@ const skill = {
 };
 
 test("降级报告始终提供两个中文使用场景", () => {
-  const analysis = fallbackAnalysis(skill, "English API error");
+  const analysis = fallbackAnalysis(project, "English API error");
 
   assert.equal(analysis.useCases.length, 2);
   assert.ok(analysis.useCases.every((item) => /[\u3400-\u9fff]/u.test(item)));

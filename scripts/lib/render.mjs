@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { escapeHtml, formatNumber, relativeTimeLabel } from "./utils.mjs";
 
@@ -33,11 +33,11 @@ function layout({ title, description, content, root = "." }) {
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="${root}/index.html"><span>智能体技能</span>日报</a>
+    <a class="brand" href="${root}/index.html"><span>智能体项目</span>日报</a>
     <nav><a href="${root}/index.html">今日推荐</a><a href="${root}/history.html">历史报告</a></nav>
   </header>
   <main>${content}</main>
-  <footer>每天北京时间 09:45 自动更新 · 数据来自 GitHub · 分析由 DeepSeek 或中文规则生成</footer>
+  <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
   <script src="${root}/assets/site.js" defer></script>
 </body>
 </html>`;
@@ -60,10 +60,10 @@ function reportBody(report) {
     ? `DeepSeek · ${analysis.model}`
     : "规则解析（人工智能降级模式）";
   return `<section class="hero report-hero">
-    <p class="eyebrow">${escapeHtml(report.date)} · 今日智能体技能</p>
+    <p class="eyebrow">${escapeHtml(report.date)} · 今日智能体项目</p>
     <h1>${escapeHtml(analysis.title || report.name)}</h1>
     <p class="lead">${escapeHtml(analysis.introduction)}</p>
-    <div class="actions"><a class="button" href="${escapeHtml(report.skillUrl)}">查看技能说明</a><a class="button secondary" href="${escapeHtml(report.repositoryUrl)}">GitHub 仓库</a></div>
+    <div class="actions"><a class="button" href="${escapeHtml(report.projectUrl || report.repositoryUrl)}">查看 GitHub 项目</a>${report.homepageUrl ? `<a class="button secondary" href="${escapeHtml(report.homepageUrl)}">项目主页</a>` : ""}</div>
   </section>
   <section class="metrics">
     ${metric("星标总数", formatNumber(report.stars), "选题最高优先级")}
@@ -104,28 +104,33 @@ export async function renderSite({ root, reports }) {
 
   const sorted = [...reports].sort((a, b) => b.date.localeCompare(a.date));
   const latest = sorted[0];
-  const empty = `<section class="hero"><p class="eyebrow">智能体技能日报</p><h1>第一份报告即将生成</h1><p class="lead">配置 DeepSeek 接口密钥后，在自动任务页面中手动运行一次工作流。</p></section>`;
+  const empty = `<section class="hero"><p class="eyebrow">智能体项目日报</p><h1>第一份项目报告即将生成</h1><p class="lead">系统将发现并分析一个完整的智能体开源项目。</p></section>`;
   const latestContent = latest
     ? `${reportBody(latest)}<section class="more"><h2>最近推荐</h2><div class="cards">${sorted.slice(1, 7).map((item) => reportCard(item)).join("") || "<p>暂无更多历史报告。</p>"}</div><a class="text-link" href="./history.html">浏览全部历史 →</a></section>`
     : empty;
   await writeFile(
     path.join(docs, "index.html"),
     layout({
-      title: latest ? `${latest.analysis?.title || latest.name} — 智能体技能日报` : "智能体技能日报",
-      description: latest?.analysis?.introduction || "每日发现并分析一个热门开源智能体技能。",
+      title: latest ? `${latest.analysis?.title || latest.name} — 智能体项目日报` : "智能体项目日报",
+      description: latest?.analysis?.introduction || "每日发现并分析一个热门智能体开源项目。",
       content: latestContent,
     }),
   );
 
-  const historyContent = `<section class="hero compact"><p class="eyebrow">推荐档案</p><h1>历史推荐</h1><p class="lead">按名称、仓库或主题查找过去的智能体技能。</p><label class="search"><span>搜索</span><input id="history-search" type="search" placeholder="例如：文档、浏览器、代码审查"></label></section><section><div id="history-list" class="cards">${sorted.map((item) => reportCard(item)).join("") || "<p>暂无历史报告。</p>"}</div></section>`;
+  const historyContent = `<section class="hero compact"><p class="eyebrow">推荐档案</p><h1>历史推荐</h1><p class="lead">按名称、仓库或主题查找过去的智能体开源项目。</p><label class="search"><span>搜索</span><input id="history-search" type="search" placeholder="例如：智能体框架、编码助手、自动化"></label></section><section><div id="history-list" class="cards">${sorted.map((item) => reportCard(item)).join("") || "<p>暂无历史项目报告。</p>"}</div></section>`;
   await writeFile(
     path.join(docs, "history.html"),
     layout({
-      title: "历史推荐 — 智能体技能日报",
-      description: "浏览智能体技能日报的全部历史推荐。",
+      title: "历史推荐 — 智能体项目日报",
+      description: "浏览智能体项目日报的全部历史推荐。",
       content: historyContent,
     }),
   );
+
+  const validReportFiles = new Set(sorted.map((report) => `${report.date}.html`));
+  const oldReportFiles = (await readdir(reportsDir))
+    .filter((file) => /^\d{4}-\d{2}-\d{2}\.html$/.test(file) && !validReportFiles.has(file));
+  await Promise.all(oldReportFiles.map((file) => unlink(path.join(reportsDir, file))));
 
   for (let index = 0; index < sorted.length; index += 1) {
     const report = sorted[index];

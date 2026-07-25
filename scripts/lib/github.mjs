@@ -3,9 +3,10 @@ import { clean, daysAgo, fetchJson, githubHeaders } from "./utils.mjs";
 
 const API = "https://api.github.com";
 const SEARCH_QUERIES = [
-  "topic:agent-skills archived:false",
-  "\"agent skills\" in:name,description,readme archived:false",
-  "\"SKILL.md\" in:readme archived:false",
+  "topic:ai-agent archived:false",
+  "topic:agentic-ai archived:false",
+  "\"AI agent\" in:name,description,readme archived:false",
+  "\"agent skill\" in:name,description,readme archived:false",
 ];
 
 function api(pathname) {
@@ -58,37 +59,51 @@ function frontmatter(markdown) {
   return result;
 }
 
-function looksLikeSkill(markdown) {
-  const meta = frontmatter(markdown);
-  const body = markdown.replace(/^---[\s\S]*?---/, "");
-  const heading = markdown.match(/^#\s+(.+)$/m)?.[1];
-  const workflowSignals = /(步骤|流程|workflow|instructions?|procedure|when to use|使用时机)/i;
+function rootReadmePath(tree) {
+  return tree
+    .filter((item) => item.type === "blob" && /^readme(?:\.[^.]+)?$/i.test(item.path))
+    .map((item) => item.path)
+    .sort((a, b) => a.length - b.length)[0] || "";
+}
+
+function hasImplementation(tree) {
+  const implementationFile = /\.(?:c|cc|cpp|cs|go|java|js|jsx|kt|kts|mjs|php|py|rb|rs|sh|swift|ts|tsx)$/i;
+  const projectManifest = /(^|\/)(?:cargo\.toml|composer\.json|dockerfile|go\.mod|package\.json|pyproject\.toml|requirements\.txt)$/i;
+  return tree.some((item) =>
+    item.type === "blob" && (implementationFile.test(item.path) || projectManifest.test(item.path)));
+}
+
+export function looksLikeAgentProject(repository, readme, tree = []) {
+  const identity = clean([
+    repository.name,
+    repository.description,
+    ...(repository.topics || []),
+    readme.slice(0, 16_000),
+  ].join(" "));
+  const collectionSignals = /(^|[\/_-])awesome([\/_-]|$)|curated\s+list|collection\s+of\s+(?:agent\s+)?skills|资源列表|链接合集/i;
+  const agentSignals = /\bai[- ]?agents?\b|\bagentic\b|\bautonomous agents?\b|\bmulti[- ]agent\b|\bagent framework\b|\bagent skills?\b|人工智能智能体|智能体框架|自主智能体/i;
+  const rootSkill = tree.some((item) => item.type === "blob" && /^SKILL\.md$/i.test(item.path));
+
   return Boolean(
-    markdown.length >= 220
-    && clean(meta.name || heading)
-    && clean(meta.description || body).length >= 60
-    && workflowSignals.test(body),
+    readme.length >= 300
+    && !collectionSignals.test(clean(`${repository.name} ${repository.description || ""}`))
+    && agentSignals.test(identity)
+    && (hasImplementation(tree) || rootSkill),
   );
 }
 
-function skillName(markdown, skillPath) {
-  const meta = frontmatter(markdown);
-  const heading = markdown.match(/^#\s+(.+)$/m)?.[1];
-  return clean(meta.name || heading || path.basename(path.dirname(skillPath)));
-}
-
-function skillDescription(markdown, repository) {
-  const meta = frontmatter(markdown);
-  const withoutFrontmatter = markdown.replace(/^---[\s\S]*?---/, "");
+function projectDescription(readme, repository) {
+  const meta = frontmatter(readme);
+  const withoutFrontmatter = readme.replace(/^---[\s\S]*?---/, "");
   const paragraph = withoutFrontmatter
     .split(/\n\s*\n/)
     .map(clean)
-    .find((item) => item && !item.startsWith("#") && !item.startsWith("-"));
-  return clean(meta.description || paragraph || repository.description || "暂无描述").slice(0, 500);
+    .find((item) => item && !item.startsWith("#") && !item.startsWith("-") && !item.startsWith("!"));
+  return clean(repository.description || meta.description || paragraph || "暂无描述").slice(0, 500);
 }
 
-function referencedPaths(markdown, skillPath, treePaths) {
-  const base = path.posix.dirname(skillPath);
+function referencedPaths(markdown, documentPath, treePaths) {
+  const base = path.posix.dirname(documentPath);
   const results = new Set();
   for (const match of markdown.matchAll(/\[[^\]]*]\(([^)#?]+)(?:[)#?][^)]*)?\)/g)) {
     let link = match[1];
@@ -100,12 +115,28 @@ function referencedPaths(markdown, skillPath, treePaths) {
     link = link.replace(/^\.?\//, "");
     if (/^(https?:|mailto:)/i.test(link)) continue;
     const resolved = path.posix.normalize(path.posix.join(base, link));
-    if (treePaths.has(resolved)) results.add(resolved);
+    if (treePaths.has(resolved) && /\.(?:md|mdx|txt)$/i.test(resolved)) results.add(resolved);
   }
-  return [...results].slice(0, 6);
+  return [...results];
 }
 
-export async function discoverSkills({ maxRepositories = 35 } = {}) {
+function projectReferencePaths(readme, readmePath, tree) {
+  const treePaths = new Set(tree.filter((item) => item.type === "blob").map((item) => item.path));
+  const preferredPatterns = [
+    /^SKILL\.md$/i,
+    /(^|\/)ARCHITECTURE\.md$/i,
+    /^docs\/(?:architecture|design|how-it-works|overview)\.(?:md|mdx)$/i,
+  ];
+  const preferred = tree
+    .filter((item) => item.type === "blob" && preferredPatterns.some((pattern) => pattern.test(item.path)))
+    .map((item) => item.path);
+  return [...new Set([
+    ...preferred,
+    ...referencedPaths(readme, readmePath, treePaths),
+  ])].filter((item) => item !== readmePath).slice(0, 6);
+}
+
+export async function discoverProjects({ maxRepositories = 35 } = {}) {
   const searches = await Promise.allSettled(SEARCH_QUERIES.map(searchRepositories));
   const repositories = new Map();
   for (const result of searches) {
@@ -122,44 +153,42 @@ export async function discoverSkills({ maxRepositories = 35 } = {}) {
   const rankedRepositories = [...repositories.values()]
     .sort((a, b) => b.stargazers_count - a.stargazers_count)
     .slice(0, maxRepositories);
-  const skills = [];
+  const projects = [];
 
   for (const repository of rankedRepositories) {
     try {
       const tree = await repositoryTree(repository);
-      const treePaths = new Set(tree.filter((item) => item.type === "blob").map((item) => item.path));
-      const skillFiles = tree
-        .filter((item) => item.type === "blob" && /(^|\/)SKILL\.md$/i.test(item.path))
-        .slice(0, 50);
-      for (const file of skillFiles) {
-        const markdown = await repositoryFile(repository, file.path);
-        if (!looksLikeSkill(markdown)) continue;
-        skills.push({
-          id: `${repository.full_name}::${file.path}`,
-          repository: repository.full_name,
-          repositoryUrl: repository.html_url,
-          skillUrl: `${repository.html_url}/blob/${repository.default_branch}/${file.path}`,
-          skillPath: file.path,
-          skillSha: file.sha,
-          name: skillName(markdown, file.path),
-          description: skillDescription(markdown, repository),
-          markdown,
-          referencedPaths: referencedPaths(markdown, file.path, treePaths),
-          stars: repository.stargazers_count,
-          forks: repository.forks_count,
-          openIssues: repository.open_issues_count,
-          pushedAt: repository.pushed_at,
-          updatedAt: repository.updated_at,
-          language: repository.language,
-          topics: repository.topics || [],
-          defaultBranch: repository.default_branch,
-        });
-      }
+      const readmePath = rootReadmePath(tree);
+      if (!readmePath) continue;
+      const readme = await repositoryFile(repository, readmePath);
+      if (!looksLikeAgentProject(repository, readme, tree)) continue;
+      projects.push({
+        id: repository.full_name,
+        projectId: repository.full_name,
+        projectSha: repository.node_id || repository.full_name,
+        repository: repository.full_name,
+        repositoryUrl: repository.html_url,
+        projectUrl: repository.html_url,
+        homepageUrl: repository.homepage || "",
+        primaryDocumentPath: readmePath,
+        name: repository.name,
+        description: projectDescription(readme, repository),
+        markdown: readme,
+        referencedPaths: projectReferencePaths(readme, readmePath, tree),
+        stars: repository.stargazers_count,
+        forks: repository.forks_count,
+        openIssues: repository.open_issues_count,
+        pushedAt: repository.pushed_at,
+        updatedAt: repository.updated_at,
+        language: repository.language,
+        topics: repository.topics || [],
+        defaultBranch: repository.default_branch,
+      });
     } catch (error) {
       console.warn(`跳过 ${repository.full_name}：${error.message}`);
     }
   }
-  return skills;
+  return projects;
 }
 
 export async function enrichCandidate(candidate, date) {
@@ -179,7 +208,7 @@ export async function enrichCandidate(candidate, date) {
     );
     issueActivity7d = issues.filter((item) => !item.pull_request).length;
   } catch (error) {
-    console.warn(`无法获取 ${candidate.repository} 的 Issue 活跃度：${error.message}`);
+    console.warn(`无法获取 ${candidate.repository} 的议题活跃度：${error.message}`);
   }
 
   const files = [];
@@ -191,7 +220,7 @@ export async function enrichCandidate(candidate, date) {
       );
       files.push({ path: filePath, content: content.slice(0, 18_000) });
     } catch (error) {
-      console.warn(`无法读取引用文件 ${filePath}：${error.message}`);
+      console.warn(`无法读取项目资料 ${filePath}：${error.message}`);
     }
   }
   return { ...candidate, issueActivity7d, referencedFiles: files };
