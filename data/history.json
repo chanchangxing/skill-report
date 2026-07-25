@@ -1,5 +1,104 @@
 [
   {
+    "reportId": "2026-07-26-024302",
+    "date": "2026-07-26",
+    "generatedAt": "2026-07-25T18:43:02.694Z",
+    "kind": "on-demand",
+    "projectId": "affaan-m/ECC",
+    "fingerprint": "R_kgDOQ77-1A",
+    "name": "ECC",
+    "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
+    "repository": "affaan-m/ECC",
+    "repositoryUrl": "https://github.com/affaan-m/ECC",
+    "projectUrl": "https://github.com/affaan-m/ECC",
+    "homepageUrl": "https://ecc.tools",
+    "primaryDocumentPath": "README.md",
+    "stars": 233203,
+    "stars7d": null,
+    "forks": 35556,
+    "forks7d": null,
+    "issueActivity7d": 23,
+    "pushedAt": "2026-07-25T00:58:36Z",
+    "topics": [
+      "ai-agents",
+      "anthropic",
+      "claude",
+      "claude-code",
+      "developer-tools",
+      "llm",
+      "mcp",
+      "productivity"
+    ],
+    "language": "JavaScript",
+    "score": 75.31,
+    "analysis": {
+      "title": "ECC 智能体工作台操作系统",
+      "introduction": "ECC（原Everything Claude Code）是一个面向AI代理工作台（harness）的操作系统级工具包，并非仅是一组配置文件。它集成了技能、本能学习、记忆优化、持续学习、安全扫描和研究优先的开发模式，旨在提升跨多种代理工作台（如Claude Code、Codex、Cursor、OpenCode、Gemini等）的开发效率。项目包含261+技能、67个专用子代理、84条命令以及丰富的钩子、规则和MCP配置，支持12种以上语言生态，并已在实际产品中经过10个月以上的高强度验证。",
+      "whyHot": [
+        "原始仓库拥有211.9K+个星标和32.5K+个复刻，是GitHub上最受关注的AI代理配置项目之一。",
+        "版本迭代频繁（v1.0至v2.0），每月发布重大更新，持续增加新代理、技能和跨平台支持。",
+        "提供AgentShield安全审计工具，具备1282个测试和102条静态分析规则，填补了代理配置安全扫描的空白。",
+        "从Anthropic黑客松获胜项目演化而来，经过实际产品开发验证，同时支持Windows、macOS和Linux。",
+        "拥有活跃的社区贡献（230+贡献者）和多语言翻译（12种以上），生态工具链完善（包含仪表盘GUI、CLI和GitHub App）。"
+      ],
+      "capabilities": [
+        "多代理工作台兼容：适配Claude Code、Codex、Cursor、OpenCode、Gemini、Zed、GitHub Copilot等主流AI代理环境。",
+        "技能与命令系统：提供279+预定义工作流技能（如测试驱动开发、安全审查、文档生成）和94条兼容斜杠命令。",
+        "持续学习v2：基于本能（Instinct）的模式提取与信心评分，自动从会话中学习并生成可复用技能。",
+        "记忆持久化：钩子驱动的跨会话上下文保存与恢复，支持会话别名、度量和导出。",
+        "安全性审计：集成AgentShield，扫描CLAUDE.md、settings.json、MCP配置等中的漏洞和注入风险。",
+        "选择性安装：通过manifest驱动的安装管道，允许按需安装组件，并附带状态追踪和增量更新。",
+        "跨平台包管理器自动检测：支持npm、pnpm、yarn、bun的自动识别与切换。",
+        "桌面仪表盘GUI：基于Tkinter的图形界面，支持暗/亮主题、字体定制和组件搜索。",
+        "多模型命令：支持PM2服务编排和多代理工作流命令（如multi-plan、multi-execute）。",
+        "MCP配置管理：内置GitHub、Supabase、Vercel等常见MCP服务器配置。"
+      ],
+      "useCases": [
+        "开发者在Claude Code中规划新功能时，使用/ecc:plan命令（或/plan）调用planner.md代理，自动分析项目结构并生成分步骤实现计划，包括接口设计、文件创建顺序和测试策略，从而减少手动规划时间并提高代码一致性。",
+        "团队利用ECC的持续学习v2系统，在每次代码审查会话后自动提取常见错误模式和编码风格偏好，将其存储为本能（Instinct），然后通过/evolve命令聚类生成正式技能，供后续所有成员共享使用，加速团队新成员适应和代码规范落地。"
+      ],
+      "workflow": [
+        "用户通过/plugin install或手动安装脚本将ECC部署到目标代理工作台（如Claude Code）。",
+        "启动会话后，ECC的钩子系统自动加载规则、记忆和已安装的技能入上下文。",
+        "用户输入斜杠命令（如/plan）或直接使用技能名触发工作流。",
+        "ECC解析请求，路由到对应的子代理（如planner.md、code-reviewer.md），读取项目文件、Git历史或配置。",
+        "代理执行生成任务：输出计划、代码审查报告、技能文件或安全扫描结果，并可选地保存到本地文件系统或回写上下文。",
+        "用户验证输出（如审查生成的计划或通过的测试），确认后提交或继续迭代。"
+      ],
+      "inputs": [
+        "用户斜杠命令参数（如/plan \"添加用户认证\"）",
+        "项目代码仓库中的文件（通过Read、Grep等工具读取）",
+        "配置文件：CLAUDE.md、settings.json、MCP服务器配置等",
+        "环境变量（如ECC_HOOK_PROFILE、CLAUDE_PACKAGE_MANAGER）",
+        "历史会话数据（用于持续学习的本能和技能文件）"
+      ],
+      "outputs": [
+        "文本计划或设计文档（由planner.md生成）",
+        "代码审查报告（含安全漏洞和风格问题标注）",
+        "自动生成的SKILL.md技能文件（持续学习v2输出）",
+        "安全扫描报告（AgentShield输出，支持A-F评级）",
+        "会话摘要和度量数据（内存持久化钩子输出）",
+        "安装状态报告（install-state记录）"
+      ],
+      "caveats": [
+        "警告：不应叠加安装方法（如先/plugin install再跑install.sh --profile full），否则会造成功能和规则重复。",
+        "插件安装不会自动分发rules目录，需手动复制规则文件夹到~/.claude/rules/ecc/。",
+        "hooks自动加载行为在Claude Code v2.1+中变更，若在plugin.json中声明hooks会导致重复加载错误。",
+        "multi-*多模型命令需要额外安装ccg-workflow运行时才能正常工作。",
+        "ECC只删除其安装状态中记录的文件，不会清理手动复制或后续创建的文件。"
+      ],
+      "evidence": [
+        "README.md",
+        "skills/tinystruct-patterns/references/architecture.md",
+        "docs/pt-BR/README.md",
+        "docs/zh-TW/README.md",
+        "docs/ko-KR/README.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
+  },
+  {
     "date": "2026-07-26",
     "projectId": "obra/superpowers",
     "fingerprint": "R_kgDOP_gcWw",
