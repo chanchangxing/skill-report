@@ -1,6 +1,7 @@
-# Daily Skill Reports
+# Agent Skill Daily
 
-| 日期 | 今日技能 | 报告 |
-| --- | --- | --- |
+公开网站和可搜索历史由 `docs/` 自动生成。
 
-新的日报会由 GitHub Actions 自动加入此表。
+- 网站：<https://chanchangxing.github.io/skill-report/>
+- 历史：<https://chanchangxing.github.io/skill-report/history.html>
+- 配置与运行方式见 [README](README.md)。

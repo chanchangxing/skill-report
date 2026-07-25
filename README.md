@@ -1,66 +1,85 @@
-# Daily Skill Report
+# Agent Skill Daily
 
-每天自动收集公开趋势信号，并用 AI 生成一份中文「最值得学的技能」报告。报告以 Markdown 提交回仓库，因此在任何电脑上拉取同一 GitHub 仓库后都能阅读完整历史。
+每天北京时间 09:45，从 GitHub 公开仓库中发现一个热门且未推荐过的 Agent Skill，读取其 `SKILL.md` 与引用文件，生成中文技术分析并发布到 GitHub Pages。
+
+## 工作方式
+
+1. GitHub Actions 按 `45 1 * * *`（UTC）定时启动，即北京时间 09:45。
+2. 脚本通过 GitHub API 搜索包含真实 `SKILL.md` 的活跃公开仓库，排除归档、Fork、链接合集与不完整文件。
+3. 总 Stars 占评分的 70%；七日新增 Stars、Forks、Issue 活跃度与更新时间合计占 30%。
+4. 系统使用 `仓库全名::SKILL.md 路径` 和文件指纹永久去重，并对同一仓库设置 14 天冷却。
+5. DeepSeek 阅读选中的 Skill 及其直接引用文件，输出项目介绍、热门原因、核心能力、输入输出和具体运作流程。
+6. 报告、指标快照和历史索引写回仓库；静态站点部署到 GitHub Pages。
+
+> 七日新增 Stars/Forks 来自本仓库每天保存的快照。运行前七天会显示“待积累”，之后使用真实增量，不用模型猜测。
 
 ## 项目结构
 
 ```text
 .
-├── .github/workflows/daily-skill-report.yml  # GitHub Actions 定时任务
-├── daily/                                   # 每天自动生成的报告
-├── scripts/generate-report.mjs              # 收集趋势、请求 AI、更新索引
-├── templates/daily-report.md                # 报告结构参考
-├── index.md                                 # 历史报告目录
-└── package.json
+├── .github/workflows/daily-skill-report.yml
+├── data/
+│   ├── history.json
+│   └── snapshots/
+├── docs/                     # 自动生成的 GitHub Pages
+├── scripts/
+│   ├── generate-report.mjs
+│   └── lib/
+├── static/                   # 页面样式和交互
+└── test/
 ```
 
-## 初次使用
+## 你需要配置的内容
 
-1. 在 GitHub 新建一个**私有或公开**空仓库，例如 `daily-skill-report`。
-2. 将本目录的全部文件提交并推送到该仓库。
-3. 在 GitHub 仓库中打开 **Settings → Secrets and variables → Actions**：
-   - 在 **Secrets** 新增 `OPENAI_API_KEY`，值为你的 OpenAI API Key。
-   - 在 **Variables** 新增 `OPENAI_MODEL`（可选）。填写你账户可用的文本模型；未填写时使用 `gpt-5-mini`。
-4. 打开 **Actions**，选择 `Daily Skill Report`，点击 **Run workflow** 做首次测试。
-5. 任务成功后，`daily/YYYY-MM-DD.md` 和 `index.md` 会自动提交。另一台电脑执行 `git pull`，或直接在 GitHub 网页查看即可。
+打开仓库的 **Settings → Secrets and variables → Actions**。
 
-> 不要把 API Key 写入仓库、`.env` 或报告内容；只放在 GitHub Actions Secret 中。
+### Secret（必填）
 
-## 定时与时区
+| Name | Value |
+| --- | --- |
+| `DEEPSEEK_API_KEY` | 你的 DeepSeek API Key |
 
-工作流的 cron 使用 UTC。`45 1 * * *` 等于 **澳洲珀斯（UTC+8）每天 09:45**。珀斯不实行夏令时。
+Secret 只注入 GitHub Actions，不会进入仓库或公开页面。不要把 Key 写进代码、提交记录或 Issue。
 
-如需更换时区，请将目标当地时间换算为 UTC，再修改 `.github/workflows/daily-skill-report.yml` 中的 `cron`。报告文件日期按 `Australia/Perth` 计算；如需改为别的日期口径，设置 workflow 的 `REPORT_TIMEZONE` 环境变量，例如 `Asia/Shanghai`。
+### Variables（均为可选）
 
-## GitHub 权限
+| Name | 默认值 | 用途 |
+| --- | --- | --- |
+| `AI_MODEL` | `deepseek-v4-pro` | DeepSeek 模型 |
+| `AI_BASE_URL` | `https://api.deepseek.com` | DeepSeek API 地址 |
+| `MAX_REPOSITORIES` | `35` | 每次深入检查的候选仓库上限 |
 
-工作流已声明 `contents: write`，以便把新报告提交回仓库。若组织策略限制默认令牌写入权限，请在仓库 **Settings → Actions → General → Workflow permissions** 允许读写，或让管理员为此工作流授权。
+GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 Token。
 
-## 本地运行
+## 启用 GitHub Pages
 
-需要 Node.js 20+。无需安装第三方依赖。
+在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。工作流中的 `deploy` Job 会上传并发布 `docs/`。
+
+## 首次运行
+
+1. 添加 `DEEPSEEK_API_KEY`。
+2. 打开仓库 **Actions → Daily Agent Skill Report → Run workflow**。
+3. 首次成功后访问 `https://chanchangxing.github.io/skill-report/`。
+
+如果暂时没有配置 Key，或 DeepSeek 临时不可用，生成器会自动输出有明确标记的规则版报告，保证历史快照和页面仍能更新。
+
+## 历史阅读与不重复保证
+
+- 首页展示当天推荐和最近报告。
+- `/history.html` 提供历史卡片及名称、仓库、主题搜索。
+- 每份报告有固定地址 `/reports/YYYY-MM-DD.html`，并提供前后翻页。
+- 已推荐的 Skill ID 和文件指纹保存在 `data/history.json`；完全相同的 Skill 不会再次推荐。
+- 同一仓库的其他 Skill 在 14 天内不会连续出现。
+- 如果候选池耗尽，任务会明确失败，不会静默重复旧内容。
+
+## 本地命令
+
+需要 Node.js 20+：
 
 ```bash
-export OPENAI_API_KEY="你的密钥"
-export OPENAI_MODEL="你可用的模型名"   # 可选
-node scripts/generate-report.mjs --force
+npm test
+npm run build
+GITHUB_TOKEN=... DEEPSEEK_API_KEY=... npm run generate
 ```
 
-可选环境变量：
-
-| 名称 | 用途 | 默认值 |
-| --- | --- | --- |
-| `OPENAI_API_KEY` | 必填，用于生成报告 | 无 |
-| `OPENAI_MODEL` | 报告生成模型 | `gpt-5-mini` |
-| `REPORT_DATE` | 指定报告日期，格式 `YYYY-MM-DD` | 珀斯当天 |
-| `REPORT_TIMEZONE` | 报告日期使用的 IANA 时区 | `Australia/Perth` |
-
-趋势数据来自 GitHub 搜索、Hacker News Algolia 和 arXiv；单个来源暂时不可用时，脚本会继续使用其余来源。报告中的链接用于追溯当天的事实信号，AI 的推荐判断则应视为学习建议，而不是投资或职业保证。
-
-## 调整报告风格
-
-编辑 `scripts/generate-report.mjs` 中的 `buildPrompt` 即可改变选题标准、语言、篇幅或「对我的价值」部分。`templates/daily-report.md` 是期望的成品结构，方便审核或改写提示词。
-
-## 成本与可靠性
-
-每次任务仅发起一次文本生成请求；费用取决于你选择的模型及当天输入/输出长度。GitHub Actions 的计划任务可能因平台调度出现少量延迟，因此报告按生成日期命名，并可随时通过 **Run workflow** 补跑。
+本地不设置 `DEEPSEEK_API_KEY` 时会使用规则解析模式。未认证调用 GitHub API 的限额较低，正式定时任务始终使用 Actions 提供的 `GITHUB_TOKEN`。

@@ -1,10 +1,12 @@
 {
-  "name": "daily-skill-report",
+  "name": "agent-skill-daily",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "generate": "node scripts/generate-report.mjs"
+    "generate": "node scripts/generate-report.mjs",
+    "build": "node scripts/build-site.mjs",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"

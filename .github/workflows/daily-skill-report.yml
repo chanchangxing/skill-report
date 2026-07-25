@@ -1,60 +1,82 @@
-name: Daily Skill Report
+name: Daily Agent Skill Report
 
 on:
   schedule:
-    # 01:45 UTC = 09:45 Australia/Perth (UTC+8)
+    # GitHub cron 使用 UTC；01:45 UTC = 中国标准时间 09:45。
     - cron: "45 1 * * *"
   workflow_dispatch:
     inputs:
       report_date:
-        description: "可选：补跑日期，YYYY-MM-DD"
+        description: "可选：补跑日期（YYYY-MM-DD）"
         required: false
         type: string
       force:
-        description: "即使当天文件存在也重新生成"
+        description: "覆盖同一天的报告"
         required: false
         default: false
         type: boolean
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
-  group: daily-skill-report
+  group: daily-agent-skill-report
   cancel-in-progress: false
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
-      REPORT_TIMEZONE: Australia/Perth
+      GITHUB_TOKEN: ${{ github.token }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      AI_BASE_URL: ${{ vars.AI_BASE_URL || 'https://api.deepseek.com' }}
+      AI_MODEL: ${{ vars.AI_MODEL || 'deepseek-v4-pro' }}
+      MAX_REPOSITORIES: ${{ vars.MAX_REPOSITORIES || '35' }}
+      REPORT_TIMEZONE: Asia/Shanghai
       REPORT_DATE: ${{ inputs.report_date }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Generate report
-        run: node scripts/generate-report.mjs ${{ inputs.force == true && '--force' || '' }}
+      - name: Run tests
+        run: npm test
 
-      - name: Detect changes
+      - name: Generate report and site
+        run: npm run generate -- ${{ inputs.force == true && '--force' || '' }}
+
+      - name: Commit generated data
         id: changes
         run: |
-          if git diff --quiet; then
+          if git diff --quiet && [ -z "$(git status --porcelain --untracked-files=normal)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
-
-      - name: Commit report
-        if: steps.changes.outputs.changed == 'true'
-        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add daily index.md
-          git commit -m "docs: add daily skill report"
+          git add data docs
+          git commit -m "docs: publish Agent Skill report"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
