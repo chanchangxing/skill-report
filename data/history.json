@@ -4,7 +4,7 @@
     "skillId": "openclaw/openclaw::.agents/skills/agent-transcript/SKILL.md",
     "fingerprint": "97ce47dafec2505ca26bdb94223b67195bc9ec09",
     "name": "agent-transcript",
-    "description": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows.",
+    "description": "为 OpenClaw 智能体创建的拉取请求或议题附加经过脱敏的智能体对话记录。",
     "repository": "openclaw/openclaw",
     "repositoryUrl": "https://github.com/openclaw/openclaw",
     "skillUrl": "https://github.com/openclaw/openclaw/blob/main/.agents/skills/agent-transcript/SKILL.md",
@@ -16,65 +16,63 @@
     "issueActivity7d": 15,
     "pushedAt": "2026-07-25T13:59:46Z",
     "topics": [
-      "ai",
-      "assistant",
-      "crustacean",
-      "molty",
-      "openclaw",
-      "own-your-data",
-      "personal"
+      "人工智能",
+      "智能助手",
+      "OpenClaw",
+      "数据自主",
+      "个人工具"
     ],
     "language": "TypeScript",
     "score": 78,
     "analysis": {
-      "title": "Agent Transcript",
-      "introduction": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows. Best-effort local-only provenance.",
+      "title": "智能体对话记录",
+      "introduction": "该技能会在 OpenClaw 智能体创建拉取请求或议题时，加入经过脱敏的对话记录，让评审者了解智能体的关键决策，同时避免泄露原始日志和敏感信息。",
       "whyHot": [
-        "Enhances PR/issue transparency by providing sanitized session logs",
-        "Helps reviewers understand agent decisions and prioritize PRs",
-        "Local-only approach avoids network and raw log uploads",
-        "Provides automated redaction of secrets and sensitive information"
+        "通过提供经过清理的会话记录，提高拉取请求和议题的透明度。",
+        "帮助评审者理解智能体的决策过程，更准确地判断处理优先级。",
+        "只在本地处理数据，不上传网络或原始日志，兼顾可追溯性与隐私。",
+        "能够自动识别并移除密钥及其他敏感信息。"
       ],
       "capabilities": [
-        "Find likely local agent session logs based on query",
-        "Render sanitized transcript Markdown section",
-        "Generate local HTML previews",
-        "Append transcript to PR/issue body files",
-        "Create HTML previews for multiple PR/session candidates for audit"
+        "根据任务线索查找最可能对应的本地智能体会话日志。",
+        "把会话内容整理为经过脱敏的对话记录。",
+        "生成可在本地查看的网页预览。",
+        "把用户确认后的对话记录追加到拉取请求或议题正文。",
+        "为多个候选会话生成预览，方便人工审查和选择。"
       ],
       "workflow": [
-        "Draft the normal PR/issue body first.",
-        "Run `find` with title, branch, PR URL/number if known, and cwd to locate a high-confidence session.",
-        "If found, ask user: 'Include a redacted agent transcript?'",
-        "If user wants preview, run `preview`, open the HTML with `open`, and wait for confirmation.",
-        "Before insertion, trim unrelated session turns based on scope (PR/issue title, branch, changed files, stated goal).",
-        "If user approves, run `append-body` to add transcript to body file.",
-        "Use the enriched body file for creation/update.",
-        "If no safe session found or user declines, continue without transcript and do not add placeholder."
+        "先起草常规的拉取请求或议题正文。",
+        "使用标题、分支、拉取请求地址或编号以及当前工作目录查找高可信度的对应会话。",
+        "找到会话后，询问用户是否加入经过脱敏的智能体对话记录。",
+        "如果用户希望预览，先生成并打开本地网页，等待用户确认。",
+        "插入前，根据标题、分支、变更文件和任务目标删除无关的会话内容。",
+        "获得用户同意后，把对话记录追加到正文文件。",
+        "使用补充后的正文创建或更新拉取请求或议题。",
+        "如果找不到安全的会话或用户拒绝，则继续原流程，不添加空占位内容。"
       ],
       "inputs": [
-        "Local agent session logs (JSONL files from Codex, Claude, Pi, OpenClaw)",
-        "PR/issue title, branch name, PR URL/number",
-        "Current working directory (cwd)",
-        "Original PR/issue body text"
+        "来自 Codex、Claude、Pi 或 OpenClaw 的本地智能体会话日志。",
+        "拉取请求或议题标题、分支名、地址或编号。",
+        "当前工作目录。",
+        "原始拉取请求或议题正文。"
       ],
       "outputs": [
-        "Sanitized transcript Markdown (optionally appended to body)",
-        "Local HTML preview",
-        "Enriched PR/issue body file"
+        "可选择追加到正文的脱敏对话记录。",
+        "本地网页预览。",
+        "补充了对话记录的拉取请求或议题正文文件。"
       ],
       "caveats": [
-        "Best effort: PR/issue creation continues even if no transcript found",
-        "Never uses network; only reads local logs",
-        "Never uploads raw logs; only renders sanitized Markdown",
-        "Fails closed on unresolved secrets, private keys, browser/session/cookie details, or auth URLs",
-        "Drops system/developer prompts, raw tool outputs, reasoning, env, cookies, tokens, and broad local paths",
-        "Keeps user prompts, assistant visible decisions, terse tool summaries, and test/proof outcomes",
-        "Removes unrelated session turns based on scope",
-        "Only adds transcript section when real transcript is found; no placeholder",
-        "Uses collapsed <details> section and updates existing markers",
-        "Always asks user before adding transcript to PR/issue body",
-        "Offers local HTML preview before insertion"
+        "这是尽力而为的辅助功能；找不到记录时不会阻止拉取请求或议题创建。",
+        "只读取本地日志，不通过网络传输。",
+        "不会上传原始日志，只输出经过清理的内容。",
+        "如果仍检测到密钥、私钥、浏览器会话、网站身份凭据或认证地址等敏感信息，会拒绝生成。",
+        "会删除系统提示、开发者提示、原始工具输出、内部推理、环境变量、令牌和过于宽泛的本地路径。",
+        "只保留用户请求、智能体可见决策、简短工具摘要以及测试或验证结果。",
+        "会根据当前任务范围移除无关会话。",
+        "只有找到真实对话记录时才会添加相应章节，不生成占位内容。",
+        "对话记录默认折叠展示，并可更新已有标记区域。",
+        "加入正文前始终需要取得用户同意。",
+        "正式插入前可先提供本地网页预览。"
       ],
       "evidence": [
         ".agents/skills/agent-transcript/SKILL.md"
