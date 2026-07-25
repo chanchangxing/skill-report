@@ -1,1 +1,68 @@
-[]
+[
+  {
+    "date": "2026-07-26",
+    "projectId": "obra/superpowers",
+    "fingerprint": "R_kgDOP_gcWw",
+    "name": "superpowers",
+    "description": "An agentic skills framework & software development methodology that works.",
+    "repository": "obra/superpowers",
+    "repositoryUrl": "https://github.com/obra/superpowers",
+    "projectUrl": "https://github.com/obra/superpowers",
+    "homepageUrl": "",
+    "primaryDocumentPath": "README.md",
+    "stars": 260973,
+    "stars7d": null,
+    "forks": 23291,
+    "forks7d": null,
+    "issueActivity7d": 23,
+    "pushedAt": "2026-07-24T21:21:36Z",
+    "topics": [
+      "ai",
+      "brainstorming",
+      "coding",
+      "obra",
+      "sdlc",
+      "skills",
+      "subagent-driven-development",
+      "superpowers"
+    ],
+    "language": "Shell",
+    "score": 75.67,
+    "analysis": {
+      "source": "fallback",
+      "title": "superpowers",
+      "introduction": "这是 obra/superpowers 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。",
+      "whyHot": [
+        "该项目目前拥有 260973 个星标和 23291 个派生仓库。",
+        "仓库最近一次推送时间为 2026-07-24，近 7 日记录到 23 个活跃议题。"
+      ],
+      "capabilities": [
+        "提供可安装、可运行或可复用的智能体项目能力"
+      ],
+      "useCases": [
+        "当团队的实际需求符合 superpowers 的项目定位时，可以部署或集成该项目来完成相关智能体任务。",
+        "当开发者需要研究同类智能体的工程实现时，可以通过该项目了解其架构、运行方式和扩展边界。"
+      ],
+      "workflow": [
+        "用户按照项目主文档完成安装、配置并启动项目。",
+        "项目接收用户任务、业务数据或外部事件作为输入。",
+        "项目内部的智能体组件调用模型、工具或脚本完成处理。",
+        "项目返回结果，并通过日志、测试或人工检查验证执行质量。"
+      ],
+      "inputs": [
+        "用户任务或业务数据",
+        "项目配置及运行环境"
+      ],
+      "outputs": [
+        "项目执行后产生的智能体结果"
+      ],
+      "caveats": [
+        "AI 深度分析暂不可用，本报告已改用中文规则解析生成。"
+      ],
+      "evidence": [
+        "README.md",
+        "docs/README.opencode.md"
+      ]
+    }
+  }
+]

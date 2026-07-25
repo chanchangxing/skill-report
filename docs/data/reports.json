@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "date": "2026-07-26",
+    "projectId": "obra/superpowers",
+    "fingerprint": "R_kgDOP_gcWw",
+    "name": "superpowers",
+    "description": "An agentic skills framework & software development methodology that works.",
+    "repository": "obra/superpowers",
+    "repositoryUrl": "https://github.com/obra/superpowers",
+    "projectUrl": "https://github.com/obra/superpowers",
+    "homepageUrl": "",
+    "primaryDocumentPath": "README.md",
+    "stars": 260973,
+    "stars7d": null,
+    "forks": 23291,
+    "forks7d": null,
+    "issueActivity7d": 23,
+    "pushedAt": "2026-07-24T21:21:36Z",
+    "topics": [
+      "ai",
+      "brainstorming",
+      "coding",
+      "obra",
+      "sdlc",
+      "skills",
+      "subagent-driven-development",
+      "superpowers"
+    ],
+    "language": "Shell",
+    "score": 75.67,
+    "title": "superpowers",
+    "summary": "这是 obra/superpowers 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。"
+  }
+]

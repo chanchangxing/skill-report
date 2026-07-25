@@ -1,146 +1,74 @@
 [
   {
-    "repository": "sindresorhus/awesome",
-    "stars": 488922,
-    "forks": 36056,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "nilbuild/developer-roadmap",
-    "stars": 362666,
-    "forks": 44670,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
     "repository": "obra/superpowers",
-    "stars": 260971,
+    "stars": 260973,
     "forks": 23291,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "affaan-m/ECC",
-    "stars": 233187,
-    "forks": 35551,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "stars": 233192,
+    "forks": 35554,
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "NousResearch/hermes-agent",
-    "stars": 220353,
-    "forks": 41924,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "n8n-io/n8n",
-    "stars": 197960,
-    "forks": 59627,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "mattpocock/skills",
-    "stars": 187988,
-    "forks": 16152,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "stars": 220356,
+    "forks": 41925,
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "Significant-Gravitas/AutoGPT",
-    "stars": 185681,
+    "stars": 185680,
     "forks": 46069,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "ollama/ollama",
-    "stars": 176860,
-    "forks": 17109,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "f/prompts.chat",
-    "stars": 166351,
-    "forks": 21491,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "anthropics/skills",
-    "stars": 164106,
+    "stars": 164109,
     "forks": 19484,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "firecrawl/firecrawl",
-    "stars": 155901,
+    "stars": 155902,
     "forks": 8868,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "langgenius/dify",
-    "stars": 150219,
+    "stars": 150221,
     "forks": 23678,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "langchain-ai/langchain",
-    "stars": 142578,
-    "forks": 23736,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "msitarzewski/agency-agents",
-    "stars": 136621,
-    "forks": 22277,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "stars": 142579,
+    "forks": 23737,
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "garrytan/gstack",
-    "stars": 124280,
-    "forks": 18613,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "github/spec-kit",
-    "stars": 123767,
-    "forks": 11049,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "farion1231/cc-switch",
-    "stars": 121137,
-    "forks": 8145,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "axios/axios",
-    "stars": 109160,
-    "forks": 11776,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "stars": 124284,
+    "forks": 18614,
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "browser-use/browser-use",
-    "stars": 106740,
+    "stars": 106741,
     "forks": 11733,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "google-gemini/gemini-cli",
-    "stars": 106166,
-    "forks": 14314,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "harry0703/MoneyPrinterTurbo",
-    "stars": 99257,
-    "forks": 14712,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "stars": 106167,
+    "forks": 14315,
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   },
   {
     "repository": "Graphify-Labs/graphify",
-    "stars": 95703,
+    "stars": 95706,
     "forks": 9277,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
-  },
-  {
-    "repository": "microsoft/playwright",
-    "stars": 93448,
-    "forks": 6149,
-    "capturedAt": "2026-07-25T17:52:22.093Z"
+    "capturedAt": "2026-07-25T18:00:43.568Z"
   }
 ]
