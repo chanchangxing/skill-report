@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows.">
-  <title>agent-transcript — Agent Skill Daily</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>agent-transcript — 2026-07-25</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>Agent Skill</span> Daily</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>Agent Skill</span> Daily</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-07-25 · 今日 Agent Skill</p>
@@ -33,8 +33,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>Draft the normal PR/issue body first.</p></li><li><span>2</span><p>Run `find` with title, branch, PR URL/number if known, and cwd to locate a high-confidence session.</p></li><li><span>3</span><p>If found, ask user: &#39;Include a redacted agent transcript?&#39;</p></li><li><span>4</span><p>If user wants preview, run `preview`, open the HTML with `open`, and wait for confirmation.</p></li><li><span>5</span><p>Before insertion, trim unrelated session turns based on scope (PR/issue title, branch, changed files, stated goal).</p></li><li><span>6</span><p>If user approves, run `append-body` to add transcript to body file.</p></li><li><span>7</span><p>Use the enriched body file for creation/update.</p></li><li><span>8</span><p>If no safe session found or user declines, continue without transcript and do not add placeholder.</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>.agents/skills/agent-transcript/SKILL.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>Best effort: PR/issue creation continues even if no transcript found</li><li>Never uses network; only reads local logs</li><li>Never uploads raw logs; only renders sanitized Markdown</li><li>Fails closed on unresolved secrets, private keys, browser/session/cookie details, or auth URLs</li><li>Drops system/developer prompts, raw tool outputs, reasoning, env, cookies, tokens, and broad local paths</li><li>Keeps user prompts, assistant visible decisions, terse tool summaries, and test/proof outcomes</li><li>Removes unrelated session turns based on scope</li><li>Only adds transcript section when real transcript is found; no placeholder</li><li>Uses collapsed &lt;details&gt; section and updates existing markers</li><li>Always asks user before adding transcript to PR/issue body</li><li>Offers local HTML preview before insertion</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-pro</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><p>暂无更多历史报告。</p></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><span></span></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 数据来自 GitHub · 分析由 DeepSeek 或本地规则生成</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>

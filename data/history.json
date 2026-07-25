@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "date": "2026-07-25",
+    "skillId": "openclaw/openclaw::.agents/skills/agent-transcript/SKILL.md",
+    "fingerprint": "97ce47dafec2505ca26bdb94223b67195bc9ec09",
+    "name": "agent-transcript",
+    "description": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows.",
+    "repository": "openclaw/openclaw",
+    "repositoryUrl": "https://github.com/openclaw/openclaw",
+    "skillUrl": "https://github.com/openclaw/openclaw/blob/main/.agents/skills/agent-transcript/SKILL.md",
+    "skillPath": ".agents/skills/agent-transcript/SKILL.md",
+    "stars": 384083,
+    "stars7d": null,
+    "forks": 80703,
+    "forks7d": null,
+    "issueActivity7d": 15,
+    "pushedAt": "2026-07-25T13:59:46Z",
+    "topics": [
+      "ai",
+      "assistant",
+      "crustacean",
+      "molty",
+      "openclaw",
+      "own-your-data",
+      "personal"
+    ],
+    "language": "TypeScript",
+    "score": 78,
+    "analysis": {
+      "title": "Agent Transcript",
+      "introduction": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows. Best-effort local-only provenance.",
+      "whyHot": [
+        "Enhances PR/issue transparency by providing sanitized session logs",
+        "Helps reviewers understand agent decisions and prioritize PRs",
+        "Local-only approach avoids network and raw log uploads",
+        "Provides automated redaction of secrets and sensitive information"
+      ],
+      "capabilities": [
+        "Find likely local agent session logs based on query",
+        "Render sanitized transcript Markdown section",
+        "Generate local HTML previews",
+        "Append transcript to PR/issue body files",
+        "Create HTML previews for multiple PR/session candidates for audit"
+      ],
+      "workflow": [
+        "Draft the normal PR/issue body first.",
+        "Run `find` with title, branch, PR URL/number if known, and cwd to locate a high-confidence session.",
+        "If found, ask user: 'Include a redacted agent transcript?'",
+        "If user wants preview, run `preview`, open the HTML with `open`, and wait for confirmation.",
+        "Before insertion, trim unrelated session turns based on scope (PR/issue title, branch, changed files, stated goal).",
+        "If user approves, run `append-body` to add transcript to body file.",
+        "Use the enriched body file for creation/update.",
+        "If no safe session found or user declines, continue without transcript and do not add placeholder."
+      ],
+      "inputs": [
+        "Local agent session logs (JSONL files from Codex, Claude, Pi, OpenClaw)",
+        "PR/issue title, branch name, PR URL/number",
+        "Current working directory (cwd)",
+        "Original PR/issue body text"
+      ],
+      "outputs": [
+        "Sanitized transcript Markdown (optionally appended to body)",
+        "Local HTML preview",
+        "Enriched PR/issue body file"
+      ],
+      "caveats": [
+        "Best effort: PR/issue creation continues even if no transcript found",
+        "Never uses network; only reads local logs",
+        "Never uploads raw logs; only renders sanitized Markdown",
+        "Fails closed on unresolved secrets, private keys, browser/session/cookie details, or auth URLs",
+        "Drops system/developer prompts, raw tool outputs, reasoning, env, cookies, tokens, and broad local paths",
+        "Keeps user prompts, assistant visible decisions, terse tool summaries, and test/proof outcomes",
+        "Removes unrelated session turns based on scope",
+        "Only adds transcript section when real transcript is found; no placeholder",
+        "Uses collapsed <details> section and updates existing markers",
+        "Always asks user before adding transcript to PR/issue body",
+        "Offers local HTML preview before insertion"
+      ],
+      "evidence": [
+        ".agents/skills/agent-transcript/SKILL.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-pro"
+    }
+  }
+]

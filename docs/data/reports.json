@@ -1,1 +1,31 @@
-[]
+[
+  {
+    "date": "2026-07-25",
+    "skillId": "openclaw/openclaw::.agents/skills/agent-transcript/SKILL.md",
+    "fingerprint": "97ce47dafec2505ca26bdb94223b67195bc9ec09",
+    "name": "agent-transcript",
+    "description": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows.",
+    "repository": "openclaw/openclaw",
+    "repositoryUrl": "https://github.com/openclaw/openclaw",
+    "skillUrl": "https://github.com/openclaw/openclaw/blob/main/.agents/skills/agent-transcript/SKILL.md",
+    "skillPath": ".agents/skills/agent-transcript/SKILL.md",
+    "stars": 384083,
+    "stars7d": null,
+    "forks": 80703,
+    "forks7d": null,
+    "issueActivity7d": 15,
+    "pushedAt": "2026-07-25T13:59:46Z",
+    "topics": [
+      "ai",
+      "assistant",
+      "crustacean",
+      "molty",
+      "openclaw",
+      "own-your-data",
+      "personal"
+    ],
+    "language": "TypeScript",
+    "score": 78,
+    "summary": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows. Best-effort local-only provenance."
+  }
+]
