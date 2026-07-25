@@ -4,7 +4,7 @@
     "skillId": "openclaw/openclaw::.agents/skills/agent-transcript/SKILL.md",
     "fingerprint": "97ce47dafec2505ca26bdb94223b67195bc9ec09",
     "name": "agent-transcript",
-    "description": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows.",
+    "description": "为 OpenClaw 智能体创建的拉取请求或议题附加经过脱敏的智能体对话记录。",
     "repository": "openclaw/openclaw",
     "repositoryUrl": "https://github.com/openclaw/openclaw",
     "skillUrl": "https://github.com/openclaw/openclaw/blob/main/.agents/skills/agent-transcript/SKILL.md",
@@ -16,16 +16,15 @@
     "issueActivity7d": 15,
     "pushedAt": "2026-07-25T13:59:46Z",
     "topics": [
-      "ai",
-      "assistant",
-      "crustacean",
-      "molty",
-      "openclaw",
-      "own-your-data",
-      "personal"
+      "人工智能",
+      "智能助手",
+      "OpenClaw",
+      "数据自主",
+      "个人工具"
     ],
     "language": "TypeScript",
     "score": 78,
-    "summary": "Add a redacted agent transcript section to GitHub PR or issue bodies during OpenClaw agent-created PR/issue workflows. Best-effort local-only provenance."
+    "title": "智能体对话记录",
+    "summary": "该技能会在 OpenClaw 智能体创建拉取请求或议题时，加入经过脱敏的对话记录，让评审者了解智能体的关键决策，同时避免泄露原始日志和敏感信息。"
   }
 ]
