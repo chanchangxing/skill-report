@@ -43,3 +43,25 @@ ${"- [Example skill](https://example.com)\n".repeat(30)}
     [{ type: "blob", path: "README.md" }],
   ), false);
 });
+
+test("仅在 README 中提到智能体的普通项目不会入选", () => {
+  const readme = `# Developer Roadmap
+
+Interactive roadmaps and educational content for developers.
+
+## Available roadmaps
+
+Frontend, backend, DevOps, databases, AI agents and many other learning topics.
+The repository contains a complete TypeScript website and community content,
+but the project itself is not an AI agent, agent framework or standalone skill.
+`;
+  assert.equal(looksLikeAgentProject(
+    {
+      name: "developer-roadmap",
+      description: "Interactive roadmaps and educational content for developers",
+      topics: ["roadmap", "education"],
+    },
+    readme,
+    implementationTree,
+  ), false);
+});

@@ -74,12 +74,12 @@ function hasImplementation(tree) {
 }
 
 export function looksLikeAgentProject(repository, readme, tree = []) {
-  const identity = clean([
+  const repositoryIdentity = clean([
     repository.name,
     repository.description,
     ...(repository.topics || []),
-    readme.slice(0, 16_000),
   ].join(" "));
+  const readmeIdentity = clean(readme.slice(0, 6_000));
   const collectionSignals = /(^|[\/_-])awesome([\/_-]|$)|curated\s+list|collection\s+of\s+(?:agent\s+)?skills|资源列表|链接合集/i;
   const agentSignals = /\bai[- ]?agents?\b|\bagentic\b|\bautonomous agents?\b|\bmulti[- ]agent\b|\bagent framework\b|\bagent skills?\b|人工智能智能体|智能体框架|自主智能体/i;
   const rootSkill = tree.some((item) => item.type === "blob" && /^SKILL\.md$/i.test(item.path));
@@ -87,7 +87,7 @@ export function looksLikeAgentProject(repository, readme, tree = []) {
   return Boolean(
     readme.length >= 300
     && !collectionSignals.test(clean(`${repository.name} ${repository.description || ""}`))
-    && agentSignals.test(identity)
+    && (agentSignals.test(repositoryIdentity) || (rootSkill && agentSignals.test(readmeIdentity)))
     && (hasImplementation(tree) || rootSkill),
   );
 }
