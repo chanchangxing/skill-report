@@ -45,7 +45,7 @@ Secret 只注入 GitHub Actions，不会进入仓库或公开页面。不要把 
 
 | Name | 默认值 | 用途 |
 | --- | --- | --- |
-| `AI_MODEL` | `deepseek-v4-pro` | DeepSeek 模型 |
+| `AI_MODEL` | `deepseek-v4-flash` | DeepSeek 模型 |
 | `AI_BASE_URL` | `https://api.deepseek.com` | DeepSeek API 地址 |
 | `MAX_REPOSITORIES` | `35` | 每次深入检查的候选仓库上限 |
 

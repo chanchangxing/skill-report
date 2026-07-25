@@ -59,16 +59,17 @@ export function relativeTimeLabel(iso, date) {
 }
 
 export async function fetchJson(url, options = {}, retries = 2) {
+  const { timeoutMs = 30_000, ...fetchOptions } = options;
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
       const response = await fetch(url, {
-        ...options,
-        signal: AbortSignal.timeout(30_000),
+        ...fetchOptions,
+        signal: fetchOptions.signal || AbortSignal.timeout(timeoutMs),
         headers: {
           "User-Agent": "agent-skill-daily/2.0",
           Accept: "application/vnd.github+json",
-          ...options.headers,
+          ...fetchOptions.headers,
         },
       });
       const text = await response.text();

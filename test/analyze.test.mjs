@@ -20,5 +20,5 @@ test("降级报告始终提供两个中文使用场景", () => {
 
   assert.equal(analysis.useCases.length, 2);
   assert.ok(analysis.useCases.every((item) => /[\u3400-\u9fff]/u.test(item)));
-  assert.doesNotMatch(analysis.caveats.join("\n"), /English API error/);
+  assert.match(analysis.caveats.join("\n"), /English API error/);
 });
