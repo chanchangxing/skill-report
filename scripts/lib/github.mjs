@@ -136,6 +136,48 @@ function projectReferencePaths(readme, readmePath, tree) {
   ])].filter((item) => item !== readmePath).slice(0, 6);
 }
 
+async function projectFromRepository(repository) {
+  const tree = await repositoryTree(repository);
+  const readmePath = rootReadmePath(tree);
+  if (!readmePath) throw new Error("仓库根目录没有 README");
+  const readme = await repositoryFile(repository, readmePath);
+  if (!looksLikeAgentProject(repository, readme, tree)) {
+    throw new Error("仓库未通过完整智能体项目校验");
+  }
+  return {
+    id: repository.full_name,
+    projectId: repository.full_name,
+    projectSha: repository.node_id || repository.full_name,
+    repository: repository.full_name,
+    repositoryUrl: repository.html_url,
+    projectUrl: repository.html_url,
+    homepageUrl: repository.homepage || "",
+    primaryDocumentPath: readmePath,
+    name: repository.name,
+    description: projectDescription(readme, repository),
+    markdown: readme,
+    referencedPaths: projectReferencePaths(readme, readmePath, tree),
+    stars: repository.stargazers_count,
+    forks: repository.forks_count,
+    openIssues: repository.open_issues_count,
+    pushedAt: repository.pushed_at,
+    updatedAt: repository.updated_at,
+    language: repository.language,
+    topics: repository.topics || [],
+    defaultBranch: repository.default_branch,
+  };
+}
+
+export async function loadProject(repositoryName) {
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repositoryName)) {
+    throw new Error("项目名称必须使用 owner/repository 格式");
+  }
+  const repository = await fetchJson(api(`/repos/${repositoryName}`), {
+    headers: githubHeaders(),
+  });
+  return projectFromRepository(repository);
+}
+
 export async function discoverProjects({ maxRepositories = 35 } = {}) {
   const searches = await Promise.allSettled(SEARCH_QUERIES.map(searchRepositories));
   const repositories = new Map();
@@ -157,33 +199,7 @@ export async function discoverProjects({ maxRepositories = 35 } = {}) {
 
   for (const repository of rankedRepositories) {
     try {
-      const tree = await repositoryTree(repository);
-      const readmePath = rootReadmePath(tree);
-      if (!readmePath) continue;
-      const readme = await repositoryFile(repository, readmePath);
-      if (!looksLikeAgentProject(repository, readme, tree)) continue;
-      projects.push({
-        id: repository.full_name,
-        projectId: repository.full_name,
-        projectSha: repository.node_id || repository.full_name,
-        repository: repository.full_name,
-        repositoryUrl: repository.html_url,
-        projectUrl: repository.html_url,
-        homepageUrl: repository.homepage || "",
-        primaryDocumentPath: readmePath,
-        name: repository.name,
-        description: projectDescription(readme, repository),
-        markdown: readme,
-        referencedPaths: projectReferencePaths(readme, readmePath, tree),
-        stars: repository.stargazers_count,
-        forks: repository.forks_count,
-        openIssues: repository.open_issues_count,
-        pushedAt: repository.pushed_at,
-        updatedAt: repository.updated_at,
-        language: repository.language,
-        topics: repository.topics || [],
-        defaultBranch: repository.default_branch,
-      });
+      projects.push(await projectFromRepository(repository));
     } catch (error) {
       console.warn(`跳过 ${repository.full_name}：${error.message}`);
     }

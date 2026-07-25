@@ -20,6 +20,10 @@ on:
         description: "可选：补跑日期（YYYY-MM-DD）"
         required: false
         type: string
+      reanalyze_project:
+        description: "可选：重新分析历史项目（owner/repository）"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -42,6 +46,7 @@ jobs:
       REPORT_TIMEZONE: Asia/Shanghai
       REPORT_DATE: ${{ inputs.report_date }}
       REPORT_MODE: ${{ github.event_name == 'workflow_dispatch' && 'on-demand' || 'daily' }}
+      REANALYZE_PROJECT: ${{ inputs.reanalyze_project }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,7 +60,14 @@ jobs:
         run: npm test
 
       - name: Generate report and site
-        run: npm run generate -- ${{ github.event_name == 'workflow_dispatch' && '--additional' || '' }}
+        run: |
+          if [ -n "$REANALYZE_PROJECT" ]; then
+            npm run reanalyze -- "$REANALYZE_PROJECT"
+          elif [ "$REPORT_MODE" = "on-demand" ]; then
+            npm run generate -- --additional
+          else
+            npm run generate
+          fi
 
       - name: Commit generated data
         id: changes
