@@ -1,6 +1,16 @@
 name: Daily Agent Skill Report
 
 on:
+  push:
+    branches:
+      - main
+    # 只监听生成器与页面模板，避免机器人写回 data/docs 后再次触发形成循环。
+    paths:
+      - ".github/workflows/daily-skill-report.yml"
+      - "scripts/**"
+      - "static/**"
+      - "test/**"
+      - "package.json"
   schedule:
     # GitHub cron 使用 UTC；01:45 UTC = 中国标准时间 09:45。
     - cron: "45 1 * * *"
