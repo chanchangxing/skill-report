@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Hermes Agent 是由 Nous Research 构建的自改进 AI 智能体，具备内置学习循环：它能从经验中创建技能、在使用中自我优化、主动持久化知识、跨会话搜索历史对话，并逐步建立用户画像。支持多种终端后端（本地、Docker、SSH、Modal、Daytona 等）和 20 多个消息平台（Telegram、Discord、Slack、WhatsApp 等），可在低至 5 美元的 VPS 或 GPU 集群上运行，通过一个统一的网关进程管理所有交互。核心架构包括同步编排引擎（AIAgent）、提示系统、提供者解析、工具系统（70+ 工具、28 个工具集）、会话持久化（SQLite + FTS5）、消息网关、插件系统、定时任务和 ACP 集成。">
-  <title>Hermes Agent（赫尔墨斯智能体） — 智能体项目日报</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>Hermes Agent（赫尔墨斯智能体） — 2026-07-27</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>智能体项目</span>日报</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>智能体项目</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-07-27 · 即时推荐</p>
@@ -35,18 +35,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>触发：用户通过 CLI（hermes）或消息平台（Telegram 等）发送输入消息</p></li><li><span>2</span><p>读取资源：HermesCLI/GatewayRunner 接收输入，解析会话 key，从 SQLite 加载会话历史（FTS5 检索），并读取配置、上下文文件、技能和记忆</p></li><li><span>3</span><p>提示组装：prompt_builder 构建系统提示，包含人格、记忆、技能、上下文文件、工具指南等</p></li><li><span>4</span><p>提供者解析：runtime_provider 根据配置选择 LLM 提供者（provider/model），解析 API 模式、密钥和端点</p></li><li><span>5</span><p>API 调用：AIAgent 发起 API 请求（chat_completions / codex_responses / anthropic_messages），支持压缩和缓存</p></li><li><span>6</span><p>工具调度：如果模型返回工具调用，model_tools 通过 registry 发现并执行对应工具（文件、网络、终端等），用户通过回调可见</p></li><li><span>7</span><p>循环：重复工具执行步骤直至模型生成最终文本响应，期间用户可用 Ctrl+C 中断</p></li><li><span>8</span><p>输出：响应通过 CLI 显示或消息网关投递到对应平台，同时保存到 SessionDB（SQLite）</p></li><li><span>9</span><p>验证：用户可继续对话、使用 /retry 或 /undo，系统通过 /doctor 诊断问题</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li><li>optional-skills/software-development/code-wiki/templates/architecture.md</li><li>skills/creative/ascii-video/references/architecture.md</li><li>website/docs/developer-guide/architecture.md</li><li>website/i18n/zh-Hans/docusaurus-plugin-content-docs/current/developer-guide/architecture.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>依赖外部 LLM API 或本地模型，需要有效的 API 密钥或计算资源</li><li>学习循环和记忆持久化可能消耗额外 token，增加使用成本（推断）</li><li>技能系统需要用户主动启用或创建，初始技能集有限（推断）</li><li>多平台网关运行需长时间保持进程运行，重启后需重新启动 gateway</li><li>Windows 原生支持需 PowerShell 安装，可能触发防病毒误报（已在文档中注明）</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><article class="report-card" data-search="ecc 智能体工作台操作系统 ecc affaan-m/ecc ai-agents anthropic claude claude-code developer-tools llm mcp productivity">
-    <div><time>2026-07-26</time><span class="score">热度 75.31</span></div>
-    <h3><a href="./reports/2026-07-26-024302.html">ECC 智能体工作台操作系统</a></h3>
-    <p>ECC（原Everything Claude Code）是一个面向AI代理工作台（harness）的操作系统级工具包，并非仅是一组配置文件。它集成了技能、本能学习、记忆优化、持续学习、安全扫描和研究优先的开发模式，旨在提升跨多种代理工作台（如Claude Code、Codex、Cursor、OpenCode、Gemini等）的开发效率。项目包含261+技能、67个专用子代理、84条命令以及丰富的钩子、规则和MCP配置，支持12种以上语言生态，并已在实际产品中经过10个月以上的高强度验证。</p>
-    <div class="card-meta"><span>星标 233,203</span><span>派生 35,556</span><span>affaan-m/ECC</span></div>
-  </article><article class="report-card" data-search="超级能力开发方法论 superpowers obra/superpowers ai brainstorming coding obra sdlc skills subagent-driven-development superpowers">
-    <div><time>2026-07-26</time><span class="score">热度 75.67</span></div>
-    <h3><a href="./reports/2026-07-26.html">超级能力开发方法论</a></h3>
-    <p>超级能力是一套完整的软件开发方法论，专为编码代理设计，基于一组可组合的技能和初始指令，使代理能够自动遵循可靠的工作流程。它从需求细化到代码实现、测试、审查和分支完成，提供结构化的过程。</p>
-    <div class="card-meta"><span>星标 260,973</span><span>派生 23,291</span><span>obra/superpowers</span></div>
-  </article></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><a href="./2026-07-26-024302.html">ECC →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>

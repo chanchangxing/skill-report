@@ -189,5 +189,120 @@
       "model": "deepseek-v4-flash"
     },
     "reanalyzedAt": "2026-07-25T19:09:47.422Z"
+  },
+  {
+    "reportId": "2026-07-27-095408",
+    "date": "2026-07-27",
+    "generatedAt": "2026-07-27T01:54:08.390Z",
+    "kind": "on-demand",
+    "projectId": "NousResearch/hermes-agent",
+    "fingerprint": "R_kgDOPRF1Gw",
+    "name": "hermes-agent",
+    "description": "The agent that grows with you",
+    "repository": "NousResearch/hermes-agent",
+    "repositoryUrl": "https://github.com/NousResearch/hermes-agent",
+    "projectUrl": "https://github.com/NousResearch/hermes-agent",
+    "homepageUrl": "https://hermes-agent.nousresearch.com",
+    "primaryDocumentPath": "README.md",
+    "stars": 220953,
+    "stars7d": null,
+    "forks": 42133,
+    "forks7d": null,
+    "issueActivity7d": 29,
+    "pushedAt": "2026-07-27T01:36:23Z",
+    "topics": [
+      "ai",
+      "ai-agent",
+      "ai-agents",
+      "anthropic",
+      "chatgpt",
+      "claude",
+      "claude-code",
+      "clawdbot",
+      "codex",
+      "hermes",
+      "hermes-agent",
+      "llm",
+      "moltbot",
+      "nous-research",
+      "openai",
+      "openclaw"
+    ],
+    "language": "Python",
+    "score": 75.51,
+    "analysis": {
+      "title": "Hermes Agent（赫尔墨斯智能体）",
+      "introduction": "Hermes Agent 是由 Nous Research 构建的自改进 AI 智能体，具备内置学习循环：它能从经验中创建技能、在使用中自我优化、主动持久化知识、跨会话搜索历史对话，并逐步建立用户画像。支持多种终端后端（本地、Docker、SSH、Modal、Daytona 等）和 20 多个消息平台（Telegram、Discord、Slack、WhatsApp 等），可在低至 5 美元的 VPS 或 GPU 集群上运行，通过一个统一的网关进程管理所有交互。核心架构包括同步编排引擎（AIAgent）、提示系统、提供者解析、工具系统（70+ 工具、28 个工具集）、会话持久化（SQLite + FTS5）、消息网关、插件系统、定时任务和 ACP 集成。",
+      "whyHot": [
+        "内置闭环学习循环，可自主创建和改进技能，实现持续自我进化",
+        "一个网关支持 20 多个消息平台，打破设备与平台限制",
+        "可运行在 $5 VPS、GPU 集群或无服务器后端，空闲时几乎零成本",
+        "支持任意 LLM 提供者（OpenAI、Anthropic、OpenRouter 等），无供应商锁定",
+        "开源、MIT 许可证，社区活跃（星标 22 万+，派生 4.2 万+）",
+        "无缝迁移自 OpenClaw，降低用户切换成本"
+      ],
+      "capabilities": [
+        "真实终端界面：多行编辑、斜杠命令补全、会话历史、流式工具输出",
+        "跨平台消息：Telegram、Discord、Slack、WhatsApp、Signal 等，含语音备忘录转写",
+        "闭环学习循环：自主创建技能、技能自我改进、定期记忆提示、FTS5 会话搜索与 LLM 摘要",
+        "定时自动化：内置 cron 调度器，可设置每日报告、夜间备份等无人值守任务",
+        "委托与并行化：生成隔离子代理处理并行工作流，Python 脚本通过 RPC 调用工具",
+        "多终端后端：local、Docker、SSH、Singularity、Modal、Daytona，其中 Modal/Daytona 支持服务器无状态持久化",
+        "研究就绪：批量轨迹生成、轨迹压缩，用于训练下一代工具调用模型",
+        "工具系统：70+ 工具、28 个工具集，包括文件操作、网络搜索、浏览器自动化、代码执行、MCP 客户端等",
+        "技能系统：支持程序的记忆（技能），可与 agentskills.io 开放标准兼容",
+        "记忆系统：持久化记忆、用户画像、跨会话回忆，支持 Honcho 辩证法用户建模",
+        "MCP 集成：可连接任何 MCP 服务器扩展能力",
+        "上下文文件：项目级上下文文件（AGENTS.md、.hermes.md）影响每次对话",
+        "插件系统：支持记忆提供者、上下文引擎等插件，通过 pip 或本地目录发现",
+        "ACP 集成：通过 stdio/JSON-RPC 作为 VS Code、Zed、JetBrains 的原生代理"
+      ],
+      "useCases": [
+        "个人自动化助手：用户将 Hermes 部署在云 VPS 上，通过 Telegram 与它交互，设置每日报告和备份脚本。Agent 自动学习用户偏好，记忆历史操作，并在空闲时休眠节省成本。解决了需要长期运行、跨平台、自适应的个人助理需求。",
+        "研究数据生成：研究员使用 Hermes 的批量轨迹生成功能，并行运行多个子代理执行不同任务，收集 ShareGPT 格式的训练数据。通过轨迹压缩和技能创建，加速工具调用模型的迭代训练。解决了手动收集训练数据效率低、难以复现的问题。"
+      ],
+      "workflow": [
+        "触发：用户通过 CLI（hermes）或消息平台（Telegram 等）发送输入消息",
+        "读取资源：HermesCLI/GatewayRunner 接收输入，解析会话 key，从 SQLite 加载会话历史（FTS5 检索），并读取配置、上下文文件、技能和记忆",
+        "提示组装：prompt_builder 构建系统提示，包含人格、记忆、技能、上下文文件、工具指南等",
+        "提供者解析：runtime_provider 根据配置选择 LLM 提供者（provider/model），解析 API 模式、密钥和端点",
+        "API 调用：AIAgent 发起 API 请求（chat_completions / codex_responses / anthropic_messages），支持压缩和缓存",
+        "工具调度：如果模型返回工具调用，model_tools 通过 registry 发现并执行对应工具（文件、网络、终端等），用户通过回调可见",
+        "循环：重复工具执行步骤直至模型生成最终文本响应，期间用户可用 Ctrl+C 中断",
+        "输出：响应通过 CLI 显示或消息网关投递到对应平台，同时保存到 SessionDB（SQLite）",
+        "验证：用户可继续对话、使用 /retry 或 /undo，系统通过 /doctor 诊断问题"
+      ],
+      "inputs": [
+        "用户自然语言消息（文本、语音转写）",
+        "会话历史（从 SQLite 加载）",
+        "系统提示（人格、记忆、技能、上下文文件）",
+        "配置（config.yaml、环境变量）",
+        "工具调用结果（来自文件系统、网络、终端等）",
+        "外部事件（消息平台事件、cron 触发器）"
+      ],
+      "outputs": [
+        "LLM 生成的文本响应（CLI 显示或消息平台回复）",
+        "工具执行结果（文件修改、网页内容、终端命令输出等）",
+        "持久化数据（会话记录到 SQLite、记忆更新、技能创建）",
+        "平台特定输出（Telegram 消息、Discord 消息、邮件等）",
+        "调试信息（/doctor 诊断报告、轨迹文件）"
+      ],
+      "caveats": [
+        "依赖外部 LLM API 或本地模型，需要有效的 API 密钥或计算资源",
+        "学习循环和记忆持久化可能消耗额外 token，增加使用成本（推断）",
+        "技能系统需要用户主动启用或创建，初始技能集有限（推断）",
+        "多平台网关运行需长时间保持进程运行，重启后需重新启动 gateway",
+        "Windows 原生支持需 PowerShell 安装，可能触发防病毒误报（已在文档中注明）"
+      ],
+      "evidence": [
+        "README.md",
+        "optional-skills/software-development/code-wiki/templates/architecture.md",
+        "skills/creative/ascii-video/references/architecture.md",
+        "website/docs/developer-guide/architecture.md",
+        "website/i18n/zh-Hans/docusaurus-plugin-content-docs/current/developer-guide/architecture.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]
