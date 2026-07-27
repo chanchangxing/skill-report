@@ -304,5 +304,78 @@
       "source": "deepseek",
       "model": "deepseek-v4-flash"
     }
+  },
+  {
+    "reportId": "2026-07-27",
+    "date": "2026-07-27",
+    "generatedAt": "2026-07-27T05:29:58.249Z",
+    "kind": "daily",
+    "projectId": "Significant-Gravitas/AutoGPT",
+    "fingerprint": "R_kgDOJKSTjA",
+    "name": "AutoGPT",
+    "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+    "repository": "Significant-Gravitas/AutoGPT",
+    "repositoryUrl": "https://github.com/Significant-Gravitas/AutoGPT",
+    "projectUrl": "https://github.com/Significant-Gravitas/AutoGPT",
+    "homepageUrl": "https://agpt.co",
+    "primaryDocumentPath": "README.md",
+    "stars": 185705,
+    "stars7d": null,
+    "forks": 46067,
+    "forks7d": null,
+    "issueActivity7d": 35,
+    "pushedAt": "2026-07-26T17:49:58Z",
+    "topics": [
+      "agentic-ai",
+      "agents",
+      "ai",
+      "artificial-intelligence",
+      "autonomous-agents",
+      "claude",
+      "gpt",
+      "llama-api",
+      "llm",
+      "openai",
+      "python"
+    ],
+    "language": "Python",
+    "score": 74.82,
+    "analysis": {
+      "source": "fallback",
+      "title": "AutoGPT",
+      "introduction": "这是 Significant-Gravitas/AutoGPT 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。",
+      "whyHot": [
+        "该项目目前拥有 185705 个星标和 46067 个派生仓库。",
+        "仓库最近一次推送时间为 2026-07-26，近 7 日记录到 35 个活跃议题。"
+      ],
+      "capabilities": [
+        "提供可安装、可运行或可复用的智能体项目能力"
+      ],
+      "useCases": [
+        "当团队的实际需求符合 AutoGPT 的项目定位时，可以部署或集成该项目来完成相关智能体任务。",
+        "当开发者需要研究同类智能体的工程实现时，可以通过该项目了解其架构、运行方式和扩展边界。"
+      ],
+      "workflow": [
+        "用户按照项目主文档完成安装、配置并启动项目。",
+        "项目接收用户任务、业务数据或外部事件作为输入。",
+        "项目内部的智能体组件调用模型、工具或脚本完成处理。",
+        "项目返回结果，并通过日志、测试或人工检查验证执行质量。"
+      ],
+      "inputs": [
+        "用户任务或业务数据",
+        "项目配置及运行环境"
+      ],
+      "outputs": [
+        "项目执行后产生的智能体结果"
+      ],
+      "caveats": [
+        "AI 深度分析失败：DeepSeek 返回的 JSON 缺少必要字段。本报告已改用中文规则解析生成。"
+      ],
+      "evidence": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "classic/README.md"
+      ]
+    }
   }
 ]

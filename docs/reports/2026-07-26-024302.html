@@ -35,7 +35,7 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>用户通过/plugin install或手动安装脚本将ECC部署到目标代理工作台（如Claude Code）。</p></li><li><span>2</span><p>启动会话后，ECC的钩子系统自动加载规则、记忆和已安装的技能入上下文。</p></li><li><span>3</span><p>用户输入斜杠命令（如/plan）或直接使用技能名触发工作流。</p></li><li><span>4</span><p>ECC解析请求，路由到对应的子代理（如planner.md、code-reviewer.md），读取项目文件、Git历史或配置。</p></li><li><span>5</span><p>代理执行生成任务：输出计划、代码审查报告、技能文件或安全扫描结果，并可选地保存到本地文件系统或回写上下文。</p></li><li><span>6</span><p>用户验证输出（如审查生成的计划或通过的测试），确认后提交或继续迭代。</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li><li>skills/tinystruct-patterns/references/architecture.md</li><li>docs/pt-BR/README.md</li><li>docs/zh-TW/README.md</li><li>docs/ko-KR/README.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>警告：不应叠加安装方法（如先/plugin install再跑install.sh --profile full），否则会造成功能和规则重复。</li><li>插件安装不会自动分发rules目录，需手动复制规则文件夹到~/.claude/rules/ecc/。</li><li>hooks自动加载行为在Claude Code v2.1+中变更，若在plugin.json中声明hooks会导致重复加载错误。</li><li>multi-*多模型命令需要额外安装ccg-workflow运行时才能正常工作。</li><li>ECC只删除其安装状态中记录的文件，不会清理手动复制或后续创建的文件。</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><nav class="report-nav"><a href="./2026-07-27-095408.html">← hermes-agent</a><a href="./2026-07-26.html">superpowers →</a></nav></main>
+  </div><nav class="report-nav"><a href="./2026-07-27.html">← AutoGPT</a><a href="./2026-07-26.html">superpowers →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
   <script src="../assets/site.js" defer></script>
 </body>
