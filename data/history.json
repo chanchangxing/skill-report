@@ -377,5 +377,107 @@
         "classic/README.md"
       ]
     }
+  },
+  {
+    "reportId": "2026-07-28-100325",
+    "date": "2026-07-28",
+    "generatedAt": "2026-07-28T02:03:25.014Z",
+    "kind": "on-demand",
+    "projectId": "langchain-ai/langchain",
+    "fingerprint": "R_kgDOIPDwlg",
+    "name": "langchain",
+    "description": "The agent engineering platform.",
+    "repository": "langchain-ai/langchain",
+    "repositoryUrl": "https://github.com/langchain-ai/langchain",
+    "projectUrl": "https://github.com/langchain-ai/langchain",
+    "homepageUrl": "https://docs.langchain.com/langchain/",
+    "primaryDocumentPath": "README.md",
+    "stars": 142720,
+    "stars7d": null,
+    "forks": 23756,
+    "forks7d": null,
+    "issueActivity7d": 37,
+    "pushedAt": "2026-07-27T18:56:26Z",
+    "topics": [
+      "agents",
+      "ai",
+      "ai-agents",
+      "anthropic",
+      "chatgpt",
+      "deepagents",
+      "enterprise",
+      "framework",
+      "gemini",
+      "generative-ai",
+      "langchain",
+      "langgraph",
+      "llm",
+      "multiagent",
+      "open-source",
+      "openai",
+      "pydantic",
+      "python",
+      "rag",
+      "typescript"
+    ],
+    "language": "Python",
+    "score": 73.26,
+    "analysis": {
+      "title": "LangChain：智能体工程平台",
+      "introduction": "LangChain 是一个用于构建智能体和 LLM 驱动应用的框架，通过可互操作的组件和丰富的第三方集成，简化 AI 应用的开发流程，同时保持底层技术演进时的决策前瞻性。",
+      "whyHot": [
+        "实时数据增强：轻松将 LLM 连接到多样化的数据源和外部/内部系统，利用广泛的集成库",
+        "模型互操作性：可随时切换模型，团队实验寻找最佳方案，行业前沿演进时快速适应",
+        "快速原型开发：基于模块化组件架构快速构建和迭代 LLM 应用，无需从头重写",
+        "生产就绪特性：通过集成 LangSmith 提供内置的监控、评估和调试能力，可可靠部署",
+        "活跃社区与生态：丰富的集成、模板和社区贡献组件，受益于持续改进和最新 AI 发展",
+        "灵活的抽象层：从高级链到低级组件，可按需选择抽象级别，随应用复杂度增长而扩展"
+      ],
+      "capabilities": [
+        "构建 LLM 驱动的智能体应用",
+        "链式组合可互操作的组件（模型、提示、工具、记忆等）",
+        "跨模型提供商的标准化接口（聊天模型、嵌入模型等）",
+        "丰富的第三方集成（向量存储、检索器、工具包等）",
+        "支持实时数据增强，连接外部数据源和系统",
+        "与 LangGraph 配合实现可控的智能体工作流编排",
+        "通过 LangSmith 实现生产监控、评估和调试"
+      ],
+      "useCases": [
+        "企业知识问答系统：开发者利用 LangChain 连接公司内部文档、数据库和向量存储，构建基于 RAG 的智能问答机器人。用户提出自然语言问题，系统自动检索相关文档并生成精准回答，大幅提升信息获取效率，降低人工客服成本。",
+        "多步骤业务流程自动化：使用 LangChain 结合 LangGraph 构建智能体，自动处理客户订单流程。智能体可调用库存查询工具、支付 API、物流系统，根据用户输入动态规划步骤并执行，减少人工干预，提升处理速度和准确性。"
+      ],
+      "workflow": [
+        "安装 LangChain 库及所需模型提供商 SDK（如 uv add langchain）",
+        "初始化聊天模型（如 init_chat_model(\"openai:gpt-5.5\")）",
+        "（推断）定义工具、记忆、提示等组件并组装成链或智能体图",
+        "（推断）通过 invoke 方法传递用户输入，触发执行链或智能体",
+        "（推断）可选集成 LangSmith 进行日志记录、调试和性能监控",
+        "（推断）根据输出结果进行验证和迭代优化"
+      ],
+      "inputs": [
+        "用户自然语言查询或指令",
+        "配置的模型（如 ChatModel 实例）",
+        "外部数据源连接（文档、API、数据库）",
+        "工具定义（函数、API 封装）",
+        "提示模板和记忆上下文"
+      ],
+      "outputs": [
+        "LLM 生成的文本回复",
+        "智能体执行的动作（如调用工具、API 请求）",
+        "结构化数据输出（如 JSON）",
+        "调试与监控日志（通过 LangSmith）"
+      ],
+      "caveats": [
+        "工作流步骤中标记为“推断”的部分并非 README 直接描述，而是基于框架的常规使用模式推导",
+        "README 明确区分 LangChain 与 LangGraph（低级编排框架）及 Deep Agents（高级封装），使用时需根据需求选择",
+        "本分析仅基于仓库 README.md 文件，未包含子目录中其他可能文件（如集成文档、API 参考等），因此能力描述为概括性总结",
+        "项目星标和派生数据来自外部统计，但本输出不依赖这些数值作为证据"
+      ],
+      "evidence": [
+        "README.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]

@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="LangChain 是一个用于构建智能体和 LLM 驱动应用的框架，通过可互操作的组件和丰富的第三方集成，简化 AI 应用的开发流程，同时保持底层技术演进时的决策前瞻性。">
-  <title>LangChain：智能体工程平台 — 智能体项目日报</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>LangChain：智能体工程平台 — 2026-07-28</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>智能体项目</span>日报</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>智能体项目</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-07-28 · 即时推荐</p>
@@ -35,28 +35,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>安装 LangChain 库及所需模型提供商 SDK（如 uv add langchain）</p></li><li><span>2</span><p>初始化聊天模型（如 init_chat_model(&quot;openai:gpt-5.5&quot;)）</p></li><li><span>3</span><p>（推断）定义工具、记忆、提示等组件并组装成链或智能体图</p></li><li><span>4</span><p>（推断）通过 invoke 方法传递用户输入，触发执行链或智能体</p></li><li><span>5</span><p>（推断）可选集成 LangSmith 进行日志记录、调试和性能监控</p></li><li><span>6</span><p>（推断）根据输出结果进行验证和迭代优化</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>工作流步骤中标记为“推断”的部分并非 README 直接描述，而是基于框架的常规使用模式推导</li><li>README 明确区分 LangChain 与 LangGraph（低级编排框架）及 Deep Agents（高级封装），使用时需根据需求选择</li><li>本分析仅基于仓库 README.md 文件，未包含子目录中其他可能文件（如集成文档、API 参考等），因此能力描述为概括性总结</li><li>项目星标和派生数据来自外部统计，但本输出不依赖这些数值作为证据</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><article class="report-card" data-search="hermes agent（赫尔墨斯智能体） hermes-agent nousresearch/hermes-agent ai ai-agent ai-agents anthropic chatgpt claude claude-code clawdbot codex hermes hermes-agent llm moltbot nous-research openai openclaw">
-    <div><time>2026-07-27</time><span class="score">热度 75.51</span></div>
-    <h3><a href="./reports/2026-07-27-095408.html">Hermes Agent（赫尔墨斯智能体）</a></h3>
-    <p>Hermes Agent 是由 Nous Research 构建的自改进 AI 智能体，具备内置学习循环：它能从经验中创建技能、在使用中自我优化、主动持久化知识、跨会话搜索历史对话，并逐步建立用户画像。支持多种终端后端（本地、Docker、SSH、Modal、Daytona 等）和 20 多个消息平台（Telegram、Discord、Slack、WhatsApp 等），可在低至 5 美元的 VPS 或 GPU 集群上运行，通过一个统一的网关进程管理所有交互。核心架构包括同步编排引擎（AIAgent）、提示系统、提供者解析、工具系统（70+ 工具、28 个工具集）、会话持久化（SQLite + FTS5）、消息网关、插件系统、定时任务和 ACP 集成。</p>
-    <div class="card-meta"><span>星标 220,953</span><span>派生 42,133</span><span>NousResearch/hermes-agent</span></div>
-  </article><article class="report-card" data-search="autogpt autogpt significant-gravitas/autogpt agentic-ai agents ai artificial-intelligence autonomous-agents claude gpt llama-api llm openai python">
-    <div><time>2026-07-27</time><span class="score">热度 74.82</span></div>
-    <h3><a href="./reports/2026-07-27.html">AutoGPT</a></h3>
-    <p>这是 Significant-Gravitas/AutoGPT 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。</p>
-    <div class="card-meta"><span>星标 185,705</span><span>派生 46,067</span><span>Significant-Gravitas/AutoGPT</span></div>
-  </article><article class="report-card" data-search="ecc 智能体工作台操作系统 ecc affaan-m/ecc ai-agents anthropic claude claude-code developer-tools llm mcp productivity">
-    <div><time>2026-07-26</time><span class="score">热度 75.31</span></div>
-    <h3><a href="./reports/2026-07-26-024302.html">ECC 智能体工作台操作系统</a></h3>
-    <p>ECC（原Everything Claude Code）是一个面向AI代理工作台（harness）的操作系统级工具包，并非仅是一组配置文件。它集成了技能、本能学习、记忆优化、持续学习、安全扫描和研究优先的开发模式，旨在提升跨多种代理工作台（如Claude Code、Codex、Cursor、OpenCode、Gemini等）的开发效率。项目包含261+技能、67个专用子代理、84条命令以及丰富的钩子、规则和MCP配置，支持12种以上语言生态，并已在实际产品中经过10个月以上的高强度验证。</p>
-    <div class="card-meta"><span>星标 233,203</span><span>派生 35,556</span><span>affaan-m/ECC</span></div>
-  </article><article class="report-card" data-search="超级能力开发方法论 superpowers obra/superpowers ai brainstorming coding obra sdlc skills subagent-driven-development superpowers">
-    <div><time>2026-07-26</time><span class="score">热度 75.67</span></div>
-    <h3><a href="./reports/2026-07-26.html">超级能力开发方法论</a></h3>
-    <p>超级能力是一套完整的软件开发方法论，专为编码代理设计，基于一组可组合的技能和初始指令，使代理能够自动遵循可靠的工作流程。它从需求细化到代码实现、测试、审查和分支完成，提供结构化的过程。</p>
-    <div class="card-meta"><span>星标 260,973</span><span>派生 23,291</span><span>obra/superpowers</span></div>
-  </article></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><a href="./2026-07-27-095408.html">hermes-agent →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>
