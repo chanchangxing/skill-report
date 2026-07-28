@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Dify 是一个开源的大语言模型（LLM）应用开发平台，通过直观的界面将 AI 工作流、RAG 流水线、智能体能力、模型管理和可观测性等功能集成在一起，帮助用户快速从原型开发过渡到生产部署。">
+  <title>Dify 开源 LLM 应用开发平台 — 2026-07-28</title>
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span>智能体项目</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
+  </header>
+  <main><section class="hero report-hero">
+    <p class="eyebrow">2026-07-28 · 今日智能体项目</p>
+    <h1>Dify 开源 LLM 应用开发平台</h1>
+    <p class="lead">Dify 是一个开源的大语言模型（LLM）应用开发平台，通过直观的界面将 AI 工作流、RAG 流水线、智能体能力、模型管理和可观测性等功能集成在一起，帮助用户快速从原型开发过渡到生产部署。</p>
+    <div class="actions"><a class="button" href="https://github.com/langgenius/dify">查看 GitHub 项目</a><a class="button secondary" href="https://dify.ai">项目主页</a><a class="button secondary" href="https://github.com/chanchangxing/skill-report/actions/workflows/daily-skill-report.yml">立即推荐新项目</a></div>
+    <p class="action-hint">登录 GitHub 后点击“Run workflow”确认；生成完成后本页会自动更新，旧推荐仍保留在历史中。</p>
+  </section>
+  <section class="metrics">
+    <div class="metric"><span>星标总数</span><strong>150,480</strong><small>选题最高优先级</small></div>
+    <div class="metric"><span>7 日新增星标</span><strong>待积累</strong><small>快照积累满 7 天后显示</small></div>
+    <div class="metric"><span>派生仓库总数</span><strong>23,710</strong></div>
+    <div class="metric"><span>7 日新增派生</span><strong>待积累</strong><small>快照积累中</small></div>
+    <div class="metric"><span>7 日议题活跃数</span><strong>19</strong></div>
+    <div class="metric"><span>最近推送</span><strong>今天</strong><small>2026-07-28</small></div>
+  </section>
+  <div class="content-grid">
+    <article class="panel wide"><h2>为什么热门</h2><ul><li>完全开源且功能全面，大幅降低 LLM 应用开发门槛</li><li>支持数百种专有与开源模型，灵活集成多种推理服务</li><li>提供可视化工作流和 Prompt IDE，显著提升开发效率</li><li>社区活跃，拥有丰富的部署选项（Docker、Kubernetes、云平台等）</li></ul></article>
+    <article class="panel"><h2>核心能力</h2><ul><li>Workflow：在可视化画布上构建和测试强大的 AI 工作流</li><li>Comprehensive model support：无缝集成数百种专有/开源 LLM，统一管理多种模型提供商</li><li>Prompt IDE：直观的提示词编辑界面，支持模型性能对比与辅助功能添加</li><li>RAG Pipeline：端到端的检索增强生成能力，从文档摄取到检索，内置 PDF、PPT 等格式解析</li><li>Agent capabilities：基于 LLM Function Calling 或 ReAct 定义智能体，支持 50+ 内置工具</li><li>LLMOps：监控和分析应用日志与性能，持续优化提示词、数据集和模型</li><li>Backend-as-a-Service：所有功能均提供 API，可轻松集成到业务逻辑中</li></ul></article>
+    <article class="panel"><h2>输入与输出</h2><h3>输入</h3><ul><li>用户通过聊天界面或 API 发送的消息</li><li>上传的文档文件（PDF、PPT、Word 等）</li><li>配置参数（模型选择、提示词、知识库设置）</li><li>外部工具调用请求（如搜索引擎查询）</li></ul><h3>输出</h3><ul><li>LLM 生成的文本回复或摘要</li><li>工作流执行结果（如数据分析报告）</li><li>智能体工具调用的返回结果</li><li>API 格式的结构化响应</li></ul></article>
+    <article class="panel wide"><h2>两个使用场景</h2><div class="use-cases"><section class="use-case"><span>场景一</span><p>企业内部知识库智能问答系统：企业将 PDF、PPT 等文档上传至 Dify，通过 RAG Pipeline 构建索引，员工通过聊天界面提问，系统利用 LLM 从知识库中检索并生成准确回答，大幅提升信息查找效率。</p></section><section class="use-case"><span>场景二</span><p>客户服务自动化机器人：电商公司使用 Dify 构建多渠道客服机器人，集成订单查询 API 和常见问题知识库，利用 Agent 能力自动处理退货、物流等问题，当遇到复杂问题时转人工，降低客服成本并提升响应速度。</p></section></div></article>
+    <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>使用 Docker Compose 部署 Dify 服务（运行 docker compose up -d）</p></li><li><span>2</span><p>在浏览器中访问初始化页面，设置管理员账号并完成首次配置</p></li><li><span>3</span><p>创建应用（如聊天助手或工作流），选择目标模型（如 GPT-4）</p></li><li><span>4</span><p>通过 Prompt IDE 编辑提示词，定义应用行为和回复风格</p></li><li><span>5</span><p>配置知识库：上传文档（PDF/PPT 等），进行向量化处理并建立索引</p></li><li><span>6</span><p>添加工具（如 Google Search、DALL·E）和智能体逻辑（基于 ReAct 或 Function Calling）</p></li><li><span>7</span><p>发布应用，获取 API 端点或嵌入代码</p></li><li><span>8</span><p>在生产环境中通过日志和性能监控（LLMOps）持续优化应用</p></li></ol></article>
+    <article class="panel"><h2>证据文件</h2><ul><li>README.md</li></ul></article>
+    <article class="panel"><h2>限制与判断边界</h2><ul><li>部署需满足最低系统要求：CPU &gt;= 2 核、RAM &gt;= 4 GiB</li><li>必须安装 Docker 和 Docker Compose v2.24.0 或更高版本</li><li>Dify Cloud 沙箱计划仅提供 200 次免费 GPT-4 调用，超出需付费</li><li>部分高级功能（如企业级 SSO、审计）仅在 Dify 企业版中提供</li><li>社区贡献的 Kubernetes Helm Charts 等部署方案可能需额外配置和测试</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
+  </div><nav class="report-nav"><a href="./2026-07-28-100325.html">← langchain</a><a href="./2026-07-27-095408.html">hermes-agent →</a></nav></main>
+  <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
+  <script src="../assets/site.js" defer></script>
+</body>
+</html>
