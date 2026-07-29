@@ -581,5 +581,98 @@
       "source": "deepseek",
       "model": "deepseek-v4-flash"
     }
+  },
+  {
+    "reportId": "2026-07-29",
+    "date": "2026-07-29",
+    "generatedAt": "2026-07-29T04:52:15.600Z",
+    "kind": "daily",
+    "projectId": "google-gemini/gemini-cli",
+    "fingerprint": "R_kgDOObWEYA",
+    "name": "gemini-cli",
+    "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
+    "repository": "google-gemini/gemini-cli",
+    "repositoryUrl": "https://github.com/google-gemini/gemini-cli",
+    "projectUrl": "https://github.com/google-gemini/gemini-cli",
+    "homepageUrl": "https://geminicli.com",
+    "primaryDocumentPath": "README.md",
+    "stars": 106229,
+    "stars7d": null,
+    "forks": 14337,
+    "forks7d": null,
+    "issueActivity7d": 98,
+    "pushedAt": "2026-07-29T01:29:18Z",
+    "topics": [
+      "ai",
+      "ai-agents",
+      "cli",
+      "gemini",
+      "gemini-api",
+      "mcp-client",
+      "mcp-server"
+    ],
+    "language": "TypeScript",
+    "score": 72.63,
+    "analysis": {
+      "title": "Gemini CLI（智能终端AI代理）",
+      "introduction": "Gemini CLI 是一个开源的 AI 代理工具，将 Google Gemini 模型的能力直接带入终端。它为开发者提供轻量级、高效的交互方式，支持代码理解、自动化任务、实时搜索等功能，并可通过 MCP 协议扩展自定义工具。项目采用 Apache 2.0 许可证，旨在成为终端优先的 AI 助手。",
+      "whyHot": [
+        "提供免费层级，个人 Google 账户即可使用，速率高达 60 次/分钟、1000 次/天",
+        "内置强大 Gemini 3 系列模型，支持 100 万 token 上下文窗口和推理增强",
+        "集成 Google 搜索、文件操作、Shell 命令、网页抓取等实用工具",
+        "通过 MCP（模型上下文协议）支持自定义扩展，可连接第三方服务",
+        "专为终端环境设计，无需离开命令行即可完成复杂任务",
+        "完全开源（Apache 2.0），社区活跃，贡献门槛低"
+      ],
+      "capabilities": [
+        "代码理解与生成：查询、编辑大型代码库，从 PDF、图片等生成应用",
+        "自动化脚本：非交互模式执行任务，如查询 PR、处理 rebase",
+        "高级功能：Google 搜索实时信息、对话检查点保存恢复、自定义上下文文件",
+        "GitHub 集成：通过 GitHub Action 实现 PR 审查、问题分类、@gemini-cli 协助",
+        "MCP 服务器：连接媒体生成、数据库查询等外部工具",
+        "多种认证方式：OAuth、API 密钥、Vertex AI，适应不同场景"
+      ],
+      "useCases": [
+        "开发者调试代码：在终端中运行 `gemini` 进入交互模式，输入自然语言描述 bug 或需求，AI 自动分析代码库、定位问题并提供修复建议，无需手动翻阅日志或文档。",
+        "团队自动化工作流：在 CI/CD 脚本中使用非交互模式，例如 `gemini -p \"审查此 PR 的代码变更\" --output-format json`，自动生成代码审查意见并输出结构化结果，集成到 GitHub Action 中实现持续审查。"
+      ],
+      "workflow": [
+        "触发：用户通过命令行输入 `gemini` 启动交互会话，或使用 `-p` 参数执行一次提示",
+        "认证：根据环境变量选择 OAuth、API 密钥或 Vertex AI 认证方式，自动登录或报错",
+        "上下文加载：读取当前目录及 `--include-directories` 指定目录的文件，以及可选的 `GEMINI.md` 自定义上下文",
+        "提示处理：自然语言提示经模型分析，调用内置工具（如文件读写、Shell 执行、网页抓取）或 MCP 服务器",
+        "生成输出：生成文本响应、JSON 或流式 JSON 事件，输出到终端或文件",
+        "验证：用户可交互式确认操作或检查非模式下的退出码和输出格式"
+      ],
+      "inputs": [
+        "自然语言提示（文本）",
+        "文件路径和目录",
+        "自定义上下文文件 GEMINI.md",
+        "环境变量（API 密钥、项目 ID、配置项）",
+        "命令行参数（模型选择、输出格式、包含目录等）",
+        "MCP 服务器配置（JSON 文件）"
+      ],
+      "outputs": [
+        "文本响应（默认）",
+        "JSON 结构化输出（`--output-format json`）",
+        "新行分隔的 JSON 事件流（`--output-format stream-json`）",
+        "文件系统变更、Shell 命令执行结果",
+        "GitHub 评论、标签等（通过 GitHub Action）"
+      ],
+      "caveats": [
+        "免费层级有速率限制（60 req/min, 1000 req/day），超出需付费或使用 API 密钥",
+        "部分高级功能（如 Vertex AI、GitHub Action）需要额外的配置或权限",
+        "Sandbox 模式依赖 Docker/Podman 或 macOS Seatbelt，首次构建较慢",
+        "项目处于活跃开发中，预览版和夜间版可能存在不稳定问题",
+        "所有用户提示和文件内容会发送到 Google 模型处理，注意隐私合规",
+        "MCP 服务器集成需自行管理安全性和可靠性"
+      ],
+      "evidence": [
+        "README.md",
+        "CONTRIBUTING.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]
