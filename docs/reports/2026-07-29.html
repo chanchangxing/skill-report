@@ -35,7 +35,7 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>触发：用户通过命令行输入 `gemini` 启动交互会话，或使用 `-p` 参数执行一次提示</p></li><li><span>2</span><p>认证：根据环境变量选择 OAuth、API 密钥或 Vertex AI 认证方式，自动登录或报错</p></li><li><span>3</span><p>上下文加载：读取当前目录及 `--include-directories` 指定目录的文件，以及可选的 `GEMINI.md` 自定义上下文</p></li><li><span>4</span><p>提示处理：自然语言提示经模型分析，调用内置工具（如文件读写、Shell 执行、网页抓取）或 MCP 服务器</p></li><li><span>5</span><p>生成输出：生成文本响应、JSON 或流式 JSON 事件，输出到终端或文件</p></li><li><span>6</span><p>验证：用户可交互式确认操作或检查非模式下的退出码和输出格式</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li><li>CONTRIBUTING.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>免费层级有速率限制（60 req/min, 1000 req/day），超出需付费或使用 API 密钥</li><li>部分高级功能（如 Vertex AI、GitHub Action）需要额外的配置或权限</li><li>Sandbox 模式依赖 Docker/Podman 或 macOS Seatbelt，首次构建较慢</li><li>项目处于活跃开发中，预览版和夜间版可能存在不稳定问题</li><li>所有用户提示和文件内容会发送到 Google 模型处理，注意隐私合规</li><li>MCP 服务器集成需自行管理安全性和可靠性</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><nav class="report-nav"><span></span><a href="./2026-07-28-100325.html">langchain →</a></nav></main>
+  </div><nav class="report-nav"><a href="./2026-07-30.html">← firecrawl</a><a href="./2026-07-28-100325.html">langchain →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
   <script src="../assets/site.js" defer></script>
 </body>

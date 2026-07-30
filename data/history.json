@@ -674,5 +674,107 @@
       "source": "deepseek",
       "model": "deepseek-v4-flash"
     }
+  },
+  {
+    "reportId": "2026-07-30",
+    "date": "2026-07-30",
+    "generatedAt": "2026-07-30T04:39:58.065Z",
+    "kind": "daily",
+    "projectId": "firecrawl/firecrawl",
+    "fingerprint": "R_kgDOLunVBg",
+    "name": "firecrawl",
+    "description": "The API to search, scrape, and interact with the web at scale. 🔥",
+    "repository": "firecrawl/firecrawl",
+    "repositoryUrl": "https://github.com/firecrawl/firecrawl",
+    "projectUrl": "https://github.com/firecrawl/firecrawl",
+    "homepageUrl": "https://firecrawl.dev",
+    "primaryDocumentPath": "README.md",
+    "stars": 157975,
+    "stars7d": null,
+    "forks": 8978,
+    "forks7d": null,
+    "issueActivity7d": 15,
+    "pushedAt": "2026-07-30T00:40:49Z",
+    "topics": [
+      "ai",
+      "ai-agents",
+      "ai-crawler",
+      "ai-scraping",
+      "ai-search",
+      "crawler",
+      "data-extraction",
+      "html-to-markdown",
+      "llm",
+      "markdown",
+      "scraper",
+      "scraping",
+      "web-crawler",
+      "web-data",
+      "web-data-extraction",
+      "web-scraper",
+      "web-scraping",
+      "web-search",
+      "webscraping"
+    ],
+    "language": "TypeScript",
+    "score": 72.45,
+    "analysis": {
+      "title": "Firecrawl - 大规模网页搜索与数据采集API",
+      "introduction": "Firecrawl 是一个开源的 API 服务，用于大规模搜索、抓取和与网页交互。它能够将网页内容转化为干净的 Markdown 或结构化数据，供 AI 智能体使用。提供云端托管和自托管选项。",
+      "whyHot": [
+        "业界领先的可靠性：覆盖 96% 的网页，包括 JavaScript 密集页面，无需处理代理问题。",
+        "极快速度：跨数百万页面的 P95 延迟为 3.4 秒，适合实时应用。",
+        "LLM 友好输出：直接输出 Markdown、结构化 JSON、截图等，节省 Token 消耗。",
+        "智能体即用：通过单条命令即可连接任何 AI 智能体或 MCP 客户端。"
+      ],
+      "capabilities": [
+        "Search：搜索网页并获取完整页面内容。",
+        "Scrape：将任意 URL 转换为 Markdown、HTML、截图或结构化 JSON。",
+        "Interact：抓取页面后，通过 AI 提示或代码进行点击、滚动、输入等交互。",
+        "Agent：通过自然语言描述需求，自动搜索、导航并提取数据。",
+        "Crawl：一次请求抓取整个网站的所有 URL。",
+        "Map：快速发现网站上的所有 URL。",
+        "Batch Scrape：异步批量抓取数千个 URL。",
+        "媒体解析：解析 PDF、DOCX 等网页托管文档的内容。"
+      ],
+      "useCases": [
+        "市场研究人员需要从多个竞争对手网站收集产品定价和功能对比信息。他们使用 Firecrawl 的 Agent 功能，输入自然语言提示（如“获取 Notion 的定价方案”），无需手动搜索和爬取，直接收到结构化数据，大幅提高调研效率。",
+        "内容聚合平台开发者需要定期从数十个新闻网站抓取文章。他们利用 Firecrawl 的 Crawl 或 Batch Scrape 功能，指定 URL 列表和格式（Markdown），自动抓取所有页面并返回干净内容，快速集成到平台中，减少开发和维护成本。"
+      ],
+      "workflow": [
+        "用户注册 Firebase 账号并获取 API 密钥。",
+        "通过 SDK（Python/Node.js/Go 等）或 CLI 调用 API 端点（如 Search、Scrape、Crawl）。",
+        "API 接收请求，处理代理旋转、JS 渲染、速率限制等底层复杂性。",
+        "根据请求类型，返回对应格式的数据（Markdown、JSON、截图或结构化对象）。",
+        "用户根据返回的数据进行验证或进一步处理（如检查 metadata、重试失败请求）。"
+      ],
+      "inputs": [
+        "API 密钥（必需）",
+        "目标 URL 或搜索查询",
+        "格式选择（markdown, html, screenshot, json 等）",
+        "限制数量（limit）",
+        "交互提示（如 prompt for Interact）",
+        "Agent 提示和可选 schema"
+      ],
+      "outputs": [
+        "Markdown 文本",
+        "HTML 内容",
+        "截图（图片链接或 base64）",
+        "结构化 JSON（如字段列表）",
+        "实时视图链接（LiveView URL）",
+        "元数据（页面标题、来源 URL 等）"
+      ],
+      "caveats": [
+        "用户必须遵守目标网站的 robots.txt 及使用条款。",
+        "云端版本有免费配额和付费限制，自托管需要自行配置基础设施。",
+        "部分高级功能（如 Agent、高并发）仅云版本提供。",
+        "推断：SDK 会自动轮询异步任务（如 Crawl），但 CLI 和纯 REST 请求可能需要手动轮询。"
+      ],
+      "evidence": [
+        "README.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]
