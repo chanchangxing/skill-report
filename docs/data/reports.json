@@ -1,5 +1,33 @@
 [
   {
+    "reportId": "2026-07-31",
+    "date": "2026-07-31",
+    "generatedAt": "2026-07-31T05:06:02.630Z",
+    "kind": "daily",
+    "projectId": "anthropics/skills",
+    "fingerprint": "R_kgDOP0wfhg",
+    "name": "skills",
+    "description": "Public repository for Agent Skills",
+    "repository": "anthropics/skills",
+    "repositoryUrl": "https://github.com/anthropics/skills",
+    "projectUrl": "https://github.com/anthropics/skills",
+    "homepageUrl": "",
+    "primaryDocumentPath": "README.md",
+    "stars": 165315,
+    "stars7d": null,
+    "forks": 19652,
+    "forks7d": null,
+    "issueActivity7d": 12,
+    "pushedAt": "2026-07-24T20:12:36Z",
+    "topics": [
+      "agent-skills"
+    ],
+    "language": "Python",
+    "score": 71.9,
+    "title": "Anthropic Skills 技能库与规范仓库",
+    "summary": "这是 Anthropic 官方发布的 Claude 技能（Skills）实现集合，仓库以文件夹形式封装指令、脚本和资源，使 Claude 能够动态加载并提升在专业任务上的表现。仓库既包含创意设计、开发技术、企业沟通和文档处理等示例技能，也开放了驱动 Claude 文档能力的 docx、pdf、pptx、xlsx 技能作为生产级参考，同时提供 Agent Skills 规范（spec）和技能模板（template）供开发者创建自定义技能。整个仓库旨在展示技能系统的可能性，并为社区提供学习、复用和构建技能的基础。"
+  },
+  {
     "reportId": "2026-07-30",
     "date": "2026-07-30",
     "generatedAt": "2026-07-30T04:39:58.065Z",

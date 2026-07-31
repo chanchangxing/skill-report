@@ -776,5 +776,95 @@
       "source": "deepseek",
       "model": "deepseek-v4-flash"
     }
+  },
+  {
+    "reportId": "2026-07-31",
+    "date": "2026-07-31",
+    "generatedAt": "2026-07-31T05:06:02.630Z",
+    "kind": "daily",
+    "projectId": "anthropics/skills",
+    "fingerprint": "R_kgDOP0wfhg",
+    "name": "skills",
+    "description": "Public repository for Agent Skills",
+    "repository": "anthropics/skills",
+    "repositoryUrl": "https://github.com/anthropics/skills",
+    "projectUrl": "https://github.com/anthropics/skills",
+    "homepageUrl": "",
+    "primaryDocumentPath": "README.md",
+    "stars": 165315,
+    "stars7d": null,
+    "forks": 19652,
+    "forks7d": null,
+    "issueActivity7d": 12,
+    "pushedAt": "2026-07-24T20:12:36Z",
+    "topics": [
+      "agent-skills"
+    ],
+    "language": "Python",
+    "score": 71.9,
+    "analysis": {
+      "title": "Anthropic Skills 技能库与规范仓库",
+      "introduction": "这是 Anthropic 官方发布的 Claude 技能（Skills）实现集合，仓库以文件夹形式封装指令、脚本和资源，使 Claude 能够动态加载并提升在专业任务上的表现。仓库既包含创意设计、开发技术、企业沟通和文档处理等示例技能，也开放了驱动 Claude 文档能力的 docx、pdf、pptx、xlsx 技能作为生产级参考，同时提供 Agent Skills 规范（spec）和技能模板（template）供开发者创建自定义技能。整个仓库旨在展示技能系统的可能性，并为社区提供学习、复用和构建技能的基础。",
+      "whyHot": [
+        "Anthropic 官方背书，代表了 Agent Skills 标准的主流实现与最佳实践，具有权威性和参考价值。",
+        "仓库关注度极高，星标总数超过 16.5 万，派生仓库近 2 万，显示开发者社区对 Claude 技能生态的强烈兴趣。",
+        "内含生产环境中实际使用的文档类技能（如 docx、pdf、pptx、xlsx），展示了从演示到落地的完整路径，对开发者有很强吸引力。",
+        "可以直接作为 Claude Code 插件市场安装，也可在 Claude.ai 和 Claude API 中使用，降低了使用门槛。",
+        "定义了一套简单清晰的 SKILL.md 技能编写规范，配合模板和示例，促进了第三方技能生态的快速成长。"
+      ],
+      "capabilities": [
+        "提供已实现的分组技能示例，覆盖创意与设计、开发与技术、企业与沟通、文档技能四大领域。",
+        "内置 Agent Skills 规范（spec）和技能模板（template），帮助开发者理解并创建符合标准的自定义技能。",
+        "支持通过 Claude Code 将本仓库注册为插件市场，并可安装 document-skills 或 example-skills 插件。",
+        "技能可在 Claude.ai 和 Claude API 中直接使用，也支持用户上传自定义技能到这些平台。",
+        "包含文档创建与编辑技能（docx、pdf、pptx、xlsx），可作为参考了解复杂生产级技能的构建方式。",
+        "提供清晰的 SKILL.md 格式定义，仅需 name 和 description 两个 YAML 前置字段即可创建基础技能。"
+      ],
+      "useCases": [
+        "企业文档自动化场景：一个团队经常需要从既有 PDF 文件中提取表单字段或生成符合品牌规范的 PDF 报告。他们可以在 Claude Code 中安装本仓库的 document-skills 插件，然后直接向 Claude 提出类似“使用 PDF 技能提取某个文件的表单字段”的请求，Claude 会读取对应技能的说明和脚本，自动完成任务，减少人工处理文档的时间。",
+        "自定义技能开发与团队复用场景：开发者在为内部工具链构建智能体应用时，希望让 Claude 学会按公司特定工作流处理数据。他可以参考本仓库的 template 目录和 spec 规范，编写自己的 SKILL.md 与配套脚本，再将技能打包为插件并注册到团队共用的 Claude Code 插件市场中，使其他成员无需了解内部实现即可通过自然语言触发该技能。"
+      ],
+      "workflow": [
+        "触发：用户在 Claude Code 中发送命令 `/plugin marketplace add anthropics/skills`，将本仓库注册为插件市场。",
+        "安装：用户通过 `/plugin install document-skills@anthropic-agent-skills` 或 `example-skills@anthropic-agent-skills` 安装对应插件，也可以在交互界面中浏览并安装。",
+        "资源加载：用户以自然语言提出任务（如“使用 PDF 技能提取表单字段”），Claude Code 定位并读取对应技能文件夹中的 SKILL.md 指令文件和相关脚本、资源。",
+        "工具/脚本调用：Claude 依据技能内说明执行具体操作，例如运行 Python 脚本处理 PDF，或调用文档生成逻辑创建 docx/pptx 等文件。",
+        "产出：生成用户所需的文档、代码、分析结果或自定义技能文件。",
+        "验证：用户自行检查输出结果，并参照 Skills 指南或规范测试技能在自身环境中的实际表现，确保满足需求。"
+      ],
+      "inputs": [
+        "用户的自然语言指令（例如要求使用某技能处理文件）。",
+        "仓库中各技能文件夹内的 SKILL.md 文件。",
+        "技能所需的辅助脚本、模板和静态资源。",
+        "待处理的外部输入（如 PDF 文件、数据文件或品牌指南）。",
+        "Claude Code 中的插件市场配置信息。"
+      ],
+      "outputs": [
+        "经过技能处理生成的文档文件（如 docx、pdf、pptx、xlsx）。",
+        "从输入文件中提取的数据或结构化信息。",
+        "Claude 根据技能规范生成的代码、设计或分析结果。",
+        "基于 template 创建的自定义 SKILL.md 技能定义文件。",
+        "安装到 Claude Code 中的技能插件实例。"
+      ],
+      "caveats": [
+        "README 明确声明，仓库中技能仅用于演示和教育目的，Claude 实际获得的行为可能与技能中展示的实现存在差异，使用前需要充分测试（已在 README 中注明）。",
+        "docx、pdf、pptx、xlsx 四个文档技能属于 source-available（源码可用），并非 Apache 2.0 完全开源，使用范围可能受限（依据 README 说明推断）。",
+        "仓库整体包含的第三方技能（如 Notion 等合作伙伴技能）并未直接收录在本仓库中，而是提供了外部链接，实际可用性需要访问对应链接确认（推断）。",
+        "关于技能在 Claude API 中的具体调用方式和限制，README 只提供了文档链接，未给出详细示例，开发者需参考官方 API 文档（推断）。",
+        "星标数、派生数等指标来自外部数据，仓库自身的功能不受这些指标影响，不能据此推断技能质量（推断）。"
+      ],
+      "evidence": [
+        "README.md",
+        "./skills",
+        "./spec",
+        "./template",
+        "skills/docx",
+        "skills/pdf",
+        "skills/pptx",
+        "skills/xlsx"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]
