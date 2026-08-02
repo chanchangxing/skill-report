@@ -931,5 +931,89 @@
         "docs/tutorial-document-generate.md"
       ]
     }
+  },
+  {
+    "reportId": "2026-08-02",
+    "date": "2026-08-02",
+    "generatedAt": "2026-08-02T04:59:26.520Z",
+    "kind": "daily",
+    "projectId": "Graphify-Labs/graphify",
+    "fingerprint": "R_kgDOR4-pDw",
+    "name": "graphify",
+    "description": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store.",
+    "repository": "Graphify-Labs/graphify",
+    "repositoryUrl": "https://github.com/Graphify-Labs/graphify",
+    "projectUrl": "https://github.com/Graphify-Labs/graphify",
+    "homepageUrl": "https://www.graphify.com",
+    "primaryDocumentPath": "README.md",
+    "stars": 100405,
+    "stars7d": 4688,
+    "forks": 9750,
+    "forks7d": 472,
+    "issueActivity7d": 49,
+    "pushedAt": "2026-08-01T14:44:12Z",
+    "topics": [
+      "ai-agents",
+      "antigravity",
+      "ast",
+      "claude-code",
+      "code-analysis",
+      "code-search",
+      "codex",
+      "cursor",
+      "developer-tools",
+      "gemini",
+      "graphrag",
+      "knowledge-graph",
+      "leiden",
+      "llm",
+      "mcp",
+      "openclaw",
+      "rag",
+      "skills",
+      "tree-sitter"
+    ],
+    "language": "Python",
+    "score": 85.6,
+    "analysis": {
+      "source": "fallback",
+      "title": "graphify",
+      "introduction": "这是 Graphify-Labs/graphify 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。",
+      "whyHot": [
+        "该项目目前拥有 100405 个星标和 9750 个派生仓库。",
+        "仓库最近一次推送时间为 2026-08-01，近 7 日记录到 49 个活跃议题。"
+      ],
+      "capabilities": [
+        "提供可安装、可运行或可复用的智能体项目能力"
+      ],
+      "useCases": [
+        "当团队的实际需求符合 graphify 的项目定位时，可以部署或集成该项目来完成相关智能体任务。",
+        "当开发者需要研究同类智能体的工程实现时，可以通过该项目了解其架构、运行方式和扩展边界。"
+      ],
+      "workflow": [
+        "用户按照项目主文档完成安装、配置并启动项目。",
+        "项目接收用户任务、业务数据或外部事件作为输入。",
+        "项目内部的智能体组件调用模型、工具或脚本完成处理。",
+        "项目返回结果，并通过日志、测试或人工检查验证执行质量。"
+      ],
+      "inputs": [
+        "用户任务或业务数据",
+        "项目配置及运行环境"
+      ],
+      "outputs": [
+        "项目执行后产生的智能体结果"
+      ],
+      "caveats": [
+        "AI 深度分析失败：Unexpected end of JSON input。本报告已改用中文规则解析生成。"
+      ],
+      "evidence": [
+        "README.md",
+        "ARCHITECTURE.md",
+        "docs/how-it-works.md",
+        "worked/example/raw/architecture.md",
+        "BENCHMARKS.md",
+        "docs/docker-mcp-sqlite.md"
+      ]
+    }
   }
 ]
