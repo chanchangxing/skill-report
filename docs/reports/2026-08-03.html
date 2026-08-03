@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Browser Use 是一个开源项目，它使 AI 代理能够像真实用户一样操控网络浏览器，自动完成打开页面、点击按钮、输入文本、填写表单和提取数据等操作。用户只需用自然语言描述任务，代理即可执行。项目提供 Python 编程库和命令行技能两种接入方式，支持与 Claude Code、Cursor 等现有代理工作流集成，并允许接入多种主流大语言模型。此外，项目还提供云端托管版本，用于处理更复杂的任务、反检测和规模化部署。">
-  <title>Browser Use：让AI代理像人一样操控浏览器的开源框架 — 智能体项目日报</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>Browser Use：让AI代理像人一样操控浏览器的开源框架 — 2026-08-03</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>智能体项目</span>日报</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>智能体项目</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-08-03 · 今日智能体项目</p>
@@ -35,38 +35,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>环境准备：通过 `uv add browser-use` 或 `pip install browser-use` 安装库，并在 `.env` 中配置 `BROWSER_USE_API_KEY` 或其他 LLM 提供商的 API 密钥。</p></li><li><span>2</span><p>创建 Agent：在代码中实例化 `Agent`，设置 `task` 为要完成的浏览器任务，并指定 `llm` 模型（如 `ChatBrowserUse`、`ChatOpenAI` 或 `ChatAnthropic`）。</p></li><li><span>3</span><p>执行任务：调用 `await agent.run()`，Agent 开始解析任务，规划并执行一系列浏览器操作。</p></li><li><span>4</span><p>浏览器操作：Agent 通过内置浏览器控制能力打开网页、定位元素、点击、输入并提交表单，根据页面反馈实时调整策略。</p></li><li><span>5</span><p>任务完成与验证：当任务达成或达到停止条件时，Agent 返回包含操作历史、状态和结果的 `history` 对象。</p></li><li><span>6</span><p>结果输出：从返回对象中提取所需数据（如 CSV、状态报告），或将结果用于后续业务逻辑。</p></li><li><span>7</span><p>可选集成：对于已有 AI 代理（如 Claude Code、Cursor）的用户，可通过 `browser-use skill install` 安装技能，让代理自动处理浏览器任务。</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li><li>static/accuracy_by_model_light.png</li><li>static/accuracy_by_model_dark.png</li><li>examples/use-cases/apply_to_job.py</li><li>examples/browser/real_browser.py</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>开源版本不内置验证码解决和高级反检测能力，这部分功能需要依赖云端服务（README 中明确建议了这一点，属于推断）。</li><li>模型选择对速度和准确率影响显著，README 推荐使用 `bu-*` 模型，使用其他模型可能表现不佳（README 中明确说明）。</li><li>生产环境并行运行多个浏览器代理时，需自行管理内存和扩展性，README 建议使用 Cloud API 处理这类场景（README 中明确说明）。</li><li>部分高级功能（如代理轮换、持久文件系统、1000+ 集成）仅在托管云版本中提供，开源版需自行替代方案（README 中明确说明）。</li><li>由于只能基于 README 分析，无法验证仓库内部具体代码实现细节，建议参考官方文档获取更多信息（推断）。</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><article class="report-card" data-search="graphify graphify graphify-labs/graphify ai-agents antigravity ast claude-code code-analysis code-search codex cursor developer-tools gemini graphrag knowledge-graph leiden llm mcp openclaw rag skills tree-sitter">
-    <div><time>2026-08-02</time><span class="score">热度 85.6</span></div>
-    <h3><a href="./reports/2026-08-02.html">graphify</a></h3>
-    <p>这是 Graphify-Labs/graphify 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。</p>
-    <div class="card-meta"><span>星标 100,405</span><span>派生 9,750</span><span>Graphify-Labs/graphify</span></div>
-  </article><article class="report-card" data-search="gstack gstack garrytan/gstack ">
-    <div><time>2026-08-01</time><span class="score">热度 81.94</span></div>
-    <h3><a href="./reports/2026-08-01.html">gstack</a></h3>
-    <p>这是 garrytan/gstack 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。</p>
-    <div class="card-meta"><span>星标 125,578</span><span>派生 18,838</span><span>garrytan/gstack</span></div>
-  </article><article class="report-card" data-search="anthropic skills 技能库与规范仓库 skills anthropics/skills agent-skills">
-    <div><time>2026-07-31</time><span class="score">热度 71.9</span></div>
-    <h3><a href="./reports/2026-07-31.html">Anthropic Skills 技能库与规范仓库</a></h3>
-    <p>这是 Anthropic 官方发布的 Claude 技能（Skills）实现集合，仓库以文件夹形式封装指令、脚本和资源，使 Claude 能够动态加载并提升在专业任务上的表现。仓库既包含创意设计、开发技术、企业沟通和文档处理等示例技能，也开放了驱动 Claude 文档能力的 docx、pdf、pptx、xlsx 技能作为生产级参考，同时提供 Agent Skills 规范（spec）和技能模板（template）供开发者创建自定义技能。整个仓库旨在展示技能系统的可能性，并为社区提供学习、复用和构建技能的基础。</p>
-    <div class="card-meta"><span>星标 165,315</span><span>派生 19,652</span><span>anthropics/skills</span></div>
-  </article><article class="report-card" data-search="firecrawl - 大规模网页搜索与数据采集api firecrawl firecrawl/firecrawl ai ai-agents ai-crawler ai-scraping ai-search crawler data-extraction html-to-markdown llm markdown scraper scraping web-crawler web-data web-data-extraction web-scraper web-scraping web-search webscraping">
-    <div><time>2026-07-30</time><span class="score">热度 72.45</span></div>
-    <h3><a href="./reports/2026-07-30.html">Firecrawl - 大规模网页搜索与数据采集API</a></h3>
-    <p>Firecrawl 是一个开源的 API 服务，用于大规模搜索、抓取和与网页交互。它能够将网页内容转化为干净的 Markdown 或结构化数据，供 AI 智能体使用。提供云端托管和自托管选项。</p>
-    <div class="card-meta"><span>星标 157,975</span><span>派生 8,978</span><span>firecrawl/firecrawl</span></div>
-  </article><article class="report-card" data-search="gemini cli（智能终端ai代理） gemini-cli google-gemini/gemini-cli ai ai-agents cli gemini gemini-api mcp-client mcp-server">
-    <div><time>2026-07-29</time><span class="score">热度 72.63</span></div>
-    <h3><a href="./reports/2026-07-29.html">Gemini CLI（智能终端AI代理）</a></h3>
-    <p>Gemini CLI 是一个开源的 AI 代理工具，将 Google Gemini 模型的能力直接带入终端。它为开发者提供轻量级、高效的交互方式，支持代码理解、自动化任务、实时搜索等功能，并可通过 MCP 协议扩展自定义工具。项目采用 Apache 2.0 许可证，旨在成为终端优先的 AI 助手。</p>
-    <div class="card-meta"><span>星标 106,229</span><span>派生 14,337</span><span>google-gemini/gemini-cli</span></div>
-  </article><article class="report-card" data-search="langchain：智能体工程平台 langchain langchain-ai/langchain agents ai ai-agents anthropic chatgpt deepagents enterprise framework gemini generative-ai langchain langgraph llm multiagent open-source openai pydantic python rag typescript">
-    <div><time>2026-07-28</time><span class="score">热度 73.26</span></div>
-    <h3><a href="./reports/2026-07-28-100325.html">LangChain：智能体工程平台</a></h3>
-    <p>LangChain 是一个用于构建智能体和 LLM 驱动应用的框架，通过可互操作的组件和丰富的第三方集成，简化 AI 应用的开发流程，同时保持底层技术演进时的决策前瞻性。</p>
-    <div class="card-meta"><span>星标 142,720</span><span>派生 23,756</span><span>langchain-ai/langchain</span></div>
-  </article></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><a href="./2026-08-02.html">graphify →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>

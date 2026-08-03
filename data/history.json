@@ -1015,5 +1015,101 @@
         "docs/docker-mcp-sqlite.md"
       ]
     }
+  },
+  {
+    "reportId": "2026-08-03",
+    "date": "2026-08-03",
+    "generatedAt": "2026-08-03T05:21:55.201Z",
+    "kind": "daily",
+    "projectId": "browser-use/browser-use",
+    "fingerprint": "R_kgDONIn9tw",
+    "name": "browser-use",
+    "description": "🌐 Make websites accessible for AI agents. Automate tasks online with ease.",
+    "repository": "browser-use/browser-use",
+    "repositoryUrl": "https://github.com/browser-use/browser-use",
+    "projectUrl": "https://github.com/browser-use/browser-use",
+    "homepageUrl": "https://browser-use.com",
+    "primaryDocumentPath": "README.md",
+    "stars": 107643,
+    "stars7d": 704,
+    "forks": 11828,
+    "forks7d": 82,
+    "issueActivity7d": 12,
+    "pushedAt": "2026-08-03T03:07:35Z",
+    "topics": [
+      "ai-agents",
+      "ai-tools",
+      "browser-automation",
+      "browser-use",
+      "llm",
+      "playwright",
+      "python"
+    ],
+    "language": "Python",
+    "score": 80.23,
+    "analysis": {
+      "title": "Browser Use：让AI代理像人一样操控浏览器的开源框架",
+      "introduction": "Browser Use 是一个开源项目，它使 AI 代理能够像真实用户一样操控网络浏览器，自动完成打开页面、点击按钮、输入文本、填写表单和提取数据等操作。用户只需用自然语言描述任务，代理即可执行。项目提供 Python 编程库和命令行技能两种接入方式，支持与 Claude Code、Cursor 等现有代理工作流集成，并允许接入多种主流大语言模型。此外，项目还提供云端托管版本，用于处理更复杂的任务、反检测和规模化部署。",
+      "whyHot": [
+        "社区热度极高：GitHub 星标超过 10.7 万，7 日内新增 704 星，派生仓库数超 1.1 万，说明开发者广泛认可并持续关注。",
+        "基准测试领先：在 Odysseys 长时域网络任务基准中以 87.4% 平均成功率排名第一，超过 OpenAI、Anthropic 和 Google 等公司的计算机使用代理。",
+        "开源免费与云端增强双轨模式：开源版可完全免费本地运行，云端版提供更高准确率、代理轮换、验证码解决等能力，满足不同层级用户需求。",
+        "生态集成丰富：支持与主流 AI 代理（如 Claude Code、Codex、Cursor）和多种 LLM 提供商无缝协作，并通过 MCP 和自定义工具扩展能力。"
+      ],
+      "capabilities": [
+        "自然语言驱动的浏览器控制：自动执行页面导航、点击、输入、表单填写等操作。",
+        "结构化数据提取：从网页中提取数据并导出为 CSV 等格式，便于后续分析。",
+        "QA 自动化：自动测试本地网站，报告 bug、可用性问题和视觉不一致。",
+        "CLI 技能集成：通过 `browser-use skill install` 让现有 AI 代理获得浏览器操控能力。",
+        "Python 库嵌入：允许开发者在自有代码中创建 Agent，实现可重复、可并行的网页自动化任务。",
+        "多 LLM 支持：可接入 OpenAI、Anthropic、Google 模型，或使用 Browser Use 自研优化模型 `bu-*` 系列。",
+        "自定义工具扩展：通过 `Tools` 装饰器添加专用工具，扩充代理能力。",
+        "会话与认证处理：支持复用真实 Chrome 配置文件，保留已登录状态。",
+        "云端高级功能：代理轮换、验证码解决、隐身浏览器指纹、持久文件系统和 1000+ 集成。"
+      ],
+      "useCases": [
+        "求职申请自动化：用户需要向多个招聘网站提交职位申请，但每次都要重复填写个人信息和简历。用户可以运行 Browser Use 的 CLI 技能或 Python 脚本，设定任务为“用我的简历和信息填写这份求职申请表”，代理会自动打开指定页面、定位表单字段并填入内容，从而节省大量时间并减少手动输入错误。",
+        "社交媒体数据采集：市场人员需要定期导出自己的社交媒体关注者列表，用于受众分析。通过编写一个使用 Browser Use Python 库的定时任务，代理会在每次执行时登录账号，提取关注者的结构化数据，并自动保存为 CSV 文件。该方案替代了手动复制粘贴，使数据收集流程变得可重复和可扩展。"
+      ],
+      "workflow": [
+        "环境准备：通过 `uv add browser-use` 或 `pip install browser-use` 安装库，并在 `.env` 中配置 `BROWSER_USE_API_KEY` 或其他 LLM 提供商的 API 密钥。",
+        "创建 Agent：在代码中实例化 `Agent`，设置 `task` 为要完成的浏览器任务，并指定 `llm` 模型（如 `ChatBrowserUse`、`ChatOpenAI` 或 `ChatAnthropic`）。",
+        "执行任务：调用 `await agent.run()`，Agent 开始解析任务，规划并执行一系列浏览器操作。",
+        "浏览器操作：Agent 通过内置浏览器控制能力打开网页、定位元素、点击、输入并提交表单，根据页面反馈实时调整策略。",
+        "任务完成与验证：当任务达成或达到停止条件时，Agent 返回包含操作历史、状态和结果的 `history` 对象。",
+        "结果输出：从返回对象中提取所需数据（如 CSV、状态报告），或将结果用于后续业务逻辑。",
+        "可选集成：对于已有 AI 代理（如 Claude Code、Cursor）的用户，可通过 `browser-use skill install` 安装技能，让代理自动处理浏览器任务。"
+      ],
+      "inputs": [
+        "自然语言任务描述，例如“查找 browser-use 仓库的星标数”",
+        "LLM API 密钥，包括 `BROWSER_USE_API_KEY` 或第三方提供商的密钥",
+        "目标网页 URL 或用户提供的交互界面",
+        "浏览器配置（新实例或复用真实 Chrome 配置文件）",
+        "可选的附加数据（如简历、表单内容）用于填入任务"
+      ],
+      "outputs": [
+        "任务执行历史记录（`history` 对象），包含操作步骤和状态",
+        "结构化提取的数据，如 CSV 文件",
+        "任务完成状态与结果摘要",
+        "可选的浏览器截图或视觉反馈（用于 QA 报告）",
+        "集成到现有代理时的执行日志或命令输出"
+      ],
+      "caveats": [
+        "开源版本不内置验证码解决和高级反检测能力，这部分功能需要依赖云端服务（README 中明确建议了这一点，属于推断）。",
+        "模型选择对速度和准确率影响显著，README 推荐使用 `bu-*` 模型，使用其他模型可能表现不佳（README 中明确说明）。",
+        "生产环境并行运行多个浏览器代理时，需自行管理内存和扩展性，README 建议使用 Cloud API 处理这类场景（README 中明确说明）。",
+        "部分高级功能（如代理轮换、持久文件系统、1000+ 集成）仅在托管云版本中提供，开源版需自行替代方案（README 中明确说明）。",
+        "由于只能基于 README 分析，无法验证仓库内部具体代码实现细节，建议参考官方文档获取更多信息（推断）。"
+      ],
+      "evidence": [
+        "README.md",
+        "static/accuracy_by_model_light.png",
+        "static/accuracy_by_model_dark.png",
+        "examples/use-cases/apply_to_job.py",
+        "examples/browser/real_browser.py"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]
