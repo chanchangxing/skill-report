@@ -1111,5 +1111,104 @@
       "source": "deepseek",
       "model": "deepseek-v4-flash"
     }
+  },
+  {
+    "reportId": "2026-08-05",
+    "date": "2026-08-05",
+    "generatedAt": "2026-08-05T04:47:57.544Z",
+    "kind": "daily",
+    "projectId": "DietrichGebert/ponytail",
+    "fingerprint": "R_kgDOS4HNrw",
+    "name": "ponytail",
+    "description": "Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.",
+    "repository": "DietrichGebert/ponytail",
+    "repositoryUrl": "https://github.com/DietrichGebert/ponytail",
+    "projectUrl": "https://github.com/DietrichGebert/ponytail",
+    "homepageUrl": "https://ponytail.dev",
+    "primaryDocumentPath": "README.md",
+    "stars": 96075,
+    "stars7d": null,
+    "forks": 5276,
+    "forks7d": null,
+    "issueActivity7d": 27,
+    "pushedAt": "2026-07-15T21:32:15Z",
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "claude",
+      "claude-code",
+      "claude-code-plugin",
+      "cursor-rules",
+      "developer-tools",
+      "llm",
+      "prompt-engineering",
+      "yagni"
+    ],
+    "language": "JavaScript",
+    "score": 67.95,
+    "analysis": {
+      "title": "Ponytail（马尾辫）—— 懒人资深开发者 AI 编码技能",
+      "introduction": "Ponytail 是一个面向 AI 编码助手的可移植技能与插件分发项目，意在将一位资深懒开发者的工作方式注入 AI agent：在写代码前先按七级决策阶梯判断是否真的需要写、是否已有现成方案，从而只产出必要且完整的代码。项目强调“懒在解法，不懒在阅读”，并要求绝不牺牲信任边界验证、安全性、可访问性和防数据丢失。它通过适配器支持 Claude Code、Codex、Gemini CLI 等 20 多种 agent 宿主，并附带可复现的智能体基准测试，宣称在真实仓库任务上平均减少 54% 代码量、20% 成本、27% 时间，同时保持 100% 安全。",
+      "whyHot": [
+        "在真实 Claude Code 会话与 FastAPI+React 真实仓库的基准测试中，ponytail 平均减少 54% 代码（日期选择器等过度构建场景最高减少 94%），同时降低 token、成本和时间，是唯一在所有指标上都优于无技能基线的对照臂。",
+        "项目坚持“精简不等于删掉安全护栏”：在对抗性输入测试中，ponytail 保持了 100% 的安全率，而单纯的“YAGNI + one-liner”提示词对照臂出现了路径穿越漏洞，因此引发关于 AI 编码中“什么才是必要代码”的广泛讨论。",
+        "仓库星标接近 10 万，登上 Trendshift，且项目公开回应了社区对旧基准的批评，重建了更严谨的智能体基准，这种开放纠错的态度吸引了大量开发者关注。",
+        "兼容 20 多种 agent 宿主（Claude Code、Codex、Gemini CLI、Qoder、Copilot CLI 等），采用瘦适配器架构，核心行为集中在 skills/ 中，便于在各类 AI 编程工具间移植。",
+        "提供 /ponytail-review、/ponytail-audit、/ponytail-debt、/ponytail-gain 等命令，不仅改变代码生成，还能审查过度工程、累计技术债、展示量化收益，形成了完整的工作流。"
+      ],
+      "capabilities": [
+        "自动注入“懒人资深开发者”规则集到每个会话与子代理，规则按 lite/full/ultra/off 分级控制强度。",
+        "通过七级决策阶梯指导 agent：先判断是否必要（YAGNI）、是否已有、标准库、原生平台、已装依赖、一行能否解决，最后才写最小可行代码。",
+        "提供 /ponytail-review 审查当前 diff 的过度工程化并给出删除清单。",
+        "提供 /ponytail-audit 对全仓库进行过度工程化审计，而不只针对当前改动。",
+        "提供 /ponytail-debt 将延迟处理的 ponytail: 注释收集为技术债台账，避免“以后再说”变成“永不”。",
+        "提供 /ponytail-gain 展示基准测试的量化影响计分板（更少代码、更低成本、更快速度）。",
+        "通过 PONYTAIL_SUBAGENT_MATCHER 环境变量控制规则是否注入到特定类型的子代理。",
+        "支持将规则文件复制到 Cursor、Windsurf、Cline、Copilot、Kiro、Qoder 等宿主，以纯指令方式运行。"
+      ],
+      "useCases": [
+        "在给一个 FastAPI+React 全栈项目添加日期选择器时，开发者直接提出功能需求，ponytail 让 AI agent 先意识到浏览器原生 <input type=\"date\"> 已经满足需求，不再安装 flatpickr、不写包装组件、不讨论时区，最终代码从无技能基线的 404 行降到 23 行，同时保留了可访问性。",
+        "在实现“将用户上传的不可信文件名拼接到基础目录”的安全函数时，ponytail 的规则明确禁止在信任边界省略输入验证，因此 agent 在精简代码时仍保留了路径穿越检查；在对抗性测试中该实现 4 次全部通过，而仅使用“遵循 YAGNI 并优先一行解决方案”提示的对照组有 1 次被 ../../ 路径逃逸出目标目录，暴露了安全漏洞。"
+      ],
+      "workflow": [
+        "安装与激活：用户根据宿主类型执行 plugin 安装命令（如 /plugin marketplace add、codex plugin add、gemini extensions install），或直接复制 AGENTS.md 等规则文件；插件通过 SessionStart 等生命周期钩子在每次会话开始时注入规则集。",
+        "读取资源：agent 在收到编码任务后，先完整阅读任务描述和相关代码，追踪真实数据流，而不是立即写代码；同时读取仓库中的 AGENTS.md、.qoder/rules/ponytail.md 或对应宿主的规则文件。",
+        "执行决策阶梯：agent 逐级判断需求是否必须存在、是否已有实现、标准库是否覆盖、原生平台是否提供、已安装依赖是否可复用、能否一行实现，最后才写最小可行代码。",
+        "生成代码与自检：按规则编写代码，保留信任边界验证、防数据丢失、安全、可访问性等护栏；对非平凡逻辑留下一个可运行检查（assert 自测或单测文件），普通一行代码无需测试。",
+        "审查与验证：开发者可运行 /ponytail-review 审查当前 diff 的过度工程化，或 /ponytail-audit 全仓库审计；项目自带 node scripts/check-rule-copies.js 与 npm test 验证规则副本一致性，基准测试通过 benchmarks/agentic 中的 run.py 复现。"
+      ],
+      "inputs": [
+        "用户的编码任务、功能请求或 bug 报告（自然语言）",
+        "目标代码仓库（如 full-stack-fastapi-template 这类真实项目）",
+        "宿主 agent 的上下文与规则文件（AGENTS.md、.qoder/rules/ponytail.md 等）",
+        "配置信息：PONYTAIL_DEFAULT_MODE 环境变量、~/.config/ponytail/config.json、PONYTAIL_SUBAGENT_MATCHER",
+        "可选：/ponytail 命令参数（lite/full/ultra/off）"
+      ],
+      "outputs": [
+        "精简后的代码 git diff，包含注释后计数的更少新增行",
+        "有意简化但带已知上限的 ponytail: 注释（说明天花板与升级路径）",
+        "/ponytail-review 给出的过度工程化删除清单",
+        "/ponytail-audit 给出的仓库级过度工程审计报告",
+        "/ponytail-debt 生成的技术债台账",
+        "/ponytail-gain 显示的基准影响计分板",
+        "非平凡逻辑后留下的一个可运行检查（assert 自测或小测试文件）"
+      ],
+      "caveats": [
+        "基准数据来自特定条件（Haiku 4.5、full-stack-fastapi-template、12 个功能任务、n=4），README 中也承认此前单次基准曾因基线过“话痨”而高估效果，因此 -54% 等数字是聚合结果，实际效果会因模型、任务和代码库而异（推断：更大模型可能缩小差距）。",
+        "“100% 安全”仅指基准中 6 个外科手术式安全任务、20 次对抗运行的确定性测试结果，并不构成对任意代码安全性的全面证明。",
+        "安装与适配器细节以 README 和 docs/agent-portability.md 为准，但各宿主工具版本更新后接口可能变化，文档中标注的到期时间（如 Antigravity 迁移）也会影响可用性（推断）。",
+        "部分宿主（如 Cursor、Windsurf、Cline）仅通过复制规则文件获得指令级支持，没有 /ponytail 命令或生命周期钩子，功能完整度低于插件级宿主。",
+        "仓库本身是一个个人开源项目，其维护节奏、与未来 agent 版本的兼容性以及第三方依赖（如 ClawHub、npm）的持续可用性均存在不确定性（推断）。"
+      ],
+      "evidence": [
+        "README.md",
+        "benchmarks/results/2026-06-18-agentic.md",
+        "AGENTS.md",
+        ".qoder/rules/ponytail.md",
+        "docs/agent-portability.md"
+      ],
+      "source": "deepseek",
+      "model": "deepseek-v4-flash"
+    }
   }
 ]

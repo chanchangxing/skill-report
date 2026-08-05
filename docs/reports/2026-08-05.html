@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Ponytail 是一个面向 AI 编码助手的可移植技能与插件分发项目，意在将一位资深懒开发者的工作方式注入 AI agent：在写代码前先按七级决策阶梯判断是否真的需要写、是否已有现成方案，从而只产出必要且完整的代码。项目强调“懒在解法，不懒在阅读”，并要求绝不牺牲信任边界验证、安全性、可访问性和防数据丢失。它通过适配器支持 Claude Code、Codex、Gemini CLI 等 20 多种 agent 宿主，并附带可复现的智能体基准测试，宣称在真实仓库任务上平均减少 54% 代码量、20% 成本、27% 时间，同时保持 100% 安全。">
-  <title>Ponytail（马尾辫）—— 懒人资深开发者 AI 编码技能 — 智能体项目日报</title>
-  <link rel="stylesheet" href="./assets/site.css">
+  <title>Ponytail（马尾辫）—— 懒人资深开发者 AI 编码技能 — 2026-08-05</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./index.html"><span>智能体项目</span>日报</a>
-    <nav><a href="./index.html">今日推荐</a><a href="./history.html">历史报告</a></nav>
+    <a class="brand" href="../index.html"><span>智能体项目</span>日报</a>
+    <nav><a href="../index.html">今日推荐</a><a href="../history.html">历史报告</a></nav>
   </header>
   <main><section class="hero report-hero">
     <p class="eyebrow">2026-08-05 · 今日智能体项目</p>
@@ -35,38 +35,8 @@
     <article class="panel wide"><h2>具体运作流程</h2><ol class="workflow"><li><span>1</span><p>安装与激活：用户根据宿主类型执行 plugin 安装命令（如 /plugin marketplace add、codex plugin add、gemini extensions install），或直接复制 AGENTS.md 等规则文件；插件通过 SessionStart 等生命周期钩子在每次会话开始时注入规则集。</p></li><li><span>2</span><p>读取资源：agent 在收到编码任务后，先完整阅读任务描述和相关代码，追踪真实数据流，而不是立即写代码；同时读取仓库中的 AGENTS.md、.qoder/rules/ponytail.md 或对应宿主的规则文件。</p></li><li><span>3</span><p>执行决策阶梯：agent 逐级判断需求是否必须存在、是否已有实现、标准库是否覆盖、原生平台是否提供、已安装依赖是否可复用、能否一行实现，最后才写最小可行代码。</p></li><li><span>4</span><p>生成代码与自检：按规则编写代码，保留信任边界验证、防数据丢失、安全、可访问性等护栏；对非平凡逻辑留下一个可运行检查（assert 自测或单测文件），普通一行代码无需测试。</p></li><li><span>5</span><p>审查与验证：开发者可运行 /ponytail-review 审查当前 diff 的过度工程化，或 /ponytail-audit 全仓库审计；项目自带 node scripts/check-rule-copies.js 与 npm test 验证规则副本一致性，基准测试通过 benchmarks/agentic 中的 run.py 复现。</p></li></ol></article>
     <article class="panel"><h2>证据文件</h2><ul><li>README.md</li><li>benchmarks/results/2026-06-18-agentic.md</li><li>AGENTS.md</li><li>.qoder/rules/ponytail.md</li><li>docs/agent-portability.md</li></ul></article>
     <article class="panel"><h2>限制与判断边界</h2><ul><li>基准数据来自特定条件（Haiku 4.5、full-stack-fastapi-template、12 个功能任务、n=4），README 中也承认此前单次基准曾因基线过“话痨”而高估效果，因此 -54% 等数字是聚合结果，实际效果会因模型、任务和代码库而异（推断：更大模型可能缩小差距）。</li><li>“100% 安全”仅指基准中 6 个外科手术式安全任务、20 次对抗运行的确定性测试结果，并不构成对任意代码安全性的全面证明。</li><li>安装与适配器细节以 README 和 docs/agent-portability.md 为准，但各宿主工具版本更新后接口可能变化，文档中标注的到期时间（如 Antigravity 迁移）也会影响可用性（推断）。</li><li>部分宿主（如 Cursor、Windsurf、Cline）仅通过复制规则文件获得指令级支持，没有 /ponytail 命令或生命周期钩子，功能完整度低于插件级宿主。</li><li>仓库本身是一个个人开源项目，其维护节奏、与未来 agent 版本的兼容性以及第三方依赖（如 ClawHub、npm）的持续可用性均存在不确定性（推断）。</li></ul><p class="source-label">分析方式：DeepSeek · deepseek-v4-flash</p></article>
-  </div><section class="more"><h2>最近推荐</h2><div class="cards"><article class="report-card" data-search="browser use：让ai代理像人一样操控浏览器的开源框架 browser-use browser-use/browser-use ai-agents ai-tools browser-automation browser-use llm playwright python">
-    <div><time>2026-08-03</time><span class="score">热度 80.23</span></div>
-    <h3><a href="./reports/2026-08-03.html">Browser Use：让AI代理像人一样操控浏览器的开源框架</a></h3>
-    <p>Browser Use 是一个开源项目，它使 AI 代理能够像真实用户一样操控网络浏览器，自动完成打开页面、点击按钮、输入文本、填写表单和提取数据等操作。用户只需用自然语言描述任务，代理即可执行。项目提供 Python 编程库和命令行技能两种接入方式，支持与 Claude Code、Cursor 等现有代理工作流集成，并允许接入多种主流大语言模型。此外，项目还提供云端托管版本，用于处理更复杂的任务、反检测和规模化部署。</p>
-    <div class="card-meta"><span>星标 107,643</span><span>派生 11,828</span><span>browser-use/browser-use</span></div>
-  </article><article class="report-card" data-search="graphify graphify graphify-labs/graphify ai-agents antigravity ast claude-code code-analysis code-search codex cursor developer-tools gemini graphrag knowledge-graph leiden llm mcp openclaw rag skills tree-sitter">
-    <div><time>2026-08-02</time><span class="score">热度 85.6</span></div>
-    <h3><a href="./reports/2026-08-02.html">graphify</a></h3>
-    <p>这是 Graphify-Labs/graphify 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。</p>
-    <div class="card-meta"><span>星标 100,405</span><span>派生 9,750</span><span>Graphify-Labs/graphify</span></div>
-  </article><article class="report-card" data-search="gstack gstack garrytan/gstack ">
-    <div><time>2026-08-01</time><span class="score">热度 81.94</span></div>
-    <h3><a href="./reports/2026-08-01.html">gstack</a></h3>
-    <p>这是 garrytan/gstack 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。</p>
-    <div class="card-meta"><span>星标 125,578</span><span>派生 18,838</span><span>garrytan/gstack</span></div>
-  </article><article class="report-card" data-search="anthropic skills 技能库与规范仓库 skills anthropics/skills agent-skills">
-    <div><time>2026-07-31</time><span class="score">热度 71.9</span></div>
-    <h3><a href="./reports/2026-07-31.html">Anthropic Skills 技能库与规范仓库</a></h3>
-    <p>这是 Anthropic 官方发布的 Claude 技能（Skills）实现集合，仓库以文件夹形式封装指令、脚本和资源，使 Claude 能够动态加载并提升在专业任务上的表现。仓库既包含创意设计、开发技术、企业沟通和文档处理等示例技能，也开放了驱动 Claude 文档能力的 docx、pdf、pptx、xlsx 技能作为生产级参考，同时提供 Agent Skills 规范（spec）和技能模板（template）供开发者创建自定义技能。整个仓库旨在展示技能系统的可能性，并为社区提供学习、复用和构建技能的基础。</p>
-    <div class="card-meta"><span>星标 165,315</span><span>派生 19,652</span><span>anthropics/skills</span></div>
-  </article><article class="report-card" data-search="firecrawl - 大规模网页搜索与数据采集api firecrawl firecrawl/firecrawl ai ai-agents ai-crawler ai-scraping ai-search crawler data-extraction html-to-markdown llm markdown scraper scraping web-crawler web-data web-data-extraction web-scraper web-scraping web-search webscraping">
-    <div><time>2026-07-30</time><span class="score">热度 72.45</span></div>
-    <h3><a href="./reports/2026-07-30.html">Firecrawl - 大规模网页搜索与数据采集API</a></h3>
-    <p>Firecrawl 是一个开源的 API 服务，用于大规模搜索、抓取和与网页交互。它能够将网页内容转化为干净的 Markdown 或结构化数据，供 AI 智能体使用。提供云端托管和自托管选项。</p>
-    <div class="card-meta"><span>星标 157,975</span><span>派生 8,978</span><span>firecrawl/firecrawl</span></div>
-  </article><article class="report-card" data-search="gemini cli（智能终端ai代理） gemini-cli google-gemini/gemini-cli ai ai-agents cli gemini gemini-api mcp-client mcp-server">
-    <div><time>2026-07-29</time><span class="score">热度 72.63</span></div>
-    <h3><a href="./reports/2026-07-29.html">Gemini CLI（智能终端AI代理）</a></h3>
-    <p>Gemini CLI 是一个开源的 AI 代理工具，将 Google Gemini 模型的能力直接带入终端。它为开发者提供轻量级、高效的交互方式，支持代码理解、自动化任务、实时搜索等功能，并可通过 MCP 协议扩展自定义工具。项目采用 Apache 2.0 许可证，旨在成为终端优先的 AI 助手。</p>
-    <div class="card-meta"><span>星标 106,229</span><span>派生 14,337</span><span>google-gemini/gemini-cli</span></div>
-  </article></div><a class="text-link" href="./history.html">浏览全部历史 →</a></section></main>
+  </div><nav class="report-nav"><span></span><a href="./2026-08-03.html">browser-use →</a></nav></main>
   <footer>每天北京时间 09:45 自动更新 · 推荐完整开源项目 · 数据来自 GitHub</footer>
-  <script src="./assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
 </body>
 </html>
