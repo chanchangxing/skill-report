@@ -13,35 +13,44 @@ function api(pathname) {
   return `${API}${pathname}`;
 }
 
-async function searchRepositories(query) {
+async function searchRepositories(query, page, request) {
   const params = new URLSearchParams({
     q: query,
     sort: "stars",
     order: "desc",
     per_page: "30",
+    page: String(page),
   });
-  const payload = await fetchJson(api(`/search/repositories?${params}`), {
+  const payload = await request(api(`/search/repositories?${params}`), {
     headers: githubHeaders(),
   });
-  return payload.items || [];
+  if (!Array.isArray(payload.items) || !Number.isFinite(payload.total_count)) {
+    throw new Error("GitHub 搜索响应缺少 items 或 total_count");
+  }
+  return payload;
 }
 
-async function repositoryTree(repository) {
+async function repositoryTree(repository, request = fetchJson) {
   const branch = encodeURIComponent(repository.default_branch);
-  const payload = await fetchJson(
+  const payload = await request(
     api(`/repos/${repository.full_name}/git/trees/${branch}?recursive=1`),
     { headers: githubHeaders() },
   );
-  return payload.tree || [];
+  if (!Array.isArray(payload.tree) || payload.truncated) {
+    throw new Error("GitHub 仓库文件树不完整，无法确认项目资格");
+  }
+  return payload.tree;
 }
 
-async function repositoryFile(repository, filePath) {
+async function repositoryFile(repository, filePath, request = fetchJson) {
   const encoded = filePath.split("/").map(encodeURIComponent).join("/");
   const url = api(
     `/repos/${repository.full_name}/contents/${encoded}?ref=${encodeURIComponent(repository.default_branch)}`,
   );
-  const payload = await fetchJson(url, { headers: githubHeaders() });
-  if (payload.encoding !== "base64" || !payload.content) return "";
+  const payload = await request(url, { headers: githubHeaders() });
+  if (payload.encoding !== "base64" || !payload.content) {
+    throw new Error("GitHub 文件内容不可用");
+  }
   return Buffer.from(payload.content, "base64").toString("utf8");
 }
 
@@ -136,13 +145,17 @@ function projectReferencePaths(readme, readmePath, tree) {
   ])].filter((item) => item !== readmePath).slice(0, 6);
 }
 
-async function projectFromRepository(repository) {
-  const tree = await repositoryTree(repository);
+function discoveryError(code, message) {
+  return Object.assign(new Error(message), { code });
+}
+
+async function projectFromRepository(repository, request = fetchJson) {
+  const tree = await repositoryTree(repository, request);
   const readmePath = rootReadmePath(tree);
-  if (!readmePath) throw new Error("仓库根目录没有 README");
-  const readme = await repositoryFile(repository, readmePath);
+  if (!readmePath) throw discoveryError("INELIGIBLE_PROJECT", "仓库根目录没有 README");
+  const readme = await repositoryFile(repository, readmePath, request);
   if (!looksLikeAgentProject(repository, readme, tree)) {
-    throw new Error("仓库未通过完整智能体项目校验");
+    throw discoveryError("INELIGIBLE_PROJECT", "仓库未通过完整智能体项目校验");
   }
   return {
     id: repository.full_name,
@@ -178,32 +191,84 @@ export async function loadProject(repositoryName) {
   return projectFromRepository(repository);
 }
 
-export async function discoverProjects({ maxRepositories = 35 } = {}) {
-  const searches = await Promise.allSettled(SEARCH_QUERIES.map(searchRepositories));
-  const repositories = new Map();
-  for (const result of searches) {
-    if (result.status !== "fulfilled") {
-      console.warn(`GitHub 搜索失败，继续使用其他来源：${result.reason.message}`);
-      continue;
-    }
-    for (const repository of result.value) {
-      if (repository.archived || repository.disabled || repository.fork) continue;
-      repositories.set(repository.full_name, repository);
+export async function discoverProjects({
+  maxRepositories = 35,
+  excludedRepositories = [],
+  maxSearchPages = 5,
+  maxApiRequests = 200,
+} = {}) {
+  for (const [name, value, maximum] of [
+    ["maxRepositories", maxRepositories, 100],
+    ["maxSearchPages", maxSearchPages, 34],
+    ["maxApiRequests", maxApiRequests, 1000],
+  ]) {
+    if (!Number.isInteger(value) || value < 1 || value > maximum) {
+      throw new Error(`${name} 必须是 1 到 ${maximum} 之间的整数`);
     }
   }
-
-  const rankedRepositories = [...repositories.values()]
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
-    .slice(0, maxRepositories);
+  let requests = 0;
+  const request = (url, options) => fetchJson(url, {
+    ...options,
+    beforeRequest() {
+      if (requests >= maxApiRequests) {
+        throw discoveryError("DISCOVERY_LIMIT", "GitHub 发现请求预算已用完，无法确认是否耗尽；未生成空报告。");
+      }
+      requests += 1;
+    },
+  });
+  const seen = new Set([...excludedRepositories].map((name) => name.toLowerCase()));
+  const sources = SEARCH_QUERIES.map((query) => ({ query, done: false }));
   const projects = [];
+  let sourceUnavailable = false;
 
-  for (const repository of rankedRepositories) {
-    try {
-      projects.push(await projectFromRepository(repository));
-    } catch (error) {
-      console.warn(`跳过 ${repository.full_name}：${error.message}`);
+  try {
+    for (let page = 1; page <= maxSearchPages; page += 1) {
+      const repositories = new Map();
+      for (const source of sources.filter((item) => !item.done)) {
+        try {
+          const payload = await searchRepositories(source.query, page, request);
+          sourceUnavailable ||= Boolean(payload.incomplete_results);
+          source.done = !payload.incomplete_results
+            && payload.total_count <= page * 30;
+          for (const repository of payload.items) {
+            const name = repository.full_name.toLowerCase();
+            if (seen.has(name) || repository.archived || repository.disabled || repository.fork) continue;
+            repositories.set(name, repository);
+          }
+        } catch (error) {
+          if (error.code === "DISCOVERY_LIMIT") throw error;
+          sourceUnavailable = true;
+          source.done = true;
+          console.warn(`GitHub 搜索失败，继续使用其他来源：${error.message}`);
+        }
+      }
+      const rankedRepositories = [...repositories.values()]
+        .sort((a, b) => b.stargazers_count - a.stargazers_count);
+      for (const repository of rankedRepositories) {
+        seen.add(repository.full_name.toLowerCase());
+        try {
+          projects.push(await projectFromRepository(repository, request));
+        } catch (error) {
+          if (error.code === "DISCOVERY_LIMIT") throw error;
+          if (error.code !== "INELIGIBLE_PROJECT") sourceUnavailable = true;
+          console.warn(`跳过 ${repository.full_name}：${error.message}`);
+        }
+        if (projects.length >= maxRepositories) return projects;
+      }
+      if (sources.every((source) => source.done)) break;
     }
+  } catch (error) {
+    if (error.code !== "DISCOVERY_LIMIT" || !projects.length) throw error;
+    console.warn(`${error.message} 使用已验证的 ${projects.length} 个新项目继续推荐。`);
   }
+  if (projects.length) return projects;
+  if (sourceUnavailable) {
+    throw discoveryError("SOURCE_UNAVAILABLE", "GitHub 来源不可用或响应不完整，无法确认是否耗尽；未生成空报告。");
+  }
+  if (sources.some((source) => !source.done)) {
+    throw discoveryError("DISCOVERY_LIMIT", "GitHub 搜索分页上限已到，无法确认是否耗尽；未生成空报告。");
+  }
+  // An empty result is authoritative only after every source was fully inspected.
   return projects;
 }
 

@@ -43,6 +43,8 @@ jobs:
       AI_BASE_URL: ${{ vars.AI_BASE_URL || 'https://api.deepseek.com' }}
       AI_MODEL: ${{ vars.AI_MODEL || 'deepseek-v4-flash' }}
       MAX_REPOSITORIES: ${{ vars.MAX_REPOSITORIES || '35' }}
+      MAX_SEARCH_PAGES: ${{ vars.MAX_SEARCH_PAGES || '5' }}
+      MAX_DISCOVERY_REQUESTS: ${{ vars.MAX_DISCOVERY_REQUESTS || '200' }}
       REPORT_TIMEZONE: Asia/Shanghai
       REPORT_DATE: ${{ inputs.report_date }}
       REPORT_MODE: ${{ github.event_name == 'workflow_dispatch' && 'on-demand' || 'daily' }}

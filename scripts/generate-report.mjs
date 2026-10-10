@@ -56,8 +56,11 @@ if (!additional && history.some((item) => item.date === date && item.kind !== "o
 console.log("正在从 GitHub 搜索完整的智能体开源项目…");
 const discovered = await discoverProjects({
   maxRepositories: Number(process.env.MAX_REPOSITORIES || 35),
+  excludedRepositories: history.flatMap((item) => [item.projectId, item.repository].filter(Boolean)),
+  maxSearchPages: Number(process.env.MAX_SEARCH_PAGES || 5),
+  maxApiRequests: Number(process.env.MAX_DISCOVERY_REQUESTS || 200),
 });
-if (!discovered.length) throw new Error("没有发现通过项目级校验的智能体开源项目，未生成空报告。");
+if (!discovered.length) throw new Error("GitHub 搜索结果已耗尽，没有未推荐过的合格新项目；保留旧站点，不生成空报告或重复推荐。");
 
 const oldSnapshots = await existingSnapshotAtOrBefore(daysAgo(date, 7));
 const snapshot = [...new Map(discovered.map((skill) => [
@@ -69,8 +72,6 @@ const snapshot = [...new Map(discovered.map((skill) => [
     capturedAt: new Date().toISOString(),
   },
 ])).values()];
-await writeFile(snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`);
-
 const preliminary = selectProject(discovered, history, oldSnapshots, date);
 if (!preliminary.selected) {
   throw new Error("候选池中没有未推荐过的新项目；系统不会静默重复推荐。");
@@ -116,6 +117,7 @@ const nextHistory = [
   ...history.filter((item) => additional || item.date !== date || item.kind === "on-demand"),
   report,
 ].sort((a, b) => (a.generatedAt || a.date).localeCompare(b.generatedAt || b.date));
+await writeFile(snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`);
 await writeFile(historyPath, `${JSON.stringify(nextHistory, null, 2)}\n`);
 await renderSite({ root, reports: nextHistory });
 console.log(`已生成 ${reportId} 的${additional ? "即时" : "定时"}报告及 GitHub Pages 历史页面（${analysis.source}）。`);

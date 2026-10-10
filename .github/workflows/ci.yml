@@ -1,0 +1,37 @@
+name: Validate report generator
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "scripts/**"
+      - "static/**"
+      - "test/**"
+      - "package.json"
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - "scripts/**"
+      - "static/**"
+      - "test/**"
+      - "package.json"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check JavaScript syntax
+        run: npm run lint
+      - name: Run tests
+        run: npm test
+      - name: Build existing site
+        run: npm run build

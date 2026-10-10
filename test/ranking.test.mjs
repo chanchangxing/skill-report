@@ -44,3 +44,8 @@ test("总 Stars 是评分的主要权重", () => {
   );
   assert.ok(popular > viral);
 });
+
+test("大小写变化及旧格式 projectId 不绕过仓库永久去重", () => {
+  const result = selectProject([base], [{ projectId: "legacy-id", repository: "OWNER/REPO" }], [], "2026-07-25");
+  assert.equal(result.selected, null);
+});
