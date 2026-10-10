@@ -5,7 +5,7 @@
 ## 工作方式
 
 1. GitHub Actions 按 `45 1 * * *`（UTC）定时启动，即北京时间 09:45。
-2. 脚本通过 GitHub API 搜索智能体项目，要求仓库包含项目级 README 以及实际代码或根目录 `SKILL.md`，并排除归档、Fork 和纯链接合集。
+2. 脚本通过 GitHub API 分页搜索智能体项目，提前排除历史推荐，按 Stars 排序逐批校验并补足候选。要求仓库包含项目级 README 以及实际代码或根目录 `SKILL.md`，并排除归档、Fork 和纯链接合集。
 3. 总 Stars 占评分的 70%；七日新增 Stars、Forks、Issue 活跃度与更新时间合计占 30%。
 4. 系统使用仓库全名永久去重，已经推荐过的项目不会再次出现。
 5. DeepSeek 阅读项目 README、架构说明和根目录技能说明等项目级资料，输出项目介绍、热门原因、核心能力、两个使用场景、输入输出和具体运作流程。
@@ -47,7 +47,9 @@ Secret 只注入 GitHub Actions，不会进入仓库或公开页面。不要把 
 | --- | --- | --- |
 | `AI_MODEL` | `deepseek-v4-flash` | DeepSeek 模型 |
 | `AI_BASE_URL` | `https://api.deepseek.com` | DeepSeek API 地址 |
-| `MAX_REPOSITORIES` | `35` | 每次深入检查的候选仓库上限 |
+| `MAX_REPOSITORIES` | `35` | 目标合格新项目数量（1–100），历史或不合格项目不占名额 |
+| `MAX_SEARCH_PAGES` | `5` | 每个搜索条件的分页上限，每页 30 个结果（1–34） |
+| `MAX_DISCOVERY_REQUESTS` | `200` | 发现阶段实际 HTTP 请求上限，含搜索、文件树、README 和重试（1–1000） |
 
 GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 Token。
 
@@ -73,7 +75,9 @@ GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 To
 - 每份报告提供前后翻页。
 - 已推荐的项目仓库保存在 `data/history.json`；同一项目不会再次推荐。
 - 仓库中的单个技能文件、插件或子目录不会成为独立推荐对象。
-- 如果候选池耗尽，任务会明确失败，不会静默重复旧内容。
+- 只有全部搜索结果检查完成且没有合格新项目时，任务才会明确报告耗尽；来源不可用、响应不完整或预算不足会分别报告原因，不能据此判定耗尽。
+- 上述情况下保留旧站点、历史和快照，不生成假报告或静默重复推荐。部分来源失败或预算用完时，如果已有通过完整校验的新项目，仍可正常推荐。
+- GitHub 429（以及带限流信息的 403）按 `Retry-After` 秒数或 HTTP 日期退避；超过 60 秒的等待直接报告来源不可用，避免提前重试或无限等待。
 
 ## 本地命令
 
@@ -81,8 +85,11 @@ GitHub API 使用 Actions 自动提供的 `GITHUB_TOKEN`，无需额外创建 To
 
 ```bash
 npm test
+npm run lint
 npm run build
 GITHUB_TOKEN=... DEEPSEEK_API_KEY=... npm run generate
 ```
 
 本地不设置 `DEEPSEEK_API_KEY` 时会使用规则解析模式。未认证调用 GitHub API 的限额较低，正式定时任务始终使用 Actions 提供的 `GITHUB_TOKEN`。
+
+修复分支和 PR 的验证工作流只执行语法检查、测试和已有站点构建，不调用 DeepSeek、写回日报或部署 Pages。
