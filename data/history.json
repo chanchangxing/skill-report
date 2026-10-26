@@ -1272,5 +1272,91 @@
         "AGENTS.md"
       ]
     }
+  },
+  {
+    "reportId": "2026-10-26",
+    "date": "2026-10-26",
+    "generatedAt": "2026-10-26T06:57:04.033Z",
+    "kind": "daily",
+    "projectId": "morluto/rea",
+    "fingerprint": "R_kgDOSB6hVQ",
+    "name": "rea",
+    "description": "Reverse engineer anything with agents, from app behavior down to native binaries.",
+    "repository": "morluto/rea",
+    "repositoryUrl": "https://github.com/morluto/rea",
+    "projectUrl": "https://github.com/morluto/rea",
+    "homepageUrl": "https://rea.tools",
+    "primaryDocumentPath": "README.md",
+    "stars": 386398,
+    "stars7d": null,
+    "forks": 96788,
+    "forks7d": null,
+    "issueActivity7d": 32,
+    "pushedAt": "2026-10-26T06:54:50Z",
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "binary-analysis",
+      "claude-code",
+      "cli",
+      "codex",
+      "cordis",
+      "decompiler",
+      "developer-tools",
+      "dsh",
+      "dsh-plugin",
+      "ghidra",
+      "hopper",
+      "llm",
+      "mcp",
+      "model-context-protocol",
+      "rea",
+      "reverse-engineering",
+      "static-analysis",
+      "touhou"
+    ],
+    "language": "TypeScript",
+    "score": 78.85,
+    "analysis": {
+      "source": "fallback",
+      "title": "rea",
+      "introduction": "这是 morluto/rea 仓库中的智能体开源项目，具体定位、能力与运作方式依据项目主文档整理。",
+      "whyHot": [
+        "该项目目前拥有 386398 个星标和 96788 个派生仓库。",
+        "仓库最近一次推送时间为 2026-10-26，近 7 日记录到 32 个活跃议题。"
+      ],
+      "capabilities": [
+        "提供可安装、可运行或可复用的智能体项目能力"
+      ],
+      "useCases": [
+        "当团队的实际需求符合 rea 的项目定位时，可以部署或集成该项目来完成相关智能体任务。",
+        "当开发者需要研究同类智能体的工程实现时，可以通过该项目了解其架构、运行方式和扩展边界。"
+      ],
+      "workflow": [
+        "用户按照项目主文档完成安装、配置并启动项目。",
+        "项目接收用户任务、业务数据或外部事件作为输入。",
+        "项目内部的智能体组件调用模型、工具或脚本完成处理。",
+        "项目返回结果，并通过日志、测试或人工检查验证执行质量。"
+      ],
+      "inputs": [
+        "用户任务或业务数据",
+        "项目配置及运行环境"
+      ],
+      "outputs": [
+        "项目执行后产生的智能体结果"
+      ],
+      "caveats": [
+        "AI 深度分析失败：Unterminated string in JSON at position 1125。本报告已改用中文规则解析生成。"
+      ],
+      "evidence": [
+        "README.md",
+        "docs/readme/README_zh.md",
+        "docs/readme/README_ja.md",
+        "docs/readme/README_tr.md",
+        "docs/readme/README_vi.md",
+        "docs/readme/README_de.md",
+        "docs/readme/README_fr.md"
+      ]
+    }
   }
 ]
