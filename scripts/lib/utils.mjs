@@ -59,9 +59,17 @@ export function relativeTimeLabel(iso, date) {
 }
 
 export async function fetchJson(url, options = {}, retries = 2) {
-  const { timeoutMs = 30_000, ...fetchOptions } = options;
+  const {
+    timeoutMs = 30_000,
+    beforeRequest = () => {},
+    sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+    ...fetchOptions
+  } = options;
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
+    // Count actual HTTP attempts, including retries, against the caller's budget.
+    beforeRequest();
+    let retryDelayMs = 800 * 2 ** attempt;
     try {
       const response = await fetch(url, {
         ...fetchOptions,
@@ -73,19 +81,40 @@ export async function fetchJson(url, options = {}, retries = 2) {
         },
       });
       const text = await response.text();
-      const payload = text ? JSON.parse(text) : {};
+      let payload;
+      try {
+        payload = text ? JSON.parse(text) : {};
+      } catch (error) {
+        if (response.ok) throw error;
+        payload = {};
+      }
       if (response.ok) return payload;
       const error = new Error(
         `${response.status} ${response.statusText}: ${payload.message || text || "请求失败"}`,
       );
       error.status = response.status;
-      if (![429, 500, 502, 503, 504].includes(response.status)) throw error;
-      lastError = error;
+      const retryAfter = response.headers.get("retry-after");
+      if (retryAfter !== null) {
+        const seconds = Number(retryAfter);
+        error.retryAfterMs = Number.isFinite(seconds)
+          ? Math.max(0, seconds * 1000)
+          : Math.max(0, Date.parse(retryAfter) - Date.now());
+      } else if (response.status === 403 && response.headers.get("x-ratelimit-remaining") === "0") {
+        error.retryAfterMs = Math.max(0, Number(response.headers.get("x-ratelimit-reset")) * 1000 - Date.now());
+      }
+      if (Number.isFinite(error.retryAfterMs)) {
+        retryDelayMs = Math.max(retryDelayMs, error.retryAfterMs);
+      }
+      error.retryable = [429, 500, 502, 503, 504].includes(response.status)
+        || (response.status === 403 && Number.isFinite(error.retryAfterMs));
+      // Never retry earlier than GitHub asks, or block a run for an unbounded wait.
+      if (retryDelayMs > 60_000) error.retryable = false;
+      throw error;
     } catch (error) {
       lastError = error;
-      if (attempt === retries) break;
+      if (error.retryable === false || attempt === retries) break;
     }
-    await new Promise((resolve) => setTimeout(resolve, 800 * 2 ** attempt));
+    await sleep(retryDelayMs);
   }
   throw lastError;
 }

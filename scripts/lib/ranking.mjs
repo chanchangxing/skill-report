@@ -37,11 +37,12 @@ export function scoreProject(project, deltas, date) {
 
 export function selectProject(projects, history, oldSnapshots, date) {
   const selectedRepositories = new Set(
-    history.map((item) => item.projectId || item.repository),
+    history.flatMap((item) => [item.projectId, item.repository].filter(Boolean))
+      .map((name) => name.toLowerCase()),
   );
 
   const ranked = projects
-    .filter((project) => !selectedRepositories.has(project.repository))
+    .filter((project) => !selectedRepositories.has(project.repository.toLowerCase()))
     .map((project) => {
       const deltas = deltasFor(project, oldSnapshots);
       return { ...project, ...deltas, score: scoreProject(project, deltas, date) };
